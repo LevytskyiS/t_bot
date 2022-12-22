@@ -23,7 +23,25 @@ class Name(Field):
 
 
 class Phone(Field):
-    pass
+    @Field.value.setter
+    def value(self, value):
+        fixed_phone = self._sanitize_phone_number(value)
+        if len(fixed_phone) < 10 or len(fixed_phone) > 12:
+            raise ValueError('Wrong format of phone, must be 10 or 12 numbers')
+        if not fixed_phone.isnumeric():
+            raise ValueError("Wrong format of phone, must be only numbers")
+        self._value = fixed_phone
+
+    def _sanitize_phone_number(self, phone):
+        new_phone = (
+            phone.strip()
+            .replace("+", "")
+            .replace("(", "")
+            .replace(")", "")
+            .replace("-", "")
+            .replace(" ", "")
+        )
+        return new_phone
 
 
 class Email(Field):

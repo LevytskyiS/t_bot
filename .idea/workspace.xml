@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="77199db3-7b37-4c66-96d2-af7f9f6e9afa" name="Changes" comment="text of ValueError changed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fields_for_record.py" beforeDir="false" afterPath="$PROJECT_DIR$/fields_for_record.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
