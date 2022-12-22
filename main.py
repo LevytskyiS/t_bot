@@ -1,5 +1,75 @@
-from utils import handler
 from address_book import address_book
+
+
+def help_func(*_) -> str:
+    pass
+
+def add_func(args: list) -> str:
+    pass
+
+def add_phone_func(args: list) -> str:
+    pass
+
+def change_phone_func(args: list) -> str:
+    pass
+
+def phone_func(args: list) -> str:
+    pass
+
+def del_phone_func(args: list) -> str:
+    pass
+
+def show_all_func(*_) -> str:
+    pass
+
+def add_birth_func(args: list) -> str:
+    pass
+
+def change_birth_func(args: list) -> str:
+    pass
+
+def days_to_birth_func(*_) -> str:
+    pass
+
+
+def all_birth_func(args: list) -> str:
+    pass
+
+
+def add_note_func(args: list) -> str:
+    pass
+
+
+def change_note_func(args: list) -> str:
+    pass
+
+
+def del_note_func(args: list) -> str:
+    pass
+
+
+def add_tag_func(args: list) -> str:
+    pass
+
+
+def find_tag_func(args: list) -> str:
+    pass
+
+
+def find_func(args) -> str:
+    pass
+
+
+def sort_func(args) -> str:
+    pass
+
+
+def exit_func(*_)-> str:
+    """
+    The function close bot.
+    """
+    return "Good bye!"
+
 
 def main():
     """
