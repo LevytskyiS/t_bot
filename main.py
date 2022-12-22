@@ -7,8 +7,8 @@ def input_error(func):
             return func(*args, **kwargs)
         except KeyError:
             return "This contact doesn't exist, please try again."
-        except ValueError:
-            return "Number must contain only numbers/the number is too short/the date is incorrect."
+        except ValueError as exception:
+            return exception.args[0]
         except IndexError:
             return "Wrong format. Must be '{command} {name} {value}'."
         except TypeError:
@@ -20,79 +20,79 @@ def input_error(func):
 
     return inner
 
-
+@input_error
 def help_func(*_) -> str:
     pass
 
-
+@input_error
 def add_func(args: list) -> str:
     pass
 
-
+@input_error
 def add_phone_func(args: list) -> str:
     pass
 
-
+@input_error
 def change_phone_func(args: list) -> str:
     pass
 
-
+@input_error
 def phone_func(args: list) -> str:
     pass
 
-
+@input_error
 def del_phone_func(args: list) -> str:
     pass
 
-
+@input_error
 def show_all_func(*_) -> str:
     pass
 
-
+@input_error
 def add_birth_func(args: list) -> str:
     pass
 
-
+@input_error
 def change_birth_func(args: list) -> str:
     pass
 
-
+@input_error
 def days_to_birth_func(*_) -> str:
     pass
 
-
+@input_error
 def all_birth_func(args: list) -> str:
     pass
 
-
+@input_error
 def add_note_func(args: list) -> str:
     pass
 
-
+@input_error
 def change_note_func(args: list) -> str:
     pass
 
-
+@input_error
 def del_note_func(args: list) -> str:
     pass
 
-
+@input_error
 def add_tag_func(args: list) -> str:
     pass
 
-
+@input_error
 def find_tag_func(args: list) -> str:
     pass
 
-
+@input_error
 def find_func(args) -> str:
     pass
 
-
+@input_error
 def sort_func(args) -> str:
     pass
 
-
+@input_error
 def exit_func(*_)-> str:
     """
     The function close bot.
@@ -124,7 +124,7 @@ FUNCTIONS = {
     "phone": phone_func
     }
 
-
+@input_error
 def handler(input_string: str) -> list:
     """
     The function separates the command word for the bot, and writes all other data into a list, where the first value is the name
