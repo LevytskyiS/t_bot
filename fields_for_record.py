@@ -1,3 +1,6 @@
+import re
+
+
 class Field:
     def __init__(self, value):
         self.__value = None
@@ -24,8 +27,17 @@ class Phone(Field):
 
 
 class Email(Field):
-    pass
 
+    @Field.value.setter
+    def value(self, email: str):
+
+        new_email = re.search(r".+@.+", email)
+
+        if not new_email:
+            return "Email is not valid."
+
+        self._value = new_email.group()
+        
 
 class Note(Field):
     pass
@@ -37,5 +49,3 @@ class Tag(Field):
 
 class Birthday(Field):
     pass
-
-
