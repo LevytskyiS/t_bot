@@ -1,5 +1,36 @@
-from utils import handler
 from address_book import address_book
+
+def exit_func():
+    return "Good bye!"
+
+
+def notes_func(args):
+    return    
+
+FUNCTIONS = {
+    "help": help_func,
+    "add": add_func,
+    "add phone": add_phone_func,
+    "change phone": change_phone_func,
+    "phone": phone_func,
+    "del phone": del_phone_func,
+    "show all": show_all_func,
+    "add birth": add_birth_func,
+    "change birth": change_birth_func,
+    "days to birth": days_to_birth_func,
+    "all births": all_birth_func,
+    "add note": add_note_func,
+    "change note": change_note_func,
+    "del note": del_note_func,
+    "add tag": add_tag_func,
+    "find tag": find_tag_func,
+    "find": find_func,
+    "sort": sort_func,
+    "good bye": exit_func,
+    "exit": exit_func,
+    "close": exit_func
+    }
+
 
 def main():
     """
