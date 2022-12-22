@@ -7,8 +7,8 @@ def input_error(func):
             return func(*args, **kwargs)
         except KeyError:
             return "This contact doesn't exist, please try again."
-        except ValueError as exception:
-            return exception.args[0]
+        except ValueError:
+            return "Number must contain only numbers/the number is too short/the date is incorrect."
         except IndexError:
             return "Wrong format. Must be '{command} {name} {value}'."
         except TypeError:
