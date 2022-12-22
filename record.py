@@ -1,5 +1,4 @@
 from fields_for_record import Name
-
 class Record:
     
     def __init__(self, name):
@@ -9,7 +8,7 @@ class Record:
         self.email = None
         self.tag = []
         self.notes = ""
-    
+
     def add_phone(self, phone) -> str:
         '''Додає телефону до списку телефонів контакту.'''
         pass
