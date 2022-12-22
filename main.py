@@ -4,29 +4,38 @@ from address_book import address_book
 def help_func(*_) -> str:
     pass
 
+
 def add_func(args: list) -> str:
     pass
+
 
 def add_phone_func(args: list) -> str:
     pass
 
+
 def change_phone_func(args: list) -> str:
     pass
+
 
 def phone_func(args: list) -> str:
     pass
 
+
 def del_phone_func(args: list) -> str:
     pass
+
 
 def show_all_func(*_) -> str:
     pass
 
+
 def add_birth_func(args: list) -> str:
     pass
 
+
 def change_birth_func(args: list) -> str:
     pass
+
 
 def days_to_birth_func(*_) -> str:
     pass
@@ -70,30 +79,29 @@ def exit_func(*_)-> str:
     """
     return "Good bye!"
 
-
-
+#Importantly! The more words in the bot command, the higher they are in the dictionary.
 FUNCTIONS = {
-    "help": help_func,
-    "add": add_func,
+    "days to birth": days_to_birth_func,
     "add phone": add_phone_func,
     "change phone": change_phone_func,
-    "phone": phone_func,
     "del phone": del_phone_func,
     "show all": show_all_func,
     "add birth": add_birth_func,
     "change birth": change_birth_func,
-    "days to birth": days_to_birth_func,
     "all births": all_birth_func,
     "add note": add_note_func,
     "change note": change_note_func,
     "del note": del_note_func,
     "add tag": add_tag_func,
     "find tag": find_tag_func,
-    "find": find_func,
-    "sort": sort_func,
     "good bye": exit_func,
     "exit": exit_func,
-    "close": exit_func
+    "close": exit_func,
+    "add": add_func,
+    "help": help_func,
+    "sort": sort_func,
+    "find": find_func,
+    "phone": phone_func
     }
 
 
@@ -103,7 +111,6 @@ def handler(input_string: str) -> list:
     """
     command = input_string
     data = ""
-    data_list = []
     for key in FUNCTIONS:
         if input_string.strip().lower().startswith(key):
             command = key
@@ -113,12 +120,8 @@ def handler(input_string: str) -> list:
     if not input_string.strip().lower().startswith(key):
         raise ValueError("This command is wrong.")
 
-    if data:
-        input_by_user = data.strip().split(" ")
-        command = input_by_user[0]
-        args = input_by_user[1:]
-        
-        return FUNCTIONS[command](args)
+    if data:        
+        return FUNCTIONS[command](data)
     
     return FUNCTIONS[command]()
 
