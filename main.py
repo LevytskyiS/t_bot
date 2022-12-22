@@ -1,6 +1,26 @@
 from address_book import address_book
 
 
+def input_error(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except KeyError:
+            return "This contact doesn't exist, please try again."
+        except ValueError as exception:
+            return exception.args[0]
+        except IndexError:
+            return "Wrong format. Must be '{command} {name} {value}'."
+        except TypeError:
+            return "Unknown command or parameters, please try again."
+        except AttributeError:
+            return "Wrong format of date."
+        except StopIteration:
+            return "There are no other numbers in the book."
+
+    return inner
+
+
 def help_func(*_) -> str:
     pass
 
