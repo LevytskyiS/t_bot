@@ -18,5 +18,9 @@ class Note(Field):
     pass
 
 
+class Tag(Field):
+    pass
+
+
 class Birthday(Field):
     pass
