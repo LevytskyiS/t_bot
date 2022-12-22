@@ -1,5 +1,45 @@
-from utils import handler
 from address_book import address_book
+
+
+def exit_func():
+    return "Good bye!"
+
+
+def notes_func(args):
+    return    
+
+
+FUNCTIONS = {
+    "exit": exit_func,
+    "notes": notes_func
+    }
+
+
+def handler(input_string: str) -> list:
+    """
+    The function separates the command word for the bot, and writes all other data into a list, where the first value is the name
+    """
+    command = input_string
+    data = ""
+    data_list = []
+    for key in FUNCTIONS:
+        if input_string.strip().lower().startswith(key):
+            command = key
+            data = input_string[len(command):]
+            break
+
+    if not input_string.strip().lower().startswith(key):
+        raise ValueError("This command is wrong.")
+
+    if data:
+        name, *args = data.strip().split(" ")
+        args = " ".join(args)
+        data_list.append(name)
+        data_list.append(args)
+        return FUNCTIONS[command](data_list)
+    
+    return FUNCTIONS[command]()
+
 
 def main():
     """
