@@ -121,7 +121,8 @@ def handler(input_string: str) -> list:
         raise ValueError("This command is wrong.")
 
     if data:        
-        return FUNCTIONS[command](data)
+        args = data.strip().split(" ")
+        return FUNCTIONS[command](args)
     
     return FUNCTIONS[command]()
 
