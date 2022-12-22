@@ -2,6 +2,10 @@ class Field:
     pass
 
 
+class Name(Field):
+    pass
+
+
 class Phone(Field):
     pass
 
@@ -10,9 +14,9 @@ class Email(Field):
     pass
 
 
-class Note:
+class Note(Field):
     pass
 
 
-class Birthday:
+class Birthday(Field):
     pass
