@@ -1,5 +1,5 @@
-from fields_for_record import Name
-from fields_for_record import Phone
+from fields_for_record import Name, Phone
+
 
 class Record:
     
@@ -18,7 +18,14 @@ class Record:
 
     def change_phone(self, old_phone, new_phone) -> str:
         '''Міняє існуючий телефон контакту.'''
-        pass
+        
+        phones_values = [phone.value for phone in self.phones]   # Список телефонів для пошуку
+        old_phone = Phone(old_phone)   
+        new_phone = Phone(new_phone)
+        index = phones_values.index(old_phone.value)   #Пошук індексу старого номеру телефону
+        self.phones[index] = new_phone   #Змінюємо старий номер телефону на новий за індексом
+
+        return f"Phone number '{old_phone}' changed to '{new_phone}'"
 
     def delete_phone(self, phone) -> str:
         '''Видаляє існуючий телефон.'''
