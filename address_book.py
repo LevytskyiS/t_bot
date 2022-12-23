@@ -26,9 +26,18 @@ class AddressBook(UserDict):
         '''Повертає список всіх контактів із їхніми даними.'''
         pass
 
-    def all_birthdays(self) -> list:
+    def all_birthdays(self, range_days) -> list:
         '''Повертає список всіх днів народжень за проміжок днів заданих користувачем.'''
-        pass
+        list_accounts = []
+        for record_elem in self.data.values():
+            if record_elem.birthday:
+                days_to_next_birthday = record_elem.days_to_birthdays()
+                if days_to_next_birthday <= range_days:
+                    list_accounts.append(record_elem.name.value)
+            else:
+                continue
+        return list_accounts
+
 
     def delete_record(self) -> str:
         '''Видаляє контакт повністю.'''
@@ -53,4 +62,5 @@ class AddressBook(UserDict):
         '''Повертає кількість сторінок, вказаних користувачем.'''
         pass
 
-address_book = AddressBook()    
+
+address_book = AddressBook()
