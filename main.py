@@ -34,7 +34,13 @@ def add_phone_func(args: list) -> str:
 
 @input_error
 def change_phone_func(args: list) -> str:
-    pass
+    '''Змінює номер телефону контакту {name}'''
+    
+    name, old_phone, new_phone = args   # Розпаковуємо аргументи
+    record = address_book.data.get(name)   # Знаходимо {record} контакту {name}
+
+    return record.change_phone(old_phone, new_phone)
+   
 
 @input_error
 def phone_func(args: list) -> str:
