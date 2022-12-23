@@ -6,8 +6,8 @@ def input_error(func):
     def inner(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        except KeyError:
-            return "This contact doesn't exist, please try again."
+        # except KeyError:
+        #     return "This contact doesn't exist, please try again."
         except ValueError as exception:
             return exception.args[0]
         except IndexError:
@@ -27,15 +27,25 @@ def help_func(*_) -> str:
 
 @input_error
 def add_func(args: list) -> str:
-    pass
+    record = Record(args[0])
+    record.add_phone(args[1])
+    return address_book.add_record(record)
 
 @input_error
 def add_phone_func(args: list) -> str:
-    pass
+    record = address_book[args[0]]
+    return record.add_phone(args[1])
+
 
 @input_error
 def change_phone_func(args: list) -> str:
-    pass
+    '''Змінює номер телефону контакту {name}'''
+    
+    name, old_phone, new_phone = args   # Розпаковуємо аргументи
+    record = address_book.data.get(name)   # Знаходимо {record} контакту {name}
+
+    return record.change_phone(old_phone, new_phone)
+   
 
 @input_error
 def phone_func(args: list) -> str:
@@ -43,7 +53,12 @@ def phone_func(args: list) -> str:
 
 @input_error
 def del_phone_func(args: list) -> str:
-    pass
+    '''Видаляє існуючий номер телефону'''
+
+    name, phone = args    
+    record = address_book.data.get(name)
+    
+    return record.delete_phone(phone)
 
 @input_error
 def show_all_func(*_) -> str:
