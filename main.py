@@ -22,7 +22,41 @@ def input_error(func):
 
 @input_error
 def help_func(*_) -> str:
-    pass
+    options_bot_str = {
+    "days to birth": "кількість днів до твого дня народження", #???? немає аргументів у функції
+    "add phone name phone": "запишу номер телефона твого друга/ подруги",
+    "change phone name phone": "поміняю номер телефона твого друга/ подруги",
+    "del phone name phone": "видалю номер телефона твого недруга",
+    "show all number": "покажу весь список контактів",
+    "add birth name data": "додам день народження твого друга/ подруги, щоб ти не забув привітати",
+    "change birth": "",
+    "all births": "",
+    "add note": "",
+    "change note": "",
+    "del note": "",
+    "add tag": "",
+    "find tag": "",
+    "good bye": "",
+    "exit": "",
+    "close": "",
+    "add": "",
+    "help": "",
+    "sort": "",
+    "find": "",
+    "phone name": ""
+    }
+
+    table_options_bot = ""
+    header_table = "| {:<25} | {:<80} |".format("Input command", "Command description") # в наст. рядку header_table повертає строку на початку якої ще є текст "\x1b[1m\x1b[34m", тому ширина перщої колонки 25 символів
+    header_table = "\033[1m\033[34m{}\033[0m".format(header_table)  
+    table_options_bot += f"\n{header_table}\n\n"
+    
+    for key, value in options_bot_str.items():
+        key = "\033[34m{}\033[0m".format(key)
+        row = "| {:<34} | {:<80} |".format(key, value)
+        table_options_bot += f"{row}\n"
+
+    return table_options_bot    
 
 @input_error
 def add_func(args: list) -> str:

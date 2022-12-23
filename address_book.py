@@ -42,3 +42,5 @@ class AddressBook(UserDict):
     def iterator(self) -> list:
         '''Повертає кількість сторінок, вказаних користувачем.'''
         pass
+
+address_book = AddressBook()    
