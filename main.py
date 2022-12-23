@@ -23,37 +23,37 @@ def input_error(func):
 @input_error
 def help_func(*_) -> str:
     options_bot_str = {
-    "days to birth": "кількість днів до твого дня народження", #???? немає аргументів у функції
-    "add phone name phone": "запишу номер телефона твого друга/ подруги",
-    "change phone name phone": "поміняю номер телефона твого друга/ подруги",
-    "del phone name phone": "видалю номер телефона твого недруга",
-    "show all number": "покажу весь список контактів",
-    "add birth name data": "додам день народження твого друга/ подруги, щоб ти не забув привітати",
-    "change birth": "",
+    "days to birth 1999.12.23": "кількість днів до твого дня народження", #???? Функція не приймає аргументи, а має
+    "add phone Natally 096-45-34-876": "запишу номер телефона твого друга/ подруги",
+    "change phone Natally 096-45-34-876": "поміняю номер телефона твого друга/ подруги",
+    "del phone Natally 096-45-34-876": "видалю номер телефона твого недруга",
+    "show all 3": "покажу весь список контактів",
+    "add birth Natally 1999.12.23": "додам день народження твого друга/ подруги, щоб ти не забув привітати",
+    "change birth Natally 1999.12.23": "",
     "all births": "",
-    "add note": "",
-    "change note": "",
-    "del note": "",
-    "add tag": "",
-    "find tag": "",
+    "add note Natally str. Peremogy, house 76.": "",
+    "change note Natally str. Gagarina, h.126.": "",
+    "del note Natally": "",
+    "add tag Natally #address #favorite": "",
+    "find tag #favorite": "",
     "good bye": "",
     "exit": "",
     "close": "",
-    "add": "",
+    "add Natally 096-45-34-876": "",
     "help": "",
-    "sort": "",
-    "find": "",
-    "phone name": ""
+    "sort": "", #??? які аргументи отримує функція
+    "find house 76": "",
+    "phone Natally": ""
     }
 
     table_options_bot = ""
-    header_table = "| {:<25} | {:<80} |".format("Input command", "Command description") # в наст. рядку header_table повертає строку на початку якої ще є текст "\x1b[1m\x1b[34m", тому ширина перщої колонки 25 символів
+    header_table = "| {:<51} | {:<80}".format("Example command", "Command description") # в наст. рядку header_table повертає строку на початку якої ще є текст "\x1b[1m\x1b[34m", тому ширина перщої колонки 25 символів
     header_table = "\033[1m\033[34m{}\033[0m".format(header_table)  
     table_options_bot += f"\n{header_table}\n\n"
     
     for key, value in options_bot_str.items():
         key = "\033[34m{}\033[0m".format(key)
-        row = "| {:<34} | {:<80} |".format(key, value)
+        row = "| {:<60} | {:<80}".format(key, value)
         table_options_bot += f"{row}\n"
 
     return table_options_bot    
