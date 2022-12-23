@@ -34,9 +34,8 @@ def add_func(args: list) -> str:
 @input_error
 def delete_record_func(args: list) -> str:
     contact_name = args[0]
-    record = Record(contact_name)
-    if record.name.value in address_book.keys():
-        return address_book.delete_record(record)
+    if contact_name in address_book.keys():
+        return address_book.delete_record(contact_name)
     return f"Name '{contact_name}' doesn't exist in your book."
 
 @input_error
