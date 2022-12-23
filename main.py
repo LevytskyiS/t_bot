@@ -56,6 +56,18 @@ def del_phone_func(args: list) -> str:
     pass
 
 @input_error
+def add_mail_func(args: list) -> str:
+    pass
+
+@input_error
+def change_mail_func(args: list) -> str:
+    pass
+
+@input_error
+def delete_mail_func(args: list) -> str:
+    pass
+
+@input_error
 def show_all_func(*_) -> str:
     pass
 
