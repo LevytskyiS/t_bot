@@ -23,27 +23,27 @@ def input_error(func):
 @input_error
 def help_func(*_) -> str:
     options_bot_str = {
-    "days to birth 1999.12.23": "кількість днів до твого дня народження", #???? Функція не приймає аргументи, а має
-    "add phone Natally 096-45-34-876": "запишу номер телефона твого друга/ подруги",
-    "change phone Natally 096-45-34-876": "поміняю номер телефона твого друга/ подруги",
-    "del phone Natally 096-45-34-876": "видалю номер телефона твого недруга",
-    "show all 3": "покажу весь список контактів",
-    "add birth Natally 1999.12.23": "додам день народження твого друга/ подруги, щоб ти не забув привітати",
-    "change birth Natally 1999.12.23": "",
-    "all births": "",
-    "add note Natally str. Peremogy, house 76.": "",
-    "change note Natally str. Gagarina, h.126.": "",
-    "del note Natally": "",
-    "add tag Natally #address #favorite": "",
-    "find tag #favorite": "",
-    "good bye": "",
-    "exit": "",
-    "close": "",
-    "add Natally 096-45-34-876": "",
-    "help": "",
+    "days to birth Leo": "I will tell you the number of days until my friend's birthday", #???? Функція не приймає аргументи, а має
+    #"add phone Natally 096-45-34-876": "I will write down your friend's phone number",
+    "change phone Natally 0995456743 0986754325": "I will change your friend's phone number",
+    "del phone Natally 096-45-34-876": "I will delete your enemy's phone number",
+    "show all 3": "I will show the entire list of contacts",
+    "add birth Natally 1999.12.23": "I will add the birthday of your friend so that you do not forget to congratulate",
+    "change birth Natally 1999.12.23": "I will change your friend's date of birth",
+    "all births": "I will show the birthdays of all your friends",
+    "add note Natally str. Peremogy, house 76.": "I will add notes to the contact",
+    "change note Natally str. Gagarina, h.126.": "I will change the contact notes",
+    "del note Natally": "I will delete contact notes",
+    "add tag Natally #address #favorite": "I will add tags",
+    "find tag #favorite": "I will show notes with such tags",
+    "good bye": "I will finish my work",
+    "exit": "I will finish my work",
+    "close": "I will finish my work",
+    "add Natally 096-45-34-876": "I will save the friend's name and phone number",
+    "help": "I will tell you about my possibilities",
     "sort": "", #??? які аргументи отримує функція
-    "find house 76": "",
-    "phone Natally": ""
+    "find house 76": "I will show you all the contacts that have what you are looking for",
+    "phone Natally": "I will show your friend's phone, just enter the name"
     }
 
     table_options_bot = ""
