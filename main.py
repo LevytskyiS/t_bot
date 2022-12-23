@@ -1,5 +1,7 @@
+import os
 from address_book import address_book
 from record import Record
+from sort import sort_files
 
 
 def input_error(func):
@@ -28,8 +30,11 @@ def help_func(*_) -> str:
 @input_error
 def add_func(args: list) -> str:
     record = Record(args[0])
-    record.add_phone(args[1])
-    return address_book.add_record(record)
+    if record.name.value not in address_book.keys():
+        record.add_phone(args[1])
+        return address_book.add_record(record)
+    else:
+        return f"The contact with the name {args[0]} already exists in the AB."
 
 @input_error
 def delete_record_func(args: list) -> str:
@@ -60,6 +65,23 @@ def phone_func(args: list) -> str:
 
 @input_error
 def del_phone_func(args: list) -> str:
+    '''Видаляє існуючий номер телефону'''
+
+    name, phone = args    
+    record = address_book.data.get(name)
+    
+    return record.delete_phone(phone)
+
+@input_error
+def add_mail_func(args: list) -> str:
+    pass
+
+@input_error
+def change_mail_func(args: list) -> str:
+    pass
+
+@input_error
+def delete_mail_func(args: list) -> str:
     pass
 
 @input_error
@@ -68,15 +90,29 @@ def show_all_func(*_) -> str:
 
 @input_error
 def add_birth_func(args: list) -> str:
-    pass
+    record = address_book[args[0]]
+    if record:
+        return record.add_birthday(args[1])
+    else:
+        return f'The name {args[0]} is not exist. Please add first'
+
 
 @input_error
 def change_birth_func(args: list) -> str:
-    pass
+    record = address_book[args[0]]
+    if record:
+        return record.change_birthday(args[1])
+    else:
+        return f'The name {args[0]} is not exist. Please add first'
 
 @input_error
-def days_to_birth_func(*_) -> str:
-    pass
+def days_to_birth_func(args: list) -> str:
+    record = address_book[args[0]]
+    if record:
+        return record.days_to_birthdays()
+    else:
+        return f'The name {args[0]} is not exist. Please add first'
+
 
 @input_error
 def all_birth_func(args: list) -> str:
@@ -107,8 +143,18 @@ def find_func(args) -> str:
     pass
 
 @input_error
-def sort_func(args) -> str:
-    pass
+def sort_func(*_) -> str:
+    user_input = input(
+        'Enter "1" if you want to sort files in the current folder.\n'
+        'Enter "2" if you want to choose another folder.\n'
+    )
+    if user_input == '1':
+        return sort_files(os.getcwd())
+    elif user_input == '2':
+        user_path = input('Enter a path: ')
+        return sort_files(user_path)
+    else:
+        return f'You have to enter "1" or "2".'
 
 @input_error
 def exit_func(*_)-> str:
@@ -195,4 +241,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()    
+    main()
