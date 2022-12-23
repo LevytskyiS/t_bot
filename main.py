@@ -1,5 +1,7 @@
+import os
 from address_book import address_book
 from record import Record
+from sort import sort_files
 
 
 def input_error(func):
@@ -122,8 +124,18 @@ def find_func(args) -> str:
     pass
 
 @input_error
-def sort_func(args) -> str:
-    pass
+def sort_func(*_) -> str:
+    user_input = input(
+        'Enter "1" if you want to sort files in the current folder.\n'
+        'Enter "2" if you want to choose another folder.\n'
+    )
+    if user_input == '1':
+        return sort_files(os.getcwd())
+    elif user_input == '2':
+        user_path = input('Enter a path: ')
+        return sort_files(user_path)
+    else:
+        return f'You have to enter "1" or "2".'
 
 @input_error
 def exit_func(*_)-> str:
