@@ -1,4 +1,6 @@
 from collections import UserDict
+import pickle
+from record import Record
 
 
 class AddressBook(UserDict):
@@ -31,10 +33,11 @@ class AddressBook(UserDict):
                 name = ""
 
         return header
-
-    def add_record(self) -> str:
+    
+    def add_record(self, record: Record) -> str:
         '''Додає ім'я як ключ та об'єкт класу Рекорд як значення.'''
-        pass
+        self.data[record.name.value] = record
+        return f'New contact was added successfuly.'
 
     def search_by_name(self) -> str:
         '''Шукає телефон по імені.'''
@@ -59,24 +62,43 @@ class AddressBook(UserDict):
         '''Повертає список всіх контактів із їхніми даними.'''
         pass
 
-    def all_birthdays(self) -> list:
+    def all_birthdays(self, range_days) -> list:
         '''Повертає список всіх днів народжень за проміжок днів заданих користувачем.'''
-        pass
+        list_accounts = []
+        for record_elem in self.data.values():
+            if record_elem.birthday:
+                days_to_next_birthday = record_elem.days_to_birthdays()
+                if days_to_next_birthday <= range_days:
+                    list_accounts.append(record_elem.name.value)
+            else:
+                continue
+        return list_accounts
 
-    def delete_record(self) -> str:
+
+    def delete_record(self, contact_name: str) -> str:
         '''Видаляє контакт повністю.'''
-        pass
+        self.data.pop(contact_name)
+        return f'The contact was deleted successfully.'
+
 
     def save_address_book(self) -> str:
         '''Зберігає адресну книгу'''
-        pass
+        with open("address_book.bin", "wb") as file:
+            pickle.dump(self.data, file)
+    
 
     def load_address_book(self) -> str:
         '''Завантажує адресну книгу.'''
-        pass
+        try:
+            with open("address_book.bin", "rb") as file:     
+                self.data = pickle.load(file)
+        except FileNotFoundError:
+            return "The file does not exist."   
+        
 
     def iterator(self) -> list:
         '''Повертає кількість сторінок, вказаних користувачем.'''
         pass
 
-address_book = AddressBook()    
+
+address_book = AddressBook()

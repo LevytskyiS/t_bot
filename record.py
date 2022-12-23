@@ -1,4 +1,4 @@
-from fields_for_record import Name, Birthday, Phone
+from fields_for_record import Name, Birthday, Phone, Email
 from datetime import datetime
 
 
@@ -40,15 +40,20 @@ class Record:
 
     def add_mail(self, mail) -> str:
         '''Додає мейл до контакту.'''
-        pass
+        self.email = Email(mail)
+        return f'The email < {mail} > was added to the contact < {self.name.value} >.'
 
     def change_mail(self, new_mail) -> str:
         '''Міняє існуючий мейл.'''
-        pass
+        old_mail = self.email.value
+        self.email = Email(new_mail)
+        return f'The email < {old_mail} > of contact < {self.name.value} > was changed into < {new_mail} >.'
 
-    def delete_mail(self, mail) -> str:
+    def delete_mail(self) -> str:
         '''Видаляє існуючий мейл.'''
-        pass
+        deleted_mail = self.email.value
+        self.email = None
+        return f'The email < {deleted_mail} > of contact < {self.name.value} > was deleted.'
 
     def add_note(self, note) -> str:
         '''Додає нотатку.'''

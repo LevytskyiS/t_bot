@@ -17,7 +17,7 @@ def input_error(func):
         except TypeError:
             return "Unknown command or parameters, please try again."
         except AttributeError:
-            return "Wrong format of date."
+            return "Can't find information about this contact."
         except StopIteration:
             return "There are no other numbers in the book."
 
@@ -108,15 +108,26 @@ def del_phone_func(args: list) -> str:
 
 @input_error
 def add_mail_func(args: list) -> str:
-    pass
+
+    record = address_book[args[0]]
+
+    return record.add_mail(args[1])
 
 @input_error
 def change_mail_func(args: list) -> str:
-    pass
+
+    name, new_mail = args                     # Розпаковуємо аргументи
+    record = address_book.data.get(name)      # Знаходимо {record} контакту {name}
+
+    return record.change_mail(new_mail)
 
 @input_error
 def delete_mail_func(args: list) -> str:
-    pass
+
+    name = args[0]
+    record = address_book.data.get(name)
+
+    return record.delete_mail()
 
 
 @input_error
@@ -199,13 +210,37 @@ def exit_func(*_)-> str:
     """
     return "Good bye!"
 
+
+def what_is_command(commands: list|dict, user_input: str) -> str:
+    count = 0
+    command_out = ""
+
+    for command in commands:
+
+        i = 0
+
+        for char_in, char_comm in zip(user_input, command):
+
+            if char_in == char_comm:
+                i += 1
+
+        if i > count:
+            count = i
+            command_out = command
+
+    return command_out
+
+
 #Importantly! The more words in the bot command, the higher they are in the dictionary.
 FUNCTIONS = {
     "days to birth": days_to_birth_func,
     "add phone": add_phone_func,
+    "add mail": add_mail_func,
     "del contact": delete_record_func,
     "change phone": change_phone_func,
+    "change mail": change_mail_func,
     "del phone": del_phone_func,
+    "del mail": delete_mail_func,
     "show all": show_all_func,
     "add birth": add_birth_func,
     "change birth": change_birth_func,
@@ -230,7 +265,8 @@ def handler(input_string: str) -> list:
     """
     The function separates the command word for the bot, and writes all other data into a list, where the first value is the name
     """
-    command = input_string
+    command = ""
+    perhaps_command = what_is_command(FUNCTIONS, input_string)
     data = ""
     for key in FUNCTIONS:
         if input_string.strip().lower().startswith(key):
@@ -238,14 +274,22 @@ def handler(input_string: str) -> list:
             data = input_string[len(command):]
             break
 
-    if not input_string.strip().lower().startswith(key):
-        raise ValueError("This command is wrong.")
+    if not command and \
+        input(f"If you mean '{perhaps_command}' enter 'y': ") == "y":
+
+        command = perhaps_command
+        input_string = input_string.split()[len(command.split()):]
+        data = " ".join(input_string)
+        print(f"data: {data}")
+
+    # if not input_string.strip().lower().startswith(key):
+    #     raise ValueError("This command is wrong.")
 
     if data:        
         args = data.strip().split(" ")
         return FUNCTIONS[command](args)
     
-    return FUNCTIONS[command]()
+    return FUNCTIONS[input_string]()
 
 
 def main():
