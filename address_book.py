@@ -11,7 +11,7 @@ class AddressBook(UserDict):
 
     def add_record(self, record: Record) -> str:
         '''Додає ім'я як ключ та об'єкт класу Рекорд як значення.'''
-        self.data[record.name] = record
+        self.data[record.name.value] = record
         return f'New contact was added successfuly.'
 
     def search_by_name(self) -> str:
