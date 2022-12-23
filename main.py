@@ -17,7 +17,7 @@ def input_error(func):
         except TypeError:
             return "Unknown command or parameters, please try again."
         except AttributeError:
-            return "Wrong format of date."
+            return "Can't find information about this contact."
         except StopIteration:
             return "There are no other numbers in the book."
 
@@ -108,15 +108,26 @@ def del_phone_func(args: list) -> str:
 
 @input_error
 def add_mail_func(args: list) -> str:
-    pass
+
+    record = address_book[args[0]]
+
+    return record.add_mail(args[1])
 
 @input_error
 def change_mail_func(args: list) -> str:
-    pass
+
+    name, new_mail = args                     # Розпаковуємо аргументи
+    record = address_book.data.get(name)      # Знаходимо {record} контакту {name}
+
+    return record.change_mail(new_mail)
 
 @input_error
 def delete_mail_func(args: list) -> str:
-    pass
+
+    name = args[0]
+    record = address_book.data.get(name)
+
+    return record.delete_mail()
 
 @input_error
 def show_all_func(*_) -> str:
@@ -222,9 +233,12 @@ def what_is_command(commands: list|dict, user_input: str) -> str:
 FUNCTIONS = {
     "days to birth": days_to_birth_func,
     "add phone": add_phone_func,
+    "add mail": add_mail_func,
     "del contact": delete_record_func,
     "change phone": change_phone_func,
+    "change mail": change_mail_func,
     "del phone": del_phone_func,
+    "del mail": delete_mail_func,
     "show all": show_all_func,
     "add birth": add_birth_func,
     "change birth": change_birth_func,
