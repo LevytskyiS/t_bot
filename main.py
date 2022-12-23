@@ -163,6 +163,27 @@ def exit_func(*_)-> str:
     """
     return "Good bye!"
 
+
+def what_is_command(commands: list|dict, user_input: str) -> str:
+    count = 0
+    command_out = ""
+
+    for command in commands:
+
+        i = 0
+
+        for char_in, char_comm in zip(user_input, command):
+
+            if char_in == char_comm:
+                i += 1
+
+        if i > count:
+            count = i
+            command_out = command
+
+    return command_out
+
+
 #Importantly! The more words in the bot command, the higher they are in the dictionary.
 FUNCTIONS = {
     "days to birth": days_to_birth_func,
@@ -194,7 +215,8 @@ def handler(input_string: str) -> list:
     """
     The function separates the command word for the bot, and writes all other data into a list, where the first value is the name
     """
-    command = input_string
+    command = ""
+    perhaps_command = what_is_command(FUNCTIONS, input_string)
     data = ""
     for key in FUNCTIONS:
         if input_string.strip().lower().startswith(key):
@@ -202,14 +224,22 @@ def handler(input_string: str) -> list:
             data = input_string[len(command):]
             break
 
-    if not input_string.strip().lower().startswith(key):
-        raise ValueError("This command is wrong.")
+    if not command and \
+        input(f"If you mean '{perhaps_command}' enter 'y': ") == "y":
+
+        command = perhaps_command
+        input_string = input_string.split()[len(command.split()):]
+        data = " ".join(input_string)
+        print(f"data: {data}")
+
+    # if not input_string.strip().lower().startswith(key):
+    #     raise ValueError("This command is wrong.")
 
     if data:        
         args = data.strip().split(" ")
         return FUNCTIONS[command](args)
     
-    return FUNCTIONS[command]()
+    return FUNCTIONS[input_string]()
 
 
 def main():
