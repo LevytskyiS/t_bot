@@ -74,7 +74,8 @@ def del_phone_func(args: list) -> str:
 
 @input_error
 def add_mail_func(args: list) -> str:
-    pass
+    record = address_book[args[0]]
+    return record.add_mail(args[1])
 
 @input_error
 def change_mail_func(args: list) -> str:
@@ -167,6 +168,7 @@ def exit_func(*_)-> str:
 FUNCTIONS = {
     "days to birth": days_to_birth_func,
     "add phone": add_phone_func,
+    "add mail": add_mail_func,
     "del contact": delete_record_func,
     "change phone": change_phone_func,
     "del phone": del_phone_func,
