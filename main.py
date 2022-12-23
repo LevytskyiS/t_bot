@@ -25,7 +25,41 @@ def input_error(func):
 
 @input_error
 def help_func(*_) -> str:
-    pass
+    options_bot_str = {
+    "days to birth Leo": "I will tell you the number of days until my friend's birthday", #???? Функція не приймає аргументи, а має
+    #"add phone Natally 096-45-34-876": "I will write down your friend's phone number",
+    "change phone Natally 0995456743 0986754325": "I will change your friend's phone number",
+    "del phone Natally 096-45-34-876": "I will delete your enemy's phone number",
+    "show all 3": "I will show the entire list of contacts",
+    "add birth Natally 1999.12.23": "I will add the birthday of your friend so that you do not forget to congratulate",
+    "change birth Natally 1999.12.23": "I will change your friend's date of birth",
+    "all births": "I will show the birthdays of all your friends",
+    "add note Natally str. Peremogy, house 76.": "I will add notes to the contact",
+    "change note Natally str. Gagarina, h.126.": "I will change the contact notes",
+    "del note Natally": "I will delete contact notes",
+    "add tag Natally #address #favorite": "I will add tags",
+    "find tag #favorite": "I will show notes with such tags",
+    "good bye": "I will finish my work",
+    "exit": "I will finish my work",
+    "close": "I will finish my work",
+    "add Natally 096-45-34-876": "I will save the friend's name and phone number",
+    "help": "I will tell you about my possibilities",
+    "sort": "", #??? які аргументи отримує функція
+    "find house 76": "I will show you all the contacts that have what you are looking for",
+    "phone Natally": "I will show your friend's phone, just enter the name"
+    }
+
+    table_options_bot = ""
+    header_table = "| {:<51} | {:<80}".format("Example command", "Command description") # в наст. рядку header_table повертає строку на початку якої ще є текст "\x1b[1m\x1b[34m", тому ширина перщої колонки 25 символів
+    header_table = "\033[1m\033[34m{}\033[0m".format(header_table)  
+    table_options_bot += f"\n{header_table}\n\n"
+    
+    for key, value in options_bot_str.items():
+        key = "\033[34m{}\033[0m".format(key)
+        row = "| {:<60} | {:<80}".format(key, value)
+        table_options_bot += f"{row}\n"
+
+    return table_options_bot    
 
 @input_error
 def add_func(args: list) -> str:
