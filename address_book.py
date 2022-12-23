@@ -1,4 +1,5 @@
 from collections import UserDict
+import pickle
 
 
 class AddressBook(UserDict):
@@ -33,12 +34,21 @@ class AddressBook(UserDict):
 
     def save_address_book(self) -> str:
         '''Зберігає адресну книгу'''
-        pass
+        with open("address_book.bin", "wb") as file:
+            pickle.dump(self.data, file)
+    
 
     def load_address_book(self) -> str:
         '''Завантажує адресну книгу.'''
-        pass
+        try:
+            with open("address_book.bin", "rb") as file:     
+                self.data = pickle.load(file)
+        except FileNotFoundError:
+            return "The file does not exist."   
+        
 
     def iterator(self) -> list:
         '''Повертає кількість сторінок, вказаних користувачем.'''
         pass
+
+address_book = AddressBook()    
