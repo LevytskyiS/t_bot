@@ -1,5 +1,6 @@
 from collections import UserDict
 import pickle
+from record import Record
 
 
 class AddressBook(UserDict):
@@ -8,9 +9,10 @@ class AddressBook(UserDict):
         super().__init__()
         self.load_address_book()
 
-    def add_record(self) -> str:
+    def add_record(self, record: Record) -> str:
         '''Додає ім'я як ключ та об'єкт класу Рекорд як значення.'''
-        pass
+        self.data[record.name] = record
+        return f'New contact was added successfuly.'
 
     def search_by_name(self) -> str:
         '''Шукає телефон по імені.'''

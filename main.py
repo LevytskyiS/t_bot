@@ -1,4 +1,5 @@
 from address_book import address_book
+from record import Record
 
 
 def input_error(func):
@@ -26,7 +27,10 @@ def help_func(*_) -> str:
 
 @input_error
 def add_func(args: list) -> str:
-    pass
+    print(args)
+    record = Record(args[0])
+    record.add_phone(args[1])
+    return address_book.add_record(record)
 
 @input_error
 def add_phone_func(args: list) -> str:
