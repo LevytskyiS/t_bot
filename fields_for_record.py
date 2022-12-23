@@ -1,21 +1,22 @@
 import re
+from datetime import datetime
 
 
 class Field:
     def __init__(self, value):
-        self.__value = None
+        self._value = None
         self.value = value
 
     @property
     def value(self):
-        return self.__value
+        return self._value
 
     @value.setter
     def value(self, new_value):
-        self.__value = new_value
+        self._value = new_value
 
     def __str__(self):
-        return f'{self.__value}'
+        return f'{self._value}'
 
 
 class Name(Field):
@@ -66,4 +67,31 @@ class Tag(Field):
 
 
 class Birthday(Field):
-    pass
+    ''' Класс Birthday створює дату народження.
+    Робить перевірку на корректність введених данних
+    '''
+    @classmethod
+    def range_control(cls, variable, left_range, right_range):
+        if left_range <= variable <= right_range:
+            return variable
+        else:
+            raise ValueError(f'Your data {variable} shall be in range from {left_range} up to {right_range}')
+
+    @Field.value.setter
+    def value(self, birthday_str):
+        birth_list = birthday_str.split('.')
+        if (len(birth_list) < 3) or (len(birth_list) > 3):
+            print('Please type birthday in format "year.month.day"')
+        year = [num for num in birth_list if len(num) == 4]
+        year_index_in_list = birth_list.index(year[0])
+        index_day = [2 if year_index_in_list == 0 else 0]
+
+        year = self.range_control(int(year[0]), 1920, 2022)
+        month = self.range_control(int(birth_list[1]), 1, 12)
+        day = self.range_control(int((birth_list[index_day[0]])), 1, 31)
+
+        self._value = datetime(year=year, month=month, day=day).date()
+
+
+
+
