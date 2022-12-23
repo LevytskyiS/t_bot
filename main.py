@@ -6,8 +6,8 @@ def input_error(func):
     def inner(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        # except KeyError:
-        #     return "This contact doesn't exist, please try again."
+        except KeyError:
+            return "This contact doesn't exist, please try again."
         except ValueError as exception:
             return exception.args[0]
         except IndexError:
@@ -30,6 +30,14 @@ def add_func(args: list) -> str:
     record = Record(args[0])
     record.add_phone(args[1])
     return address_book.add_record(record)
+
+@input_error
+def delete_record_func(args: list) -> str:
+    contact_name = args[0]
+    record = Record(contact_name)
+    if record.name.value in address_book.keys():
+        return address_book.delete_record(record)
+    return f"Name '{contact_name}' doesn't exist in your book."
 
 @input_error
 def add_phone_func(args: list) -> str:
@@ -114,6 +122,7 @@ def exit_func(*_)-> str:
 FUNCTIONS = {
     "days to birth": days_to_birth_func,
     "add phone": add_phone_func,
+    "del contact": delete_record_func,
     "change phone": change_phone_func,
     "del phone": del_phone_func,
     "show all": show_all_func,

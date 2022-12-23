@@ -30,9 +30,13 @@ class AddressBook(UserDict):
         '''Повертає список всіх днів народжень за проміжок днів заданих користувачем.'''
         pass
 
-    def delete_record(self) -> str:
+    def delete_record(self, name_to_del) -> str:
         '''Видаляє контакт повністю.'''
-        pass
+        for key in self.data.keys():
+            if name_to_del.name.value == key:
+                self.data.pop(key)
+                return f'The contact was deleted successfully.'
+
 
     def save_address_book(self) -> str:
         '''Зберігає адресну книгу'''
