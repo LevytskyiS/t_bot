@@ -28,8 +28,11 @@ def help_func(*_) -> str:
 @input_error
 def add_func(args: list) -> str:
     record = Record(args[0])
-    record.add_phone(args[1])
-    return address_book.add_record(record)
+    if record.name.value not in address_book.keys():
+        record.add_phone(args[1])
+        return address_book.add_record(record)
+    else:
+        return f"The contact with the name {args[0]} already exists in the AB."
 
 @input_error
 def add_phone_func(args: list) -> str:
