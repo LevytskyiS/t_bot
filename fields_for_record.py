@@ -15,9 +15,6 @@ class Field:
     def value(self, new_value):
         self._value = new_value
 
-    def __str__(self):
-        return f'{self._value}'
-
 
 class Name(Field):
     pass
