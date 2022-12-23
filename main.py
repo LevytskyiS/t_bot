@@ -53,7 +53,12 @@ def phone_func(args: list) -> str:
 
 @input_error
 def del_phone_func(args: list) -> str:
-    pass
+    '''Видаляє існуючий номер телефону'''
+
+    name, phone = args    
+    record = address_book.data.get(name)
+    
+    return record.delete_phone(phone)
 
 @input_error
 def show_all_func(*_) -> str:
