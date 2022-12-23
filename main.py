@@ -66,15 +66,29 @@ def show_all_func(*_) -> str:
 
 @input_error
 def add_birth_func(args: list) -> str:
-    pass
+    record = address_book[args[0]]
+    if record:
+        return record.add_birthday(args[1])
+    else:
+        return f'The name {args[0]} is not exist. Please add first'
+
 
 @input_error
 def change_birth_func(args: list) -> str:
-    pass
+    record = address_book[args[0]]
+    if record:
+        return record.change_birthday(args[1])
+    else:
+        return f'The name {args[0]} is not exist. Please add first'
 
 @input_error
-def days_to_birth_func(*_) -> str:
-    pass
+def days_to_birth_func(args: list) -> str:
+    record = address_book[args[0]]
+    if record:
+        return record.days_to_birthdays()
+    else:
+        return f'The name {args[0]} is not exist. Please add first'
+
 
 @input_error
 def all_birth_func(args: list) -> str:
@@ -192,4 +206,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()    
+    main()
