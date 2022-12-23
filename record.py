@@ -1,4 +1,6 @@
 from fields_for_record import Name, Phone
+
+
 class Record:
     
     def __init__(self, name):
@@ -11,7 +13,8 @@ class Record:
 
     def add_phone(self, phone) -> str:
         '''Додає телефону до списку телефонів контакту.'''
-        pass
+        self.phones.append(Phone(phone))
+        return f'The phone was added.'
 
     def change_phone(self, old_phone, new_phone) -> str:
         '''Міняє існуючий телефон контакту.'''
