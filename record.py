@@ -9,7 +9,7 @@ class Record:
         self.phones = []
         self.birthday = None
         self.email = None
-        self.tag = []
+        self.tag = ""
         self.notes = ""
 
     def add_phone(self, phone) -> str:
