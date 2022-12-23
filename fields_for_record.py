@@ -50,7 +50,6 @@ class Tag(Field):
 
 class Birthday(Field):
     ''' Класс Birthday створює дату народження.
-     Вираховує кількість днів до наступного дня нарождення від поточної дати
     Робить перевірку на корректність введених данних
     '''
     @classmethod
@@ -75,15 +74,6 @@ class Birthday(Field):
 
         self._value = datetime(year=year, month=month, day=day).date()
 
-    def day_to_next_birthday(self):
-        current_year = datetime.now().year
-        current_day = datetime.now()
-        this_year_birthday = datetime(year=current_year, month=self._value.month, day=self._value.day)
-        if (this_year_birthday - current_day).days >= 0:
-            next_birth = this_year_birthday - current_day
-            return f'Days to birthday is {next_birth.days}'
-        else:
-            next_birth = datetime(year=current_year + 1, month=self._value.month, day=self._value.day)
-            return f'Days to birthday is {(next_birth - current_day).days}'
+
 
 
