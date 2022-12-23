@@ -1,6 +1,8 @@
-from fields_for_record import Name
+from fields_for_record import Name, Phone
+
+
 class Record:
-    
+
     def __init__(self, name):
         self.name = Name(name)
         self.phones = []
@@ -19,7 +21,13 @@ class Record:
 
     def delete_phone(self, phone) -> str:
         '''Видаляє існуючий телефон.'''
-        pass
+        
+        phone = Phone(phone)
+        phones_values = [phone_.value for phone_ in self.phones]
+        index = phones_values.index(phone.value)
+        self.phones.pop(index)
+
+        return f"The phone number '{phone.value}' has been deleted"
 
     def add_mail(self, mail) -> str:
         '''Додає мейл до контакту.'''
