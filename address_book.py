@@ -5,11 +5,7 @@ from record import Record
 
 class AddressBook(UserDict):
 
-    def __init__(self):
-        super().__init__()
-        self.load_address_book()
-
-    def __str__(self) -> str: # допишу як тільки будуть функції додавання контактів
+    def __str__(self) -> str: # допишу як тільки будуть нотатки
 
         headers = ("Name", "Phone", "Birthday", "Email", "Tags", "Notes")
         columns = "\n" + "|{:^10}|{:^25}" * (len(headers) // 2) + "|"
@@ -18,19 +14,21 @@ class AddressBook(UserDict):
         header = "\033[34m{}\033[0m".format(header)
 
         for name, record in self.data.items():
+
+            birthday = record.birthday if record.birthday else ""
+            email = record.email if record.email else ""
             for phone in record.phones:
                 header += columns.format(
-                    name.value,
+                    name,
                     phone.value,
-                    "1988.09.12",
-                    # record.email,
-                    "123",
+                    birthday,
+                    email,
                     "tags",
                     "notes")
                     # str(record.notes[0]),
                     # record.notes[1])
 
-                name = ""
+                name, birthday, email = ("",) * 3
 
         return header
     
@@ -44,12 +42,14 @@ class AddressBook(UserDict):
         '''Шукає співпадіння по цифрі в телефоні, по букві в імені, мейлу.'''
         
         output_book = AddressBook()
+        data = data[0]        
 
         for name, record in self.data.items():
+            email = record.email if record.email else ""
             for phone in record.phones:
-                if data in name.value or\
+                if data in name or\
                     data in phone.value or\
-                    data in record.email:
+                    data in email:
 
                     output_book.add_record(record)
         
@@ -99,3 +99,4 @@ class AddressBook(UserDict):
 
 
 address_book = AddressBook()
+address_book.load_address_book()
