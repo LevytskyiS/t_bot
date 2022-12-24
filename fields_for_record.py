@@ -1,5 +1,6 @@
 import re
 from datetime import datetime
+from collections import UserDict
 
 
 class Field:
@@ -55,6 +56,20 @@ class Email(Field):
         self._value = new_email.group()
         
 
+class Notes(UserDict):
+    # [["note1", ["tag1_1", "tag1_2"]], ["note2", ["#tag2_1", "tag2_2"]]]
+
+    def __init__(self):
+        self.notes = []   # буде складатися з класів Note
+
+    def add_tags(self, tags):
+        self.tags = tags
+        
+
+        
+
+
+
 class Note(Field):
     pass
 
@@ -64,7 +79,7 @@ class Tag(Field):
     def value(self, value):
         for tag in value:
             if not isinstance(tag, str):
-                raise TypeError(f'The tag  shall be string')
+                raise TypeError(f'The tag shall be string')
             if not tag.startswith('#'):
                 raise ValueError(f'The tag must start #')
         value = " ".join(value)
