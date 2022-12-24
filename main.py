@@ -129,9 +129,11 @@ def delete_mail_func(args: list) -> str:
 
     return record.delete_mail()
 
+
 @input_error
 def show_all_func(*_) -> str:
-    pass
+    return address_book
+
 
 @input_error
 def add_birth_func(args: list) -> str:
@@ -185,7 +187,7 @@ def find_tag_func(args: list) -> str:
 
 @input_error
 def find_func(args) -> str:
-    pass
+    return address_book.search_in_contact_book(args)
 
 @input_error
 def sort_func(*_) -> str:
