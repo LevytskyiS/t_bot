@@ -281,7 +281,8 @@ FUNCTIONS = {
     "find": find_func,
     "phone": phone_func
     }
-
+    
+@input_error
 def handler(input_string: str) -> list:
     """
     The function separates the command word for the bot, and writes all other data into a list, where the first value is the name
