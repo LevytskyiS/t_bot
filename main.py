@@ -89,8 +89,6 @@ def add_phone_func(args: list) -> str:
         else:
             return f"There is no '{contact_name}' in your AB."
         
-
-
 @input_error
 def change_phone_func(args: list) -> str:
     '''Змінює номер телефону контакту {name}'''
@@ -175,8 +173,17 @@ def days_to_birth_func(args: list) -> str:
 
 
 @input_error
-def all_birth_func(*_) -> str:
-    return address_book.all_birthdays()
+def all_birth_func(self, range_days) -> list:
+        '''Повертає список всіх днів народжень за проміжок днів заданих користувачем.'''
+        list_accounts = []
+        for record_elem in self.data.values():
+            if record_elem.birthday:
+                days_to_next_birthday = record_elem.days_to_birthdays()
+                if days_to_next_birthday <= range_days:
+                    list_accounts.append(record_elem.name.value)
+            else:
+                continue
+        return list_accounts
 
 @input_error
 def add_note_func(args: list) -> str:
@@ -194,7 +201,9 @@ def change_note_func(args: list) -> str:
 
 @input_error
 def del_note_func(args: list) -> str:
-    pass
+    name=args[0]
+    record = address_book.data.get(name)
+    return record.delete_note()
 
 @input_error
 def add_tag_func(args: list) -> str:
@@ -202,6 +211,21 @@ def add_tag_func(args: list) -> str:
     record = address_book[args[0]]
     
     return record.add_tag(args[1:])
+
+@input_error
+def change_tag_func(args: list) -> str:
+    record = address_book[args[0]]
+    if record:
+        return record.change_tag(args[1])
+    else:
+        f'The name {args[0]} is not exist. Please add first'
+
+@input_error
+def del_tag_func(args: list) -> str:
+    name = args[0]
+    record = address_book.data.get(name)
+    return record.del_tag()
+
 
 @input_error
 def find_tag_func(args: list) -> str:
@@ -233,7 +257,7 @@ def exit_func(*_)-> str:
     return "Good bye!"
 
 
-def what_is_command(commands: list|dict, user_input: str) -> str:
+def what_is_command(commands: list, user_input: str) -> str:
     count = 0
     command_out = ""
 
