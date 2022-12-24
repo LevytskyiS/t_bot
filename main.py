@@ -280,16 +280,12 @@ def handler(input_string: str) -> list:
         command = perhaps_command
         input_string = input_string.split()[len(command.split()):]
         data = " ".join(input_string)
-        print(f"data: {data}")
-
-    # if not input_string.strip().lower().startswith(key):
-    #     raise ValueError("This command is wrong.")
 
     if data:        
         args = data.strip().split(" ")
         return FUNCTIONS[command](args)
     
-    return FUNCTIONS[input_string]()
+    return FUNCTIONS[command]()
 
 
 def main():
