@@ -5,13 +5,13 @@ from record import Record
 
 class AddressBook(UserDict):
 
-    def __str__(self) -> str: # допишу як тільки будуть нотатки
+    def __str__(self) -> str:
 
-        header = "\n|" + "-" * 110 + "|"
+        header = "\n|" + "-" * 117 + "|"
         headers = ("Name", "Phone", "Birthday", "Email", "Tags", "Notes")
-        columns = "\n" + "|{:^10}|{:^25}" * (len(headers) // 2) + "|"
+        columns = "\n|{:^10}|{:^15}|{:^12}|{:^25}|{:^15}|{:^35}|"
         header += columns.format(*headers)
-        header += "\n|" + "-" * 110+ "|"
+        header += "\n|" + "-" * 117+ "|"
         header = "\033[34m{}\033[0m".format(header)
 
         for name, record in self.data.items():
@@ -20,7 +20,8 @@ class AddressBook(UserDict):
             birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
             email = record.email.value if record.email else ""
             tag = record.tag.value if record.tag else ""
-            note = record.note.value if record.note else ""
+            note = record.note.value if record.note else " "
+            note_table = [note[i:i+33] for i in range(0, len(note), 33)]
 
             header += columns.format(
                 name.title(),
@@ -28,14 +29,14 @@ class AddressBook(UserDict):
                 birthday,
                 email,
                 tag,
-                note)
+                note_table[0])
 
             for i, phone in enumerate(record.phones):
 
                 if i > 0:
-                    header += columns.format("", phone.value, "", "", "", "")
+                    header += columns.format("", phone.value, "", "", "", note_table[i])
 
-            header += "\n|" + "-" * 110 + "|"
+            header += "\n|" + "-" * 117 + "|"
 
         return header
     
@@ -52,13 +53,23 @@ class AddressBook(UserDict):
         data = data[0]        
 
         for name, record in self.data.items():
-            email = record.email if record.email else ""
-            for phone in record.phones:
-                if data in name or\
-                    data in phone.value or\
-                    data in email:
 
-                    output_book.add_record(record)
+            birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
+            email = record.email.value if record.email else ""
+            tag = record.tag.value if record.tag else ""
+            note = record.note.value if record.note else ""
+
+            if data in name or\
+                data in birthday or\
+                data in email or\
+                data in tag or\
+                data in note:
+
+                output_book.add_record(record)
+
+            for phone in record.phones:
+                if data in phone.value:
+                    output_book.add_record(record)                
         
         return output_book        
 

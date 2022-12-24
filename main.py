@@ -97,13 +97,12 @@ def add_phone_func(args: list) -> str:
         return f"There is no '{contact_name}' in your AB or the {phone} already exists in the list."
         
 
-
 @input_error
 def change_phone_func(args: list) -> str:
     '''Змінює номер телефону контакту {name}'''
     
-    name, old_phone, new_phone = args   # Розпаковуємо аргументи
-    record = address_book.data.get(name)   # Знаходимо {record} контакту {name}
+    name, old_phone, new_phone = args
+    record = address_book.data.get(name)
 
     return record.change_phone(old_phone, new_phone)
    
@@ -136,8 +135,8 @@ def add_mail_func(args: list) -> str:
 @input_error
 def change_mail_func(args: list) -> str:
 
-    name, new_mail = args                     # Розпаковуємо аргументи
-    record = address_book.data.get(name)      # Знаходимо {record} контакту {name}
+    name, new_mail = args
+    record = address_book.data.get(name)
 
     return record.change_mail(new_mail)
 
