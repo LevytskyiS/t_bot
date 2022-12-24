@@ -26,28 +26,39 @@ def input_error(func):
 @input_error
 def help_func(*_) -> str:
     options_bot_str = {
-    "days to birth Leo": "I will tell you the number of days until my friend's birthday", #???? Функція не приймає аргументи, а має
-    "add phone Natally 096-45-34-876": "I will add another number to your contact",
+
+    "add Natally": "I will save the friend's name",
+    "show all 3/showll all": "I will show the entire list of contacts / all contacts",
+    "del contact Natally": "I will delete the contact",
+    
+    "add phone Natally 096-45-34-876": "I will add a number to your contact",
     "change phone Natally 0995456743 0986754325": "I will change your friend's phone number",
+    "phone Natally": "I will show your friend's phone, just enter the name",
     "del phone Natally 096-45-34-876": "I will delete your contact's phone number",
+    
     "add mail Vasya vasiliy007@gmail.com": "I will add email to your contact",
     "change mail Vasya new_mail_vasya@gmail.com": "I will change email of your contact",
     "del mail Vasya": "I will delete email of your contact",
-    "show all 3": "I will show the entire list of contacts",
+    
+    
     "add birth Natally 1999.12.23": "I will add the birthday of your friend so that you do not forget to congratulate",
     "change birth Natally 1999.12.23": "I will change your friend's date of birth",
-    "all births": "I will show the birthdays of all your friends",
+    "all births 50": "I will show the birthdays of all your friends in the next 50 days",
+    "days to birth Leo": "I will tell you the number of days until my friend's birthday",
+
     "add note Natally str. Peremogy, house 76.": "I will add notes to the contact",
     "change note Natally str. Gagarina, h.126.": "I will change the contact notes",
     "del note Natally": "I will delete contact notes",
+
     "add tag Natally #address #favorite": "I will add tags",
     "find tag #favorite": "I will show notes with such tags",
-    f"{EXIT_COMMANDS}": "I will finish my work",
-    "add Natally 096-45-34-876": "I will save the friend's name and phone number",
+    "del tag": "I will delete a note's tag",
+    
     "help": "I will tell you about my possibilities",
-    "sort": "", #??? які аргументи отримує функція
-    "find house 76": "I will show you all the contacts that have what you are looking for",
-    "phone Natally": "I will show your friend's phone, just enter the name"
+    "sort": "I will sort all the files in the folder you choose",
+    "find mi": "I will find all record, which contains 'mi'",
+    f"{EXIT_COMMANDS}": "Enter one of these word and I will finisg my work",
+    
     }
 
     table_options_bot = ""
@@ -224,12 +235,10 @@ def sort_func(*_) -> str:
 
 @input_error
 def exit_func(*_)-> str:
-    """
-    The function close bot.
-    """
+    """The function close bot."""
     return exit("Good bye!")
 
-
+@input_error
 def what_is_command(commands: list|dict, user_input: str) -> str:
     count = 0
     command_out = ""
