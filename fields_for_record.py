@@ -79,7 +79,7 @@ class Tag(Field):
     def value(self, value):
         for tag in value:
             if not isinstance(tag, str):
-                raise TypeError(f'The tag shall be string')
+                raise ValueError(f'The tag shall be string')
             if not tag.startswith('#'):
                 raise ValueError(f'The tag must start #')
         # value = " ".join(value)
