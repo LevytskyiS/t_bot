@@ -81,12 +81,12 @@ def delete_record_func(args: list) -> str:
 
 @input_error
 def add_phone_func(args: list) -> str:
-    record = address_book[args[0]]
+    contact_name = args[0]
     phone = args[1]
-    if record.name.value in address_book.keys():
-        return record.add_phone(phone)
+    if contact_name in address_book.keys():
+        return contact_name.add_phone(phone)
     else:
-        return f'There is no {record.name.value} in your AB.'
+        return f"There is no '{contact_name}' in your AB."
         
 
 
