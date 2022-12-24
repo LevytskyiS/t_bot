@@ -1,4 +1,4 @@
-from fields_for_record import Name, Birthday, Phone, Email
+from fields_for_record import Name, Birthday, Phone, Email, Note, Tag
 from datetime import datetime
 
 
@@ -10,7 +10,8 @@ class Record:
         self.birthday = None
         self.email = None
         self.tag = ""
-        self.notes = ""
+        self.note = ""
+        self.notes =[]
 
     def add_phone(self, phone) -> str:
         '''Додає телефону до списку телефонів контакту.'''
@@ -55,13 +56,25 @@ class Record:
         self.email = None
         return f'The email < {deleted_mail} > of contact < {self.name.value} > was deleted.'
 
-    def add_note(self, note) -> str:
+    def add_note(self, list_note) -> str:
         '''Додає нотатку.'''
-        pass
+        note = ""
+        for item in list_note:
+            note += f"{item} "  
+        self.note = Note(note)
 
-    def change_note(self) -> str:
+        return f"The note < {note[:-1]} > was added to the contact < {self.name.value} >."
+
+    def change_note(self, list_new_note) -> str:
         '''Міняє нотатку.'''
-        pass
+        new_note = ""
+        for item in list_new_note:
+            new_note += f"{item} "
+        old_note = self.note.value
+        note = old_note + new_note   
+        self.note = Note(note)
+
+        return f"The note < {new_note[:-1]} > was added to the contact < {self.name.value} >."
 
     def delete_note(self) -> str:
         '''Видаляє нотатку.'''
