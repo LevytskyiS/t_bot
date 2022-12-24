@@ -15,20 +15,24 @@ class AddressBook(UserDict):
 
         for name, record in self.data.items():
 
-            birthday = record.birthday if record.birthday else ""
+            birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
             email = record.email if record.email else ""
+            tag = record.tag.value if record.tag else ""
+            note = record.note.value if record.note else ""
+
             for phone in record.phones:
+
                 header += columns.format(
                     name,
                     phone.value,
                     birthday,
                     email,
-                    "tags",
-                    "notes")
-                    # str(record.notes[0]),
-                    # record.notes[1])
+                    tag,
+                    note)
 
-                name, birthday, email = ("",) * 3
+                name, birthday, email, tag, note = ("",) * 5
+
+            header += "\n|" + "-" * (37 * (len(headers) // 2) - 1) + "|"
 
         return header
     
