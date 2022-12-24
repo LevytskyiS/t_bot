@@ -39,9 +39,6 @@ class AddressBook(UserDict):
         self.data[record.name.value] = record
         return f'New contact was added successfuly.'
 
-    def search_by_name(self) -> str:
-        '''Шукає телефон по імені.'''
-        pass
 
     def search_in_contact_book(self, data) -> str:
         '''Шукає співпадіння по цифрі в телефоні, по букві в імені, мейлу.'''

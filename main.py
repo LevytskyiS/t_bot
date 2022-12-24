@@ -27,9 +27,12 @@ def input_error(func):
 def help_func(*_) -> str:
     options_bot_str = {
     "days to birth Leo": "I will tell you the number of days until my friend's birthday", #???? Функція не приймає аргументи, а має
-    #"add phone Natally 096-45-34-876": "I will write down your friend's phone number",
+    "add phone Natally 096-45-34-876": "I will add another number to your contact",
     "change phone Natally 0995456743 0986754325": "I will change your friend's phone number",
-    "del phone Natally 096-45-34-876": "I will delete your enemy's phone number",
+    "del phone Natally 096-45-34-876": "I will delete your contact's phone number",
+    "add mail Vasya vasiliy007@gmail.com": "I will add email to your contact",
+    "change mail Vasya new_mail_vasya@gmail.com": "I will change email of your contact",
+    "del mail Vasya": "I will delete email of your contact",
     "show all 3": "I will show the entire list of contacts",
     "add birth Natally 1999.12.23": "I will add the birthday of your friend so that you do not forget to congratulate",
     "change birth Natally 1999.12.23": "I will change your friend's date of birth",
@@ -95,7 +98,12 @@ def change_phone_func(args: list) -> str:
 
 @input_error
 def phone_func(args: list) -> str:
-    pass
+    name = args[0]
+    record = address_book.data.get(name)
+    if record:
+        phones_list = [phone.value for phone in record.phones]
+        return f"{record.name.value} has this phones {phones_list}"
+    return f"I didn't find any < {name} > in your Address Book."
 
 @input_error
 def del_phone_func(args: list) -> str:
