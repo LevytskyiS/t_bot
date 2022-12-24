@@ -175,8 +175,8 @@ def days_to_birth_func(args: list) -> str:
 
 
 @input_error
-def all_birth_func(args: list) -> str:
-    pass
+def all_birth_func(*_) -> str:
+    return address_book.all_birthdays()
 
 @input_error
 def add_note_func(args: list) -> str:
