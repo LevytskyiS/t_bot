@@ -42,9 +42,7 @@ def help_func(*_) -> str:
     "del note Natally": "I will delete contact notes",
     "add tag Natally #address #favorite": "I will add tags",
     "find tag #favorite": "I will show notes with such tags",
-    "good bye": "I will finish my work",
-    "exit": "I will finish my work",
-    "close": "I will finish my work",
+    f"{EXIT_COMMANDS}": "I will finish my work",
     "add Natally 096-45-34-876": "I will save the friend's name and phone number",
     "help": "I will tell you about my possibilities",
     "sort": "", #??? які аргументи отримує функція
@@ -107,7 +105,7 @@ def phone_func(args: list) -> str:
     record = address_book.data.get(name)
     if record:
         phones_list = [phone.value for phone in record.phones]
-        return f"{record.name.value} has this phones {phones_list}"
+        return f"{record.name.value.title()} has this phones {phones_list}"
     return f"I didn't find any < {name} > in your Address Book."
 
 @input_error
@@ -230,7 +228,7 @@ def exit_func(*_)-> str:
     """
     The function close bot.
     """
-    return "Good bye!"
+    return exit("Good bye!")
 
 
 def what_is_command(commands: list|dict, user_input: str) -> str:
@@ -272,9 +270,6 @@ FUNCTIONS = {
     "del note": del_note_func,
     "add tag": add_tag_func,
     "find tag": find_tag_func,
-    "good bye": exit_func,
-    "exit": exit_func,
-    "close": exit_func,
     "add": add_func,
     "help": help_func,
     "sort": sort_func,
@@ -282,6 +277,8 @@ FUNCTIONS = {
     "phone": phone_func
     }
     
+EXIT_COMMANDS = ("good bye", "exit", "close", "quit", "bye", "q")
+
 @input_error
 def handler(input_string: str) -> list:
     """
@@ -319,7 +316,7 @@ def main():
         - a command for the bot;
         - command, contact name, phone number or date of birth, email address, notes, tags,
     The function returns the bot's response and prints them.
-    The bot terminates after the words "good bye" or "close" or "exit"
+    The bot terminates after the words "good bye", "exit", "close", "quit", "bye"
     """
     try: 
         print("")
@@ -331,11 +328,13 @@ def main():
         
         while True:
             print("")
+            #print(address_book.data.keys())
             input_string = input("Input command, please: ")
+            if input_string.lower() in EXIT_COMMANDS:
+                exit_func()
             get_command = handler(input_string)
             print(get_command)
-            if get_command == "Good bye!":
-                exit()
+            
 
     finally:
         address_book.save_address_book()           

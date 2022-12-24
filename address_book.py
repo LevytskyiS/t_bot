@@ -23,7 +23,7 @@ class AddressBook(UserDict):
             note = record.note.value if record.note else ""
 
             header += columns.format(
-                name,
+                name.title(),
                 phone,
                 birthday,
                 email,
@@ -41,7 +41,7 @@ class AddressBook(UserDict):
     
     def add_record(self, record: Record) -> str:
         '''Додає ім'я як ключ та об'єкт класу Рекорд як значення.'''
-        self.data[record.name.value.title()] = record
+        self.data[record.name.value] = record                 #.title()
         return f'New contact was added successfuly.'
 
 
