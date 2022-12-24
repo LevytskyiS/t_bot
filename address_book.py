@@ -5,13 +5,13 @@ from record import Record
 
 class AddressBook(UserDict):
 
-    def __str__(self) -> str: # допишу як тільки будуть нотатки
+    def __str__(self) -> str:
 
-        header = "\n|" + "-" * 110 + "|"
+        header = "\n|" + "-" * 117 + "|"
         headers = ("Name", "Phone", "Birthday", "Email", "Tags", "Notes")
-        columns = "\n" + "|{:^10}|{:^25}" * (len(headers) // 2) + "|"
+        columns = "\n|{:^10}|{:^15}|{:^12}|{:^25}|{:^15}|{:^35}|"
         header += columns.format(*headers)
-        header += "\n|" + "-" * 110+ "|"
+        header += "\n|" + "-" * 117+ "|"
         header = "\033[34m{}\033[0m".format(header)
 
         for name, record in self.data.items():
@@ -20,7 +20,8 @@ class AddressBook(UserDict):
             birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
             email = record.emails[0].value if record.emails else ""
             tag = record.tag.value if record.tag else ""
-            note = record.note.value if record.note else ""
+            note = record.note.value if record.note else " "
+            note_table = [note[i:i+33] for i in range(0, len(note), 33)]
 
             header += columns.format(
                 name.title(),
@@ -28,19 +29,19 @@ class AddressBook(UserDict):
                 birthday,
                 email,
                 tag,
-                note)
+                note_table[0])
 
             for i, phone in enumerate(record.phones):
 
                 if i > 0:
-                    header += columns.format("", phone.value, "", "", "", "")
+                    header += columns.format("", phone.value, "", "", "", note_table[i])
 
             for ii, email in enumerate(record.emails):
 
                 if ii > 0:
                     header += columns.format("", "", "", email.value, "", "")
 
-            header += "\n|" + "-" * 110 + "|"
+            header += "\n|" + "-" * 117 + "|"
 
         return header
     
