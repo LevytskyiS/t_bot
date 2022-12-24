@@ -82,7 +82,7 @@ class Tag(Field):
                 raise TypeError(f'The tag shall be string')
             if not tag.startswith('#'):
                 raise ValueError(f'The tag must start #')
-        value = " ".join(value)
+        # value = " ".join(value)
         self._value = value
 
 
