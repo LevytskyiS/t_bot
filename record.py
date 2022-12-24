@@ -1,5 +1,6 @@
 from fields_for_record import Name, Birthday, Phone, Email, Note, Tag
 from datetime import datetime
+from copy import copy
 
 
 class Record:
@@ -57,11 +58,14 @@ class Record:
         return f'The email < {deleted_mail} > of contact < {self.name.value} > was deleted.'
 
     def add_note(self, list_note) -> str:
-        '''Додає нотатку.'''
-        note = ""
-        for item in list_note:
-            note += f"{item} "  
-        self.note = Note(note)
+        '''Додає нотатку. Один раз'''
+        if not self.note:
+            note = ""
+            for item in list_note:
+                note += f"{item} "
+            self.note = Note(note)
+        else:
+            return f'Note is existed. Cannot be added'
 
         return f"The note < {note[:-1]} > was added to the contact < {self.name.value} >."
 
@@ -83,25 +87,53 @@ class Record:
         return f'The note < {deleted_note} > of contact < {self.name.value} > was deleted.'
 
     def add_tag(self, tag) -> str:
-        '''Додає тег.'''  
-        self.tag = Tag(tag)
-        return f"The tag < {tag} > was added to the contact < {self.name.value} >."
+        '''Створює теги. Один Раз при виклику '''
+        if not self.tag:
+            self.tag = Tag(tag)
+            return f"The tag < {tag} > was added to the contact < {self.name.value} >."
+        else:
+            return f'Tag is existed. Cannot be added'
 
-    def change_tag(self,new_tag_list):
-        '''Змінює теги.'''
+    def change_tag(self, new_tag_list):
+        '''Додає теги до існуючиго списку тегів.'''
         old_tag = self.tag
         if self.tag:
-            self.tag=Tag(new_tag_list)
-            return f'The old tag {old_tag.value} has been changed on new one {self.tag.value}'
+            self.tag=Tag(old_tag.value + new_tag_list)
+            print(f'The new tag {new_tag_list} has been added to old one {old_tag.value}')
         else:
-            return f'The tag has been added yet for this contact. Add first'
+            print(f'The tag has been added yet for this contact. Add first')
 
-
-    def del_tag(self) -> str:
-        '''Видаляє тег.'''
+    def delete_tags(self) -> str:
+        '''Видаляє всі тег.'''
         deleted_tag = self.tag
         self.tag = Tag('')
-        return f"The tag < {deleted_tag} > of contact < {self.name.value} > was deleted"
+        return f"The tag < {deleted_tag.value} > of contact < {self.name.value} > was deleted"
+
+    def del_tag(self):
+        '''Видаляє існуючий тег зі списку.'''
+        if self.tag:
+            old_tags =copy(self.tag.value)
+            tags = [tag for tag in self.tag.value]
+            showing = dict(enumerate(tags, 1))
+            while True:
+                try:
+                    print(f"What tag do you want to remove? {showing}")
+                    choosing = input("Choose № of this tags (skip it if you  want press enter)>>> ")
+                    if not choosing:
+                        print( f"You didn't remove any tags of < {self.tag.value} >")
+                    choosing = int(choosing)
+                    self.tag.value.pop(choosing - 1)
+                    print( f"Tag < {showing[choosing]} > from < {old_tags} > was removed")
+                    break
+                except ValueError:
+                    print(f"{choosing} is not a number!")
+                except KeyError:
+                    print(f"{choosing} is out of range!")
+                except IndexError:
+                    print(f"{choosing} is out of range!")
+        else:
+            return f' Tag {self.tag} is empty '
+
 
     def add_birthday(self, birthday) -> str:
         '''Додає день народження.'''
@@ -130,7 +162,4 @@ class Record:
                 return (next_birth - current_day).days
         else:
             return f'The birthday hasn`t been added yet for this contact'
-
-
-
 
