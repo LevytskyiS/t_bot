@@ -68,7 +68,6 @@ def help_func(*_) -> str:
 def add_func(args: list) -> str:
     record = Record(args[0])
     if record.name.value not in address_book.keys():
-        record.add_phone(args[1])
         return address_book.add_record(record)
     else:
         return f"The contact with the name {args[0]} already exists in the AB."
@@ -82,8 +81,13 @@ def delete_record_func(args: list) -> str:
 
 @input_error
 def add_phone_func(args: list) -> str:
-    record = address_book[args[0]]
-    return record.add_phone(args[1])
+    record = Record(args[0])
+    phone = args[1]
+    if record.name.value in address_book.keys():
+        return record.add_phone(phone)
+    else:
+        return f"There is no '{record.name.value}' in your AB."
+        
 
 
 @input_error
@@ -274,7 +278,6 @@ FUNCTIONS = {
     "phone": phone_func
     }
 
-@input_error
 def handler(input_string: str) -> list:
     """
     The function separates the command word for the bot, and writes all other data into a list, where the first value is the name
