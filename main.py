@@ -40,7 +40,6 @@ def help_func(*_) -> str:
     "change mail Vasya new_mail_vasya@gmail.com": "I will change email of your contact",
     "del mail Vasya": "I will delete email of your contact",
     
-    
     "add birth Natally 1999.12.23": "I will add the birthday of your friend so that you do not forget to congratulate",
     "change birth Natally 1999.12.23": "I will change your friend's date of birth",
     "all births 50": "I will show the birthdays of all your friends in the next 50 days",
@@ -177,9 +176,9 @@ def change_birth_func(args: list) -> str:
 def days_to_birth_func(args: list) -> str:
     record = address_book[args[0]]
     if record:
-        return record.days_to_birthdays()
+        return f"{args[0].title()}'s birthday will be in {record.days_to_birthdays()} days."
     else:
-        return f'The name {args[0]} is not exist. Please add first'
+        return f'The name {args[0].title()} is not exist. Please add first'
 
 
 @input_error
