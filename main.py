@@ -196,8 +196,11 @@ def del_note_func(args: list) -> str:
     pass
 
 @input_error
-def add_tag_func(*args: list) -> str:
-    pass
+def add_tag_func(args: list) -> str:
+
+    record = address_book[args[0]]
+    
+    return record.add_tag(args[1:])
 
 @input_error
 def find_tag_func(args: list) -> str:

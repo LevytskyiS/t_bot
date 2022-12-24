@@ -80,6 +80,12 @@ class Record:
         '''Видаляє нотатку.'''
         pass
 
+    def add_tag(self, tag) -> str:
+        '''Додає тег.'''  
+        self.tag = Tag(tag)
+
+        return f"The tag < {tag} > was added to the contact < {self.name.value} >."
+
     def add_birthday(self, birthday) -> str:
         '''Додає день народження.'''
         self.birthday = Birthday(birthday)
