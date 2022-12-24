@@ -23,10 +23,10 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/nikolay.grishyn/Documents/GitHub/t_bot&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/nikolay.grishyn/Documents/GitHub/Module_12&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.record">
+  <component name="RunManager" selected="Python.main">
     <configuration name="address_book" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="t_bot" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -92,8 +92,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.record" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.record" />
         <item itemvalue="Python.address_book" />
       </list>
     </recent_temporary>
