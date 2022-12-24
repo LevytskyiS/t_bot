@@ -7,32 +7,35 @@ class AddressBook(UserDict):
 
     def __str__(self) -> str: # допишу як тільки будуть нотатки
 
+        header = "\n|" + "-" * 110 + "|"
         headers = ("Name", "Phone", "Birthday", "Email", "Tags", "Notes")
         columns = "\n" + "|{:^10}|{:^25}" * (len(headers) // 2) + "|"
-        header = columns.format(*headers)
-        header += "\n|" + "-" * (37 * (len(headers) // 2) - 1) + "|"
+        header += columns.format(*headers)
+        header += "\n|" + "-" * 110+ "|"
         header = "\033[34m{}\033[0m".format(header)
 
         for name, record in self.data.items():
 
+            phone = record.phones[0].value if record.phones else ""
             birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
             email = record.email if record.email else ""
             tag = record.tag.value if record.tag else ""
             note = record.note.value if record.note else ""
 
-            for phone in record.phones:
+            header += columns.format(
+                name,
+                phone,
+                birthday,
+                email,
+                tag,
+                note)
 
-                header += columns.format(
-                    name,
-                    phone.value,
-                    birthday,
-                    email,
-                    tag,
-                    note)
+            for i, phone in enumerate(record.phones):
 
-                name, birthday, email, tag, note = ("",) * 5
+                if i > 0:
+                    header += columns.format("", phone.value, "", "", "", "")
 
-            header += "\n|" + "-" * (37 * (len(headers) // 2) - 1) + "|"
+            header += "\n|" + "-" * 110 + "|"
 
         return header
     
