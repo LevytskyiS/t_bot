@@ -18,7 +18,7 @@ class AddressBook(UserDict):
 
             phone = record.phones[0].value if record.phones else ""
             birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
-            email = record.email.value if record.email else ""
+            email = record.emails[0].value if record.emails else ""
             tag = record.tag.value if record.tag else ""
             note = record.note.value if record.note else ""
 
@@ -35,6 +35,11 @@ class AddressBook(UserDict):
                 if i > 0:
                     header += columns.format("", phone.value, "", "", "", "")
 
+            for ii, email in enumerate(record.emails):
+
+                if ii > 0:
+                    header += columns.format("", "", "", email.value, "", "")
+
             header += "\n|" + "-" * 110 + "|"
 
         return header
@@ -49,18 +54,33 @@ class AddressBook(UserDict):
         '''Шукає співпадіння по цифрі в телефоні, по букві в імені, мейлу.'''
         
         output_book = AddressBook()
-        data = data[0]        
+        data = data[0]
+        counter = 0        
 
         for name, record in self.data.items():
-            email = record.email if record.email else ""
-            for phone in record.phones:
-                if data in name or\
-                    data in phone.value or\
-                    data in email:
 
-                    output_book.add_record(record)
+            phones = [phone.value for phone in record.phones]
+            phones = " ".join(phones)
+            emails = [email.value for email in record.emails]
+            emails = " ".join(emails)
+            birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
+            tag = record.tag.value if record.tag else ""
+            note = record.note.value if record.note else ""
+
+            if data in name or\
+                data in birthday or\
+                data in emails or\
+                data in phones or\
+                data in tag or\
+                data in note:
+
+                output_book.add_record(record)
+                counter += 1 
         
-        return output_book        
+        if counter < 1:
+            raise ValueError(f"I didn't find any {data} in AB.")              
+        
+        return output_book   
 
     def get_all_records(self) -> list:
         '''Повертає список всіх контактів із їхніми даними.'''

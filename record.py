@@ -8,15 +8,16 @@ class Record:
         self.name = Name(name)
         self.phones = []
         self.birthday = None
-        self.email = None
+        self.emails = []
         self.tag = ""
         self.note = ""
         self.notes =[]
 
     def add_phone(self, phone) -> str:
         '''Додає телефону до списку телефонів контакту.'''
-        self.phones.append(Phone(phone))
-        return f'The phone was added.'
+        added_phone = Phone(phone)
+        self.phones.append(added_phone)
+        return f'The phone < {added_phone.value} > was added to the < {self.name.value.title()} >.'
 
     def change_phone(self, new_phone) -> str:
         '''Міняє існуючий телефон контакту.'''
@@ -80,20 +81,66 @@ class Record:
 
     def add_mail(self, mail) -> str:
         '''Додає мейл до контакту.'''
-        self.email = Email(mail)
-        return f'The email < {mail} > was added to the contact < {self.name.value.title()} >.'
+        added_email = Email(mail)
+        self.emails.append(added_email)
+        return f'The phone < {added_email.value} > was added to the < {self.name.value.title()} >.'
 
     def change_mail(self, new_mail) -> str:
         '''Міняє існуючий мейл.'''
-        old_mail = self.email.value
-        self.email = Email(new_mail)
-        return f'The email < {old_mail} > of contact < {self.name.value.title()} > was changed into < {new_mail} >.'
+        if self.emails:
+            new_mail = Email(new_mail)
+            emails = [email.value for email in self.emails]
+            showing = dict(enumerate(emails, 1))
+            while True:
+                try:
+                    print(f"What email you want to change? {showing}")
+                    choosing = input("Choose № of this email (skip it if you don't want)>>> ")
+                    if not choosing:
+                        return f"You didn't change any email of < {self.name.value.title()} >"
+                    choosing = int(choosing)
+                    if choosing > 0:
+                        self.emails[choosing-1] = new_mail
+                        return f"Email < {showing[choosing]} > of < {self.name.value.title()} > changed to the < {new_mail.value} >"
+                    else:
+                        raise KeyError
+                    break
+                except ValueError:
+                    print(f"{choosing} is not a number!")
+                except KeyError:
+                    print(f"{choosing} is out of range!")
+                except IndexError:
+                    print(f"{choosing} is out of range!")
+
+        else:
+            raise ValueError(f"Emails list of < {self.name.value.title()} > is empty")
 
     def delete_mail(self) -> str:
         '''Видаляє існуючий мейл.'''
-        deleted_mail = self.email.value
-        self.email = None
-        return f'The email < {deleted_mail} > of contact < {self.name.value.title()} > was deleted.'
+        if self.emails:
+            emails = [email.value for email in self.emails]
+            showing = dict(enumerate(emails, 1))
+            while True:
+                try:
+                    print(f"What email you want to remove? {showing}")
+                    choosing = input("Choose № of this email (skip it if you don't want)>>> ")
+                    if not choosing:
+                        return f"You didn't remove any email of < {self.name.value.title()} >"
+                    choosing = int(choosing)
+                    if choosing > 0:
+                        self.emails.pop(choosing-1)
+                        return f"Email < {showing[choosing]} > of < {self.name.value.title()} > removed."
+                    else:
+                        raise KeyError
+                    break
+                except ValueError:
+                    print(f"{choosing} is not a number!")
+                except KeyError:
+                    print(f"{choosing} is out of range!")
+                except IndexError:
+                    print(f"{choosing} is out of range!")
+
+        else:
+            raise ValueError(f"Emails list of < {self.name.value.title()} > is empty")
 
     def add_note(self, list_note) -> str:
         '''Додає нотатку.'''
