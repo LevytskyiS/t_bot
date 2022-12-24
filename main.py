@@ -264,7 +264,7 @@ FUNCTIONS = {
     "phone": phone_func
     }
 
-#@input_error
+@input_error
 def handler(input_string: str) -> list:
     """
     The function separates the command word for the bot, and writes all other data into a list, where the first value is the name
@@ -287,8 +287,6 @@ def handler(input_string: str) -> list:
         data = " ".join(input_string)
         print(f"data: {data}")
 
-    # if not input_string.strip().lower().startswith(key):
-    #     raise ValueError("This command is wrong.")
 
     if data:        
         args = data.strip().split(" ")
