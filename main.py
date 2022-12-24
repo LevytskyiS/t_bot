@@ -137,9 +137,11 @@ def delete_mail_func(args: list) -> str:
 
     return record.delete_mail()
 
+
 @input_error
 def show_all_func(*_) -> str:
-    pass
+    return address_book
+
 
 @input_error
 def add_birth_func(args: list) -> str:
@@ -193,7 +195,7 @@ def find_tag_func(args: list) -> str:
 
 @input_error
 def find_func(args) -> str:
-    pass
+    return address_book.search_in_contact_book(args)
 
 @input_error
 def sort_func(*_) -> str:
@@ -286,16 +288,12 @@ def handler(input_string: str) -> list:
         command = perhaps_command
         input_string = input_string.split()[len(command.split()):]
         data = " ".join(input_string)
-        print(f"data: {data}")
-
-    # if not input_string.strip().lower().startswith(key):
-    #     raise ValueError("This command is wrong.")
 
     if data:        
         args = data.strip().split(" ")
         return FUNCTIONS[command](args)
     
-    return FUNCTIONS[input_string]()
+    return FUNCTIONS[command]()
 
 
 def main():
