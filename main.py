@@ -17,7 +17,7 @@ def input_error(func):
         except TypeError:
             return "Unknown command or parameters, please try again."
         except AttributeError:
-            return "Wrong format of date."
+            return "Can't find information about this contact."
         except StopIteration:
             return "There are no other numbers in the book."
 
@@ -25,13 +25,49 @@ def input_error(func):
 
 @input_error
 def help_func(*_) -> str:
-    pass
+    options_bot_str = {
+    "days to birth Leo": "I will tell you the number of days until my friend's birthday", #???? Функція не приймає аргументи, а має
+    "add phone Natally 096-45-34-876": "I will add another number to your contact",
+    "change phone Natally 0995456743 0986754325": "I will change your friend's phone number",
+    "del phone Natally 096-45-34-876": "I will delete your contact's phone number",
+    "add mail Vasya vasiliy007@gmail.com": "I will add email to your contact",
+    "change mail Vasya new_mail_vasya@gmail.com": "I will change email of your contact",
+    "del mail Vasya": "I will delete email of your contact",
+    "show all 3": "I will show the entire list of contacts",
+    "add birth Natally 1999.12.23": "I will add the birthday of your friend so that you do not forget to congratulate",
+    "change birth Natally 1999.12.23": "I will change your friend's date of birth",
+    "all births": "I will show the birthdays of all your friends",
+    "add note Natally str. Peremogy, house 76.": "I will add notes to the contact",
+    "change note Natally str. Gagarina, h.126.": "I will change the contact notes",
+    "del note Natally": "I will delete contact notes",
+    "add tag Natally #address #favorite": "I will add tags",
+    "find tag #favorite": "I will show notes with such tags",
+    "good bye": "I will finish my work",
+    "exit": "I will finish my work",
+    "close": "I will finish my work",
+    "add Natally 096-45-34-876": "I will save the friend's name and phone number",
+    "help": "I will tell you about my possibilities",
+    "sort": "", #??? які аргументи отримує функція
+    "find house 76": "I will show you all the contacts that have what you are looking for",
+    "phone Natally": "I will show your friend's phone, just enter the name"
+    }
+
+    table_options_bot = ""
+    header_table = "| {:<51} | {:<80}".format("Example command", "Command description") # в наст. рядку header_table повертає строку на початку якої ще є текст "\x1b[1m\x1b[34m", тому ширина перщої колонки 25 символів
+    header_table = "\033[1m\033[34m{}\033[0m".format(header_table)  
+    table_options_bot += f"\n{header_table}\n\n"
+    
+    for key, value in options_bot_str.items():
+        key = "\033[34m{}\033[0m".format(key)
+        row = "| {:<60} | {:<80}".format(key, value)
+        table_options_bot += f"{row}\n"
+
+    return table_options_bot    
 
 @input_error
 def add_func(args: list) -> str:
     record = Record(args[0])
     if record.name.value not in address_book.keys():
-        record.add_phone(args[1])
         return address_book.add_record(record)
     else:
         return f"The contact with the name {args[0]} already exists in the AB."
@@ -45,8 +81,14 @@ def delete_record_func(args: list) -> str:
 
 @input_error
 def add_phone_func(args: list) -> str:
-    record = address_book[args[0]]
-    return record.add_phone(args[1])
+    contact_name = args[0]
+    phone = args[1]
+    for key in address_book.keys():
+        if key == contact_name:
+            return address_book[key].add_phone(phone)
+        else:
+            return f"There is no '{contact_name}' in your AB."
+        
 
 
 @input_error
@@ -61,7 +103,12 @@ def change_phone_func(args: list) -> str:
 
 @input_error
 def phone_func(args: list) -> str:
-    pass
+    name = args[0]
+    record = address_book.data.get(name)
+    if record:
+        phones_list = [phone.value for phone in record.phones]
+        return f"{record.name.value} has this phones {phones_list}"
+    return f"I didn't find any < {name} > in your Address Book."
 
 @input_error
 def del_phone_func(args: list) -> str:
@@ -74,19 +121,32 @@ def del_phone_func(args: list) -> str:
 
 @input_error
 def add_mail_func(args: list) -> str:
-    pass
+
+    record = address_book[args[0]]
+
+    return record.add_mail(args[1])
 
 @input_error
 def change_mail_func(args: list) -> str:
-    pass
+
+    name, new_mail = args                     # Розпаковуємо аргументи
+    record = address_book.data.get(name)      # Знаходимо {record} контакту {name}
+
+    return record.change_mail(new_mail)
 
 @input_error
 def delete_mail_func(args: list) -> str:
-    pass
+
+    name = args[0]
+    record = address_book.data.get(name)
+
+    return record.delete_mail()
+
 
 @input_error
 def show_all_func(*_) -> str:
-    pass
+    return address_book
+
 
 @input_error
 def add_birth_func(args: list) -> str:
@@ -115,16 +175,22 @@ def days_to_birth_func(args: list) -> str:
 
 
 @input_error
-def all_birth_func(args: list) -> str:
-    pass
+def all_birth_func(*_) -> str:
+    return address_book.all_birthdays()
 
 @input_error
 def add_note_func(args: list) -> str:
-    pass
+
+    record = address_book[args[0]]
+
+    return record.add_note(args[1:])
 
 @input_error
 def change_note_func(args: list) -> str:
-    pass
+    name, *new_note = args 
+    record = address_book.data.get(name)
+
+    return record.change_note(new_note)
 
 @input_error
 def del_note_func(args: list) -> str:
@@ -132,7 +198,10 @@ def del_note_func(args: list) -> str:
 
 @input_error
 def add_tag_func(args: list) -> str:
-    pass
+
+    record = address_book[args[0]]
+    
+    return record.add_tag(args[1:])
 
 @input_error
 def find_tag_func(args: list) -> str:
@@ -140,7 +209,7 @@ def find_tag_func(args: list) -> str:
 
 @input_error
 def find_func(args) -> str:
-    pass
+    return address_book.search_in_contact_book(args)
 
 @input_error
 def sort_func(*_) -> str:
@@ -163,13 +232,37 @@ def exit_func(*_)-> str:
     """
     return "Good bye!"
 
+
+def what_is_command(commands: list|dict, user_input: str) -> str:
+    count = 0
+    command_out = ""
+
+    for command in commands:
+
+        i = 0
+
+        for char_in, char_comm in zip(user_input, command):
+
+            if char_in == char_comm:
+                i += 1
+
+        if i > count:
+            count = i
+            command_out = command
+
+    return command_out
+
+
 #Importantly! The more words in the bot command, the higher they are in the dictionary.
 FUNCTIONS = {
     "days to birth": days_to_birth_func,
     "add phone": add_phone_func,
+    "add mail": add_mail_func,
     "del contact": delete_record_func,
     "change phone": change_phone_func,
+    "change mail": change_mail_func,
     "del phone": del_phone_func,
+    "del mail": delete_mail_func,
     "show all": show_all_func,
     "add birth": add_birth_func,
     "change birth": change_birth_func,
@@ -189,21 +282,28 @@ FUNCTIONS = {
     "phone": phone_func
     }
 
-@input_error
 def handler(input_string: str) -> list:
     """
     The function separates the command word for the bot, and writes all other data into a list, where the first value is the name
     """
-    command = input_string
+    command = ""
+    perhaps_command = what_is_command(FUNCTIONS, input_string)
     data = ""
+    input_string = input_string.strip().lower()
     for key in FUNCTIONS:
-        if input_string.strip().lower().startswith(key):
+        if input_string.startswith(key):
             command = key
             data = input_string[len(command):]
             break
 
-    if not input_string.strip().lower().startswith(key):
-        raise ValueError("This command is wrong.")
+    if not command and \
+        input(f"If you mean '{perhaps_command}' enter 'y': ") == "y":
+
+        command = perhaps_command
+        input_string = input_string.split()[len(command.split()):]
+        data = " ".join(input_string)
+        print(f"data: {data}")
+
 
     if data:        
         args = data.strip().split(" ")

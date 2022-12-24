@@ -5,22 +5,62 @@ from record import Record
 
 class AddressBook(UserDict):
 
-    def __init__(self):
-        super().__init__()
-        self.load_address_book()
+    def __str__(self) -> str: # допишу як тільки будуть нотатки
 
+        header = "\n|" + "-" * 110 + "|"
+        headers = ("Name", "Phone", "Birthday", "Email", "Tags", "Notes")
+        columns = "\n" + "|{:^10}|{:^25}" * (len(headers) // 2) + "|"
+        header += columns.format(*headers)
+        header += "\n|" + "-" * 110+ "|"
+        header = "\033[34m{}\033[0m".format(header)
+
+        for name, record in self.data.items():
+
+            phone = record.phones[0].value if record.phones else ""
+            birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
+            email = record.email if record.email else ""
+            tag = record.tag.value if record.tag else ""
+            note = record.note.value if record.note else ""
+
+            header += columns.format(
+                name,
+                phone,
+                birthday,
+                email,
+                tag,
+                note)
+
+            for i, phone in enumerate(record.phones):
+
+                if i > 0:
+                    header += columns.format("", phone.value, "", "", "", "")
+
+            header += "\n|" + "-" * 110 + "|"
+
+        return header
+    
     def add_record(self, record: Record) -> str:
         '''Додає ім'я як ключ та об'єкт класу Рекорд як значення.'''
         self.data[record.name.value] = record
         return f'New contact was added successfuly.'
 
-    def search_by_name(self) -> str:
-        '''Шукає телефон по імені.'''
-        pass
 
-    def search_in_contact_book(self) -> str:
+    def search_in_contact_book(self, data) -> str:
         '''Шукає співпадіння по цифрі в телефоні, по букві в імені, мейлу.'''
-        pass
+        
+        output_book = AddressBook()
+        data = data[0]        
+
+        for name, record in self.data.items():
+            email = record.email if record.email else ""
+            for phone in record.phones:
+                if data in name or\
+                    data in phone.value or\
+                    data in email:
+
+                    output_book.add_record(record)
+        
+        return output_book        
 
     def get_all_records(self) -> list:
         '''Повертає список всіх контактів із їхніми даними.'''
@@ -66,3 +106,4 @@ class AddressBook(UserDict):
 
 
 address_book = AddressBook()
+address_book.load_address_book()

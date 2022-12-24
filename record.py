@@ -1,4 +1,4 @@
-from fields_for_record import Name, Birthday, Phone
+from fields_for_record import Name, Birthday, Phone, Email, Note, Tag
 from datetime import datetime
 
 
@@ -9,8 +9,9 @@ class Record:
         self.phones = []
         self.birthday = None
         self.email = None
-        self.tag = []
-        self.notes = ""
+        self.tag = ""
+        self.note = ""
+        self.notes =[]
 
     def add_phone(self, phone) -> str:
         '''Додає телефону до списку телефонів контакту.'''
@@ -40,27 +41,50 @@ class Record:
 
     def add_mail(self, mail) -> str:
         '''Додає мейл до контакту.'''
-        pass
+        self.email = Email(mail)
+        return f'The email < {mail} > was added to the contact < {self.name.value} >.'
 
     def change_mail(self, new_mail) -> str:
         '''Міняє існуючий мейл.'''
-        pass
+        old_mail = self.email.value
+        self.email = Email(new_mail)
+        return f'The email < {old_mail} > of contact < {self.name.value} > was changed into < {new_mail} >.'
 
-    def delete_mail(self, mail) -> str:
+    def delete_mail(self) -> str:
         '''Видаляє існуючий мейл.'''
-        pass
+        deleted_mail = self.email.value
+        self.email = None
+        return f'The email < {deleted_mail} > of contact < {self.name.value} > was deleted.'
 
-    def add_note(self, note) -> str:
+    def add_note(self, list_note) -> str:
         '''Додає нотатку.'''
-        pass
+        note = ""
+        for item in list_note:
+            note += f"{item} "  
+        self.note = Note(note)
 
-    def change_note(self) -> str:
+        return f"The note < {note[:-1]} > was added to the contact < {self.name.value} >."
+
+    def change_note(self, list_new_note) -> str:
         '''Міняє нотатку.'''
-        pass
+        new_note = ""
+        for item in list_new_note:
+            new_note += f"{item} "
+        old_note = self.note.value
+        note = old_note + new_note   
+        self.note = Note(note)
+
+        return f"The note < {new_note[:-1]} > was added to the contact < {self.name.value} >."
 
     def delete_note(self) -> str:
         '''Видаляє нотатку.'''
         pass
+
+    def add_tag(self, tag) -> str:
+        '''Додає тег.'''  
+        self.tag = Tag(tag)
+
+        return f"The tag < {tag} > was added to the contact < {self.name.value} >."
 
     def add_birthday(self, birthday) -> str:
         '''Додає день народження.'''
