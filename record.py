@@ -43,19 +43,19 @@ class Record:
     def add_mail(self, mail) -> str:
         '''Додає мейл до контакту.'''
         self.email = Email(mail)
-        return f'The email < {mail} > was added to the contact < {self.name.value} >.'
+        return f'The email < {mail} > was added to the contact < {self.name.value.title()} >.'
 
     def change_mail(self, new_mail) -> str:
         '''Міняє існуючий мейл.'''
         old_mail = self.email.value
         self.email = Email(new_mail)
-        return f'The email < {old_mail} > of contact < {self.name.value} > was changed into < {new_mail} >.'
+        return f'The email < {old_mail} > of contact < {self.name.value.title()} > was changed into < {new_mail} >.'
 
     def delete_mail(self) -> str:
         '''Видаляє існуючий мейл.'''
         deleted_mail = self.email.value
         self.email = None
-        return f'The email < {deleted_mail} > of contact < {self.name.value} > was deleted.'
+        return f'The email < {deleted_mail} > of contact < {self.name.value.title()} > was deleted.'
 
     def add_note(self, list_note) -> str:
         '''Додає нотатку. Один раз'''
@@ -67,7 +67,7 @@ class Record:
         else:
             return f'Note is existed. Cannot be added'
 
-        return f"The note < {note[:-1]} > was added to the contact < {self.name.value} >."
+        return f"The note < {note[:-1]} > was added to the contact < {self.name.value}.title() >."
 
     def change_note(self, list_new_note) -> str:
         '''Міняє нотатку.'''
@@ -78,7 +78,7 @@ class Record:
         note = old_note + new_note   
         self.note = Note(note)
 
-        return f"The note < {new_note[:-1]} > was added to the contact < {self.name.value} >."
+        return f"The note < {new_note[:-1]} > was added to the contact < {self.name.value.title()} >."
 
     def delete_note(self) -> str:
         '''Видаляє нотатку.'''
