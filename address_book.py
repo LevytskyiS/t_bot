@@ -59,15 +59,17 @@ class AddressBook(UserDict):
             tag = record.tag.value if record.tag else ""
             note = record.note.value if record.note else ""
 
-            for phone in record.phones:
-                if data in name or\
-                    data in phone.value or\
-                    data in birthday or\
-                    data in email or\
-                    data in tag or\
-                    data in note:
+            if data in name or\
+                data in birthday or\
+                data in email or\
+                data in tag or\
+                data in note:
 
-                    output_book.add_record(record)
+                output_book.add_record(record)
+
+            for phone in record.phones:
+                if data in phone.value:
+                    output_book.add_record(record)                
         
         return output_book        
 
