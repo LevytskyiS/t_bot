@@ -11,6 +11,8 @@ def input_error(func):
         except KeyError:
             return "This contact doesn't exist, please try again."
         except ValueError as exception:
+            if exception.args[0] == "not enough values to unpack (expected 2, got 1)":
+                return "Wrong format. Must be '{command} {name} {new_value}'."
             return exception.args[0]
         except IndexError:
             return "Wrong format. Must be '{command} {name} {value}'."
@@ -127,10 +129,14 @@ def del_phone_func(args: list) -> str:
 
 @input_error
 def add_mail_func(args: list) -> str:
-
-    record = address_book[args[0]]
-
-    return record.add_mail(args[1])
+    
+    contact_name = args[0]
+    email = args[1]
+    
+    if contact_name in address_book.keys() and email not in [e.value for e in address_book[contact_name].emails]:
+        return address_book[contact_name].add_mail(email)
+    else:
+        return f"There is no '{contact_name}' in your AB or the '{email}' already exists in the list."
 
 @input_error
 def change_mail_func(args: list) -> str:

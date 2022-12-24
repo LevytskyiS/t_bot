@@ -18,8 +18,10 @@ class AddressBook(UserDict):
 
             phone = record.phones[0].value if record.phones else ""
             birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
-            email = record.emails[0].value if record.emails else ""
-            tag = record.tag.value if record.tag else ""
+            email = record.emails[0].value if record.emails else " "
+            email_table = [email[i:i+23] for i in range(0, len(email), 23)]
+            tag = record.tag.value if record.tag else " "
+            tag_table = [tag[i:i+13] for i in range(0, len(tag), 13)]
             note = record.note.value if record.note else " "
             note_table = [note[i:i+33] for i in range(0, len(note), 33)]
 
@@ -27,19 +29,21 @@ class AddressBook(UserDict):
                 name.title(),
                 phone,
                 birthday,
-                email,
-                tag,
+                email_table[0],
+                tag_table[0],
                 note_table[0])
 
             for i, phone in enumerate(record.phones):
 
                 if i > 0:
-                    header += columns.format("", phone.value, "", "", "", note_table[i])
+                    header += columns.format("", phone.value, "", "", "", "")   #note_table[i])
 
             for ii, email in enumerate(record.emails):
 
                 if ii > 0:
-                    header += columns.format("", "", "", email.value, "", "")
+                    mail = email.value
+                    mail_table = [mail[i:i+23] for i in range(0, len(mail), 23)]
+                    header += columns.format("", "", "", mail_table[0], "", "")
 
             header += "\n|" + "-" * 117 + "|"
 

@@ -83,7 +83,7 @@ class Record:
         '''Додає мейл до контакту.'''
         added_email = Email(mail)
         self.emails.append(added_email)
-        return f'The phone < {added_email.value} > was added to the < {self.name.value.title()} >.'
+        return f'The email < {added_email.value} > was added to the < {self.name.value.title()} >.'
 
     def change_mail(self, new_mail) -> str:
         '''Міняє існуючий мейл.'''
