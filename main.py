@@ -200,7 +200,10 @@ def change_note_func(args: list) -> str:
 
 @input_error
 def del_note_func(args: list) -> str:
-    pass
+    name = args[0]
+    record = address_book.data.get(name)
+
+    return record.delete_note()
 
 @input_error
 def add_tag_func(args: list) -> str:
