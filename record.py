@@ -9,8 +9,8 @@ class Record:
         self.phones = []
         self.birthday = None
         self.email = None
-        self.tag = ""
-        self.note = ""
+        self.tag = None
+        self.note = None
         self.notes =[]
 
     def add_phone(self, phone) -> str:
@@ -78,13 +78,30 @@ class Record:
 
     def delete_note(self) -> str:
         '''Видаляє нотатку.'''
-        pass
+        deleted_note = self.note.value
+        self.note = Note('')
+        return f'The note < {deleted_note} > of contact < {self.name.value} > was deleted.'
 
     def add_tag(self, tag) -> str:
         '''Додає тег.'''  
         self.tag = Tag(tag)
-
         return f"The tag < {tag} > was added to the contact < {self.name.value} >."
+
+    def change_tag(self,new_tag_list):
+        '''Змінює теги.'''
+        old_tag = self.tag
+        if self.tag:
+            self.tag=Tag(new_tag_list)
+            return f'The old tag {old_tag.value} has been changed on new one {self.tag.value}'
+        else:
+            return f'The tag has been added yet for this contact. Add first'
+
+
+    def del_tag(self) -> str:
+        '''Видаляє тег.'''
+        deleted_tag = self.tag
+        self.tag = Tag('')
+        return f"The tag < {deleted_tag} > of contact < {self.name.value} > was deleted"
 
     def add_birthday(self, birthday) -> str:
         '''Додає день народження.'''
@@ -98,7 +115,6 @@ class Record:
             return f'Birthday has been successfully changed'
         else:
             return f'The birthday hasn`t been added yet for this contact. Add first'
-
 
     def days_to_birthdays(self):
         '''Повертає кількість днів, яка залишилась до ДН конкретної людини.'''
@@ -114,4 +130,7 @@ class Record:
                 return (next_birth - current_day).days
         else:
             return f'The birthday hasn`t been added yet for this contact'
+
+
+
 
