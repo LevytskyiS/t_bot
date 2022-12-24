@@ -83,11 +83,10 @@ def delete_record_func(args: list) -> str:
 def add_phone_func(args: list) -> str:
     contact_name = args[0]
     phone = args[1]
-    for key in address_book.keys():
-        if key == contact_name:
-            return address_book[key].add_phone(phone)
-        else:
-            return f"There is no '{contact_name}' in your AB."
+    if contact_name in address_book.keys() and phone not in [p.value for p in address_book[contact_name].phones]:
+        return address_book[contact_name].add_phone(phone)
+    else:
+        return f"There is no '{contact_name}' in your AB or the {phone} already exists in the list."
         
 
 
