@@ -175,18 +175,24 @@ def all_birth_func(args: list) -> str:
 
 @input_error
 def add_note_func(args: list) -> str:
-    pass
+
+    record = address_book[args[0]]
+
+    return record.add_note(args[1:])
 
 @input_error
 def change_note_func(args: list) -> str:
-    pass
+    name, *new_note = args 
+    record = address_book.data.get(name)
+
+    return record.change_note(new_note)
 
 @input_error
 def del_note_func(args: list) -> str:
     pass
 
 @input_error
-def add_tag_func(args: list) -> str:
+def add_tag_func(*args: list) -> str:
     pass
 
 @input_error
@@ -276,8 +282,9 @@ def handler(input_string: str) -> list:
     command = ""
     perhaps_command = what_is_command(FUNCTIONS, input_string)
     data = ""
+    input_string = input_string.strip().lower()
     for key in FUNCTIONS:
-        if input_string.strip().lower().startswith(key):
+        if input_string.startswith(key):
             command = key
             data = input_string[len(command):]
             break
@@ -288,6 +295,8 @@ def handler(input_string: str) -> list:
         command = perhaps_command
         input_string = input_string.split()[len(command.split()):]
         data = " ".join(input_string)
+        print(f"data: {data}")
+
 
     if data:        
         args = data.strip().split(" ")
