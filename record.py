@@ -18,26 +18,65 @@ class Record:
         self.phones.append(Phone(phone))
         return f'The phone was added.'
 
-    def change_phone(self, old_phone, new_phone) -> str:
+    def change_phone(self, new_phone) -> str:
         '''Міняє існуючий телефон контакту.'''
         
-        phones_values = [phone.value for phone in self.phones]   # Список телефонів для пошуку
-        old_phone = Phone(old_phone)   
-        new_phone = Phone(new_phone)
-        index = phones_values.index(old_phone.value)   #Пошук індексу старого номеру телефону
-        self.phones[index] = new_phone   #Змінюємо старий номер телефону на новий за індексом
+        if self.phones:
+            new_phone = Phone(new_phone)
+            phones = [phone.value for phone in self.phones]
+            showing = dict(enumerate(phones, 1))
+            while True:
+                try:
+                    print(f"What phone you want to change? {showing}")
+                    choosing = input("Choose № of this phone (skip it if you don't want)>>> ")
+                    if not choosing:
+                        return f"You didn't change any phone of < {self.name.value.title()} >"
+                    choosing = int(choosing)
+                    if choosing > 0:
+                        self.phones[choosing-1] = new_phone
+                        return f"Phone < {showing[choosing]} > of < {self.name.value.title()} > changed to the < {new_phone.value} >"
+                    else:
+                        raise KeyError
+                    break
+                except ValueError:
+                    print(f"{choosing} is not a number!")
+                except KeyError:
+                    print(f"{choosing} is out of range!")
+                except IndexError:
+                    print(f"{choosing} is out of range!")
 
-        return f"Phone number '{old_phone}' changed to '{new_phone}'"
+        else:
+            raise ValueError(f"Phones list of < {self.name.value.title()} > is empty")
 
-    def delete_phone(self, phone) -> str:
+   
+    def delete_phone(self) -> str:
         '''Видаляє існуючий телефон.'''
         
-        phone = Phone(phone)
-        phones_values = [phone_.value for phone_ in self.phones]
-        index = phones_values.index(phone.value)
-        self.phones.pop(index)
+        if self.phones:
+            phones = [phone.value for phone in self.phones]
+            showing = dict(enumerate(phones, 1))
+            while True:
+                try:
+                    print(f"What phone you want to remove? {showing}")
+                    choosing = input("Choose № of this phone (skip it if you don't want)>>> ")
+                    if not choosing:
+                        return f"You didn't remove any phone of < {self.name.value.title()} >"
+                    choosing = int(choosing)
+                    if choosing > 0:
+                        self.phones.pop(choosing-1)
+                        return f"Phone < {showing[choosing]} > of < {self.name.value.title()} > removed"
+                    else:
+                        raise KeyError
+                    break
+                except ValueError:
+                    print(f"{choosing} is not a number!")
+                except KeyError:
+                    print(f"{choosing} is out of range!")
+                except IndexError:
+                    print(f"{choosing} is out of range!")
 
-        return f"The phone number '{phone.value}' has been deleted"
+        else:
+            raise ValueError(f"Phones list of < {self.name.value.title()} > is empty")
 
     def add_mail(self, mail) -> str:
         '''Додає мейл до контакту.'''
@@ -63,7 +102,7 @@ class Record:
             note += f"{item} "  
         self.note = Note(note)
 
-        return f"The note < {note[:-1]} > was added to the contact < {self.name.value}.title() >."
+        return f"The note < {note[:-1]} > was added to the contact < {self.name.value.title()} >."
 
     def change_note(self, list_new_note) -> str:
         '''Міняє нотатку.'''
