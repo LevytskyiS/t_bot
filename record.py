@@ -1,4 +1,4 @@
-from fields_for_record import Name, Birthday, Phone
+from fields_for_record import Name, Birthday, Phone, Email
 from datetime import datetime
 
 
@@ -40,15 +40,20 @@ class Record:
 
     def add_mail(self, mail) -> str:
         '''Додає мейл до контакту.'''
-        pass
+        self.email = Email(mail)
+        return f'The email < {mail} > was added to the contact < {self.name.value} >.'
 
     def change_mail(self, new_mail) -> str:
         '''Міняє існуючий мейл.'''
-        pass
+        old_mail = self.email.value
+        self.email = Email(new_mail)
+        return f'The email < {old_mail} > of contact < {self.name.value} > was changed into < {new_mail} >.'
 
-    def delete_mail(self, mail) -> str:
+    def delete_mail(self) -> str:
         '''Видаляє існуючий мейл.'''
-        pass
+        deleted_mail = self.email.value
+        self.email = None
+        return f'The email < {deleted_mail} > of contact < {self.name.value} > was deleted.'
 
     def add_note(self, note) -> str:
         '''Додає нотатку.'''
@@ -76,21 +81,18 @@ class Record:
             return f'The birthday hasn`t been added yet for this contact. Add first'
 
 
-    def days_to_birthdays(self) -> str:
-        '''Повертає кількість днів, яка залишилась до ДН конкретної людини.
-        Реализовать функцию days_to_birthdays в файле Рекорд. Если имя есть в списке контактов, то возвращает ДР или
-        строку наподобие “The birthday hasn`t been added yet for this contact.“ Если такого имени нет в книге контактов,
-        то возвращается строка с тем, что такого контакта нет.'''
+    def days_to_birthdays(self):
+        '''Повертає кількість днів, яка залишилась до ДН конкретної людини.'''
         if self.birthday:
             current_year = datetime.now().year
             current_day = datetime.now()
             this_year_birthday = datetime(year=current_year, month=self.birthday.value.month, day=self.birthday.value.day)
             if (this_year_birthday - current_day).days >= 0:
                 next_birth = this_year_birthday - current_day
-                return f'Days to birthday is {next_birth.days}'
+                return next_birth.days
             else:
                 next_birth = datetime(year=current_year + 1, month=self.birthday.value.month, day=self.birthday.value.day)
-                return f'Days to birthday is {(next_birth - current_day).days}'
+                return (next_birth - current_day).days
         else:
             return f'The birthday hasn`t been added yet for this contact'
 

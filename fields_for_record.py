@@ -15,9 +15,6 @@ class Field:
     def value(self, new_value):
         self._value = new_value
 
-    def __str__(self):
-        return f'{self._value}'
-
 
 class Name(Field):
     pass
@@ -53,7 +50,7 @@ class Email(Field):
         new_email = re.search(r".+@.+", email)
 
         if not new_email:
-            return "Email is not valid."
+            raise ValueError(f"Email {email} is not valid.")
 
         self._value = new_email.group()
         

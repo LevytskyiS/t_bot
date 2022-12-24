@@ -8,8 +8,8 @@ def input_error(func):
     def inner(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        # except KeyError:
-        #     return "This contact doesn't exist, please try again."
+        except KeyError:
+            return "This contact doesn't exist, please try again."
         except ValueError as exception:
             return exception.args[0]
         except IndexError:
@@ -17,7 +17,7 @@ def input_error(func):
         except TypeError:
             return "Unknown command or parameters, please try again."
         except AttributeError:
-            return "Wrong format of date."
+            return "Can't find information about this contact."
         except StopIteration:
             return "There are no other numbers in the book."
 
@@ -25,7 +25,41 @@ def input_error(func):
 
 @input_error
 def help_func(*_) -> str:
-    pass
+    options_bot_str = {
+    "days to birth Leo": "I will tell you the number of days until my friend's birthday", #???? Функція не приймає аргументи, а має
+    #"add phone Natally 096-45-34-876": "I will write down your friend's phone number",
+    "change phone Natally 0995456743 0986754325": "I will change your friend's phone number",
+    "del phone Natally 096-45-34-876": "I will delete your enemy's phone number",
+    "show all 3": "I will show the entire list of contacts",
+    "add birth Natally 1999.12.23": "I will add the birthday of your friend so that you do not forget to congratulate",
+    "change birth Natally 1999.12.23": "I will change your friend's date of birth",
+    "all births": "I will show the birthdays of all your friends",
+    "add note Natally str. Peremogy, house 76.": "I will add notes to the contact",
+    "change note Natally str. Gagarina, h.126.": "I will change the contact notes",
+    "del note Natally": "I will delete contact notes",
+    "add tag Natally #address #favorite": "I will add tags",
+    "find tag #favorite": "I will show notes with such tags",
+    "good bye": "I will finish my work",
+    "exit": "I will finish my work",
+    "close": "I will finish my work",
+    "add Natally 096-45-34-876": "I will save the friend's name and phone number",
+    "help": "I will tell you about my possibilities",
+    "sort": "", #??? які аргументи отримує функція
+    "find house 76": "I will show you all the contacts that have what you are looking for",
+    "phone Natally": "I will show your friend's phone, just enter the name"
+    }
+
+    table_options_bot = ""
+    header_table = "| {:<51} | {:<80}".format("Example command", "Command description") # в наст. рядку header_table повертає строку на початку якої ще є текст "\x1b[1m\x1b[34m", тому ширина перщої колонки 25 символів
+    header_table = "\033[1m\033[34m{}\033[0m".format(header_table)  
+    table_options_bot += f"\n{header_table}\n\n"
+    
+    for key, value in options_bot_str.items():
+        key = "\033[34m{}\033[0m".format(key)
+        row = "| {:<60} | {:<80}".format(key, value)
+        table_options_bot += f"{row}\n"
+
+    return table_options_bot    
 
 @input_error
 def add_func(args: list) -> str:
@@ -35,6 +69,13 @@ def add_func(args: list) -> str:
         return address_book.add_record(record)
     else:
         return f"The contact with the name {args[0]} already exists in the AB."
+
+@input_error
+def delete_record_func(args: list) -> str:
+    contact_name = args[0]
+    if contact_name in address_book.keys():
+        return address_book.delete_record(contact_name)
+    return f"Name '{contact_name}' doesn't exist in your book."
 
 @input_error
 def add_phone_func(args: list) -> str:
@@ -67,15 +108,26 @@ def del_phone_func(args: list) -> str:
 
 @input_error
 def add_mail_func(args: list) -> str:
-    pass
+
+    record = address_book[args[0]]
+
+    return record.add_mail(args[1])
 
 @input_error
 def change_mail_func(args: list) -> str:
-    pass
+
+    name, new_mail = args                     # Розпаковуємо аргументи
+    record = address_book.data.get(name)      # Знаходимо {record} контакту {name}
+
+    return record.change_mail(new_mail)
 
 @input_error
 def delete_mail_func(args: list) -> str:
-    pass
+
+    name = args[0]
+    record = address_book.data.get(name)
+
+    return record.delete_mail()
 
 @input_error
 def show_all_func(*_) -> str:
@@ -156,12 +208,37 @@ def exit_func(*_)-> str:
     """
     return "Good bye!"
 
+
+def what_is_command(commands: list|dict, user_input: str) -> str:
+    count = 0
+    command_out = ""
+
+    for command in commands:
+
+        i = 0
+
+        for char_in, char_comm in zip(user_input, command):
+
+            if char_in == char_comm:
+                i += 1
+
+        if i > count:
+            count = i
+            command_out = command
+
+    return command_out
+
+
 #Importantly! The more words in the bot command, the higher they are in the dictionary.
 FUNCTIONS = {
     "days to birth": days_to_birth_func,
     "add phone": add_phone_func,
+    "add mail": add_mail_func,
+    "del contact": delete_record_func,
     "change phone": change_phone_func,
+    "change mail": change_mail_func,
     "del phone": del_phone_func,
+    "del mail": delete_mail_func,
     "show all": show_all_func,
     "add birth": add_birth_func,
     "change birth": change_birth_func,
@@ -186,7 +263,8 @@ def handler(input_string: str) -> list:
     """
     The function separates the command word for the bot, and writes all other data into a list, where the first value is the name
     """
-    command = input_string
+    command = ""
+    perhaps_command = what_is_command(FUNCTIONS, input_string)
     data = ""
     for key in FUNCTIONS:
         if input_string.strip().lower().startswith(key):
@@ -194,14 +272,22 @@ def handler(input_string: str) -> list:
             data = input_string[len(command):]
             break
 
-    if not input_string.strip().lower().startswith(key):
-        raise ValueError("This command is wrong.")
+    if not command and \
+        input(f"If you mean '{perhaps_command}' enter 'y': ") == "y":
+
+        command = perhaps_command
+        input_string = input_string.split()[len(command.split()):]
+        data = " ".join(input_string)
+        print(f"data: {data}")
+
+    # if not input_string.strip().lower().startswith(key):
+    #     raise ValueError("This command is wrong.")
 
     if data:        
         args = data.strip().split(" ")
         return FUNCTIONS[command](args)
     
-    return FUNCTIONS[command]()
+    return FUNCTIONS[input_string]()
 
 
 def main():
@@ -234,3 +320,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
