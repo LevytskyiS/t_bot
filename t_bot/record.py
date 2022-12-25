@@ -269,5 +269,6 @@ class Record:
             return f"The birthday hasn`t been added yet for this contact."
     
     def delete_birthday(self):
+        '''Deletes a birthday.'''
         self.birthday = None
         return f"The birhdays was deleted successfully."

@@ -33,5 +33,5 @@ def main():
         address_book.save_address_book()           
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
