@@ -65,12 +65,8 @@ class Notes(UserDict):
 
     def add_tags(self, tags):
         self.tags = tags
-        
-
-        
-
-
-
+       
+       
 class Note(Field):
     pass
 
@@ -103,7 +99,7 @@ class Birthday(Field):
     def value(self, birthday_str):
         birth_list = birthday_str.split('.')
         if (len(birth_list) < 3) or (len(birth_list) > 3):
-            print('Please type birthday in format "year.month.day"')
+            return "Please type birthday in format 'year.month.day'"
         year = [num for num in birth_list if len(num) == 4]
         year_index_in_list = birth_list.index(year[0])
         index_day = [2 if year_index_in_list == 0 else 0]

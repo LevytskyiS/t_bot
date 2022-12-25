@@ -170,7 +170,7 @@ class Record:
     def delete_note(self) -> str:
         '''Видаляє нотатку.'''
         deleted_note = self.note.value
-        self.note = Note('')
+        self.note = None
         return f'The note < {deleted_note} > of contact < {self.name.value} > was deleted.'
 
     def add_tag(self, list_tag) -> str:
@@ -236,7 +236,7 @@ class Record:
     def change_birthday(self, new_birthday) -> str:
         '''Міняє день народження.'''
         if self.birthday:
-            self.birthday.value = new_birthday
+            self.birthday = Birthday(new_birthday)
             return f'Birthday has been successfully changed'
         else:
             return f'The birthday hasn`t been added yet for this contact. Add first'
@@ -254,5 +254,9 @@ class Record:
                 next_birth = datetime(year=current_year + 1, month=self.birthday.value.month, day=self.birthday.value.day)
                 return (next_birth - current_day).days
         else:
-            raise ValueError(f'The birthday hasn`t been added yet for this contact')
+            return f'The birthday hasn`t been added yet for this contact'
+    
+    def delete_birthday(self):
+        self.birthday = None
+        return f"The birhdays was deleted successfully."
 

@@ -1,10 +1,7 @@
-from __future__ import annotations
-import os
-from address_book import address_book
 from record import Record
 from sort import sort_files
-
-
+import os
+from address_book import address_book
 
 def input_error(func):
     def inner(*args, **kwargs):
@@ -15,13 +12,13 @@ def input_error(func):
         except ValueError as exception:
             if exception.args[0] == "not enough values to unpack (expected 2, got 1)":
                 return "Wrong format. Must be '{command} {name} {new_value}'."
-            return exception.args[0]
+            return "Incorrect data"
         except IndexError:
             return "Wrong format. Must be '{command} {name} {value}'."
         except TypeError:
             return "Unknown command or parameters, please try again."
         except AttributeError:
-            return "Can't find information about this contact."
+            return "Can't find information about this contact or the data is incorrect."
         except StopIteration:
             return "There are no other numbers in the book."
 
@@ -32,6 +29,7 @@ def help_func(*_) -> str:
     options_bot_str = {
 
     "add Natally": "I will save the friend's name",
+    "edit contact Natally": "I will correct the name of an existing contact",
     "show all 3/showll all": "I will show the entire list of contacts / all contacts",
     "del contact Natally": "I will delete the contact",
     
@@ -48,6 +46,7 @@ def help_func(*_) -> str:
     "change birth Natally 1999.12.23": "I will change your friend's date of birth",
     "all births 50": "I will show the birthdays of all your friends in the next 50 days",
     "days to birth Leo": "I will tell you the number of days until my friend's birthday",
+    "del birth Natally": "I will delete your contacts's birthday",
 
     "add note Natally str. Peremogy, house 76.": "I will add notes to the contact",
     "change note Natally str. Gagarina, h.126.": "I will change the contact notes",
@@ -55,7 +54,7 @@ def help_func(*_) -> str:
 
     "add tag Natally #address #favorite": "I will add tags",
     "find tag #favorite": "I will show notes with such tags",
-    "del tag": "I will delete a note's tag",
+    "del tags Natally": "I will delete a note's tags",
     
     "help": "I will tell you about my possibilities",
     "sort": "I will sort all the files in the folder you choose",
@@ -82,7 +81,21 @@ def add_func(args: list) -> str:
     if record.name.value not in address_book.keys():
         return address_book.add_record(record)
     else:
-        return f"The contact with the name {args[0]} already exists in the AB."
+        return f"The contact with the name {args[0].title()} already exists in the AB."
+
+@input_error
+def edit_contact_name_func(args: list) -> str:
+    existing_name = args[0]
+    corrected_name = args[1]
+    if not address_book:
+        return f"'{existing_name.title()}' wasn't found in you address book."
+    for value in address_book.values():
+        if existing_name in address_book.keys():
+            value.name.value = corrected_name
+            address_book[corrected_name] = address_book.pop(existing_name)
+            return f"'{existing_name.title()}' was changed to '{corrected_name.title()}'."
+        else:
+            return f"'{existing_name.title()}' wasn't found in you address book."
 
 @input_error
 def delete_record_func(args: list) -> str:
@@ -164,27 +177,35 @@ def show_all_func(*_) -> str:
 @input_error
 def add_birth_func(args: list) -> str:
     record = address_book[args[0]]
-    if record:
+    if not record.birthday:
         return record.add_birthday(args[1])
     else:
-        return f'The name {args[0]} is not exist. Please add first'
+        return f'The name {args[0].title()} is not exist or this guy already has a birthday.'
 
 
 @input_error
 def change_birth_func(args: list) -> str:
     record = address_book[args[0]]
-    if record:
+    if record.birthday:
         return record.change_birthday(args[1])
     else:
-        return f'The name {args[0]} is not exist. Please add first'
+        return f'The name {args[0].title()} is not exist. Please add first'
+
+@input_error
+def del_birth_func(args: list) -> str:
+    record = address_book[args[0]]
+    if record.birthday:
+        return record.delete_birthday()
+    else:
+        return f"The name {args[0].title()} isn't in AB or there is no birthday to delete."
 
 @input_error
 def days_to_birth_func(args: list) -> str:
     record = address_book[args[0]]
-    if record:
+    if record.birthday != None:
         return f"{args[0].title()}'s birthday will be in {record.days_to_birthdays()} days."
     else:
-        return f'The name {args[0].title()} is not exist. Please add first'
+        return f"The name {args[0].title()} is not exist or this guy doesn't have a bday."
 
 
 @input_error
@@ -202,16 +223,13 @@ def all_birth_func(args) -> str:
 
 @input_error
 def add_note_func(args: list) -> str:
-
     record = address_book[args[0]]
-
     return record.add_note(args[1:])
 
 @input_error
 def change_note_func(args: list) -> str:
     name, *new_note = args 
     record = address_book.data.get(name)
-
     return record.change_note(new_note)
 
 @input_error
@@ -239,7 +257,7 @@ def edit_tag_func(args: list) -> str:
                 record.del_tag()
                 continue
             elif act == 2:
-                new_line_tag = input('Please type new tags, with # and separated by \' space\'>>>')
+                new_line_tag = input('Please type new tags, with # and separated by \'space\'>>>')
                 new_list_tag = new_line_tag.split(' ')
                 record.change_tag(new_list_tag)
                 continue
@@ -256,11 +274,6 @@ def delete_tags_func(args: list) -> str:
     '''Функція видаляє всі теги'''
     record = address_book.data.get(args[0])
     return record.delete_tags()
-
-
-@input_error
-def find_tag_func(args: list) -> str:
-    pass
 
 @input_error
 def find_func(args) -> str:
@@ -313,21 +326,22 @@ FUNCTIONS = {
     "add phone": add_phone_func,
     "add mail": add_mail_func,
     "del contact": delete_record_func,
-    "change phone": change_phone_func,
-    "change mail": change_mail_func,
+    "edit contact": edit_contact_name_func,
+    "edit phone": change_phone_func,
+    "edit mail": change_mail_func,
     "del phone": del_phone_func,
     "del mail": delete_mail_func,
     "show all": show_all_func,
     "add birth": add_birth_func,
-    "change birth": change_birth_func,
+    "del birth": del_birth_func,
+    "edit birth": change_birth_func,
     "all births": all_birth_func,
     "add note": add_note_func,
-    "change note": change_note_func,
+    "edit note": change_note_func,
     "del note": del_note_func,
     "add tag": add_tag_func,
-    "find tag": find_tag_func,
     "edit tag": edit_tag_func,
-    "delete tags": delete_tags_func,
+    "del tags": delete_tags_func,
     "add": add_func,
     "help": help_func,
     "sort": sort_func,
@@ -358,49 +372,9 @@ def handler(input_string: str) -> list:
         command = perhaps_command
         input_string = input_string.split()[len(command.split()):]
         data = " ".join(input_string)
-        print(f"data: {data}")
-
 
     if data:        
         args = data.strip().split(" ")
         return FUNCTIONS[command](args)
     
     return FUNCTIONS[command]()
-
-
-def main():
-    """
-    The user enters through a space:
-        - a command for the bot;
-        - command, contact name, phone number or date of birth, email address, notes, tags,
-    The function returns the bot's response and prints them.
-    The bot terminates after the words "good bye", "exit", "close", "quit", "bye"
-    """
-    try: 
-        print("")
-        print("\033[1m\033[34m{}\033[0m".format("Hello, I am Bot-contacts:)"))
-        print("")
-        #print("Type 'help' to see all commands")
-        help_str = "\033[34m{}\033[0m".format("help")
-        print(f"Type {help_str} to see all commands")
-        
-        while True:
-            print("")
-            input_string = input("Input command, please: ")
-            if input_string.lower() in EXIT_COMMANDS:
-                exit_func()
-            get_command = handler(input_string)
-            print(get_command)
-    
-    except Exception:
-        print("\nAn unexpected error has occurred...")
-        main()
-
-    finally:
-        address_book.save_address_book()           
-
-
-if __name__ == '__main__':
-    main()
-
-
