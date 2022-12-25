@@ -205,8 +205,6 @@ class Record:
         if self.tag:
             self.tag = Tag(old_tag.value + new_tag_list)
             print(f"The new tag {new_tag_list} has been added to old one {old_tag.value}.")
-        else:
-            print(f'The tag has been added yet for this contact. Add first')
 
     def delete_tags(self) -> str:
         '''Deletes all tags.'''
