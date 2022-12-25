@@ -173,11 +173,12 @@ class Record:
         self.note = Note('')
         return f'The note < {deleted_note} > of contact < {self.name.value} > was deleted.'
 
-    def add_tag(self, tag) -> str:
-        '''Створює теги. Один Раз при виклику '''
+    def add_tag(self, tag:list) -> str:
+        '''Створює теги. Один Раз при виклику та кожного разу післі Delete tags '''
         if not self.tag:
-            self.tag = Tag(tag)
-            return f"The tag < {tag} > was added to the contact < {self.name.value} >."
+            tags_list = tag[0].split(',') # [#one,#two]
+            self.tag = Tag(tags_list)
+            return f"The tag < {tags_list} > was added to the contact < {self.name.value} >."
         else:
             return f'Tag is existed. Cannot be added'
 
@@ -193,7 +194,7 @@ class Record:
     def delete_tags(self) -> str:
         '''Видаляє всі тег.'''
         deleted_tag = self.tag
-        self.tag = Tag('')
+        self.tag = None
         return f"The tag < {deleted_tag.value} > of contact < {self.name.value} > was deleted"
 
     def del_tag(self):
