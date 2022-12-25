@@ -188,17 +188,17 @@ def days_to_birth_func(args: list) -> str:
 
 
 @input_error
-def all_birth_func(self, range_days) -> list:
-    '''Повертає список всіх днів народжень за проміжок днів заданих користувачем.'''
-    list_accounts = []
-    for record_elem in self.data.values():
-        if record_elem.birthday:
-            days_to_next_birthday = record_elem.days_to_birthdays()
-            if days_to_next_birthday <= range_days:
-                list_accounts.append(record_elem.name.value)
-        else:
-            continue
-    return list_accounts
+def all_birth_func(args) -> str:
+    days = int(args[0])
+    result = "\n"
+    bdays = address_book.all_birthdays(days)
+    if not bdays:
+        return f"There are no bdays in {days}'s days."
+    for data in bdays:
+        result += " - ".join(data)
+        result += "\n"
+    result = result[0:-1]
+    return result
 
 @input_error
 def add_note_func(args: list) -> str:
