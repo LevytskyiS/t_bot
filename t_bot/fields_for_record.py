@@ -1,6 +1,6 @@
-import re
 from datetime import datetime
 from collections import UserDict
+import re
 
 
 class Field:

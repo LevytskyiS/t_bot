@@ -1,7 +1,8 @@
 from record import Record
 from sort import sort_files
-import os
 from address_book import address_book
+import os
+
 
 def input_error(func):
     def inner(*args, **kwargs):
