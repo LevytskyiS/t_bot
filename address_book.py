@@ -31,8 +31,21 @@ class AddressBook(UserDict):
                 for i in range(0, len(email.value), 23):
                     email_table.append(email.value[i:i+23])
            
-            tag = " ".join(record.tag.value) if record.tag else ""
-            tag_table = [tag[i:i+13] for i in range(0, len(tag), 13)]
+            tag = record.tag.value if record.tag else ""
+            tag_table = []
+            temp = ""
+            tag_i = ""
+
+            for tag_i in tag:
+
+                if len(temp + tag_i) < 13:
+                    temp += " " + tag_i
+                
+                else:
+                    tag_table.append(temp)
+                    temp = tag_i
+
+            tag_table.append(temp)
 
             note = record.note.value if record.note else " "
             note_table = [note[i:i+28] for i in range(0, len(note), 28)]
@@ -74,7 +87,7 @@ class AddressBook(UserDict):
             emails = [email.value for email in record.emails]
             emails = " ".join(emails)
             birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
-            tag = record.tag.value if record.tag else ""
+            tag = " ".join(record.tag.value if record.tag else "")
             note = record.note.value if record.note else ""
 
             if data in name or\
