@@ -32,6 +32,7 @@ def help_func(*_) -> str:
     options_bot_str = {
 
     "add Natally": "I will save the friend's name",
+    "edit contact Natally": "I will correct the name of an existing contact",
     "show all 3/showll all": "I will show the entire list of contacts / all contacts",
     "del contact Natally": "I will delete the contact",
     
@@ -83,6 +84,20 @@ def add_func(args: list) -> str:
         return address_book.add_record(record)
     else:
         return f"The contact with the name {args[0]} already exists in the AB."
+
+@input_error
+def edit_contact_name_func(args: list) -> str:
+    existing_name = args[0]
+    corrected_name = args[1]
+    if not address_book:
+        return f"'{existing_name.title()}' wasn't found in you address book."
+    for value in address_book.values():
+        if existing_name in address_book.keys():
+            value.name.value = corrected_name
+            address_book[corrected_name] = address_book.pop(existing_name)
+            return f"'{existing_name.title()}' was changed to '{corrected_name.title()}'."
+        else:
+            return f"'{existing_name.title()}' wasn't found in you address book."
 
 @input_error
 def delete_record_func(args: list) -> str:
@@ -313,6 +328,7 @@ FUNCTIONS = {
     "add phone": add_phone_func,
     "add mail": add_mail_func,
     "del contact": delete_record_func,
+    "edit contact": edit_contact_name_func,
     "change phone": change_phone_func,
     "change mail": change_mail_func,
     "del phone": del_phone_func,
