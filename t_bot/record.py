@@ -192,11 +192,12 @@ class Record:
     def change_tag(self, new_tag_list):
         '''Додає теги до існуючиго списку тегів.'''
         old_tag = self.tag
+        
         if self.tag:
             self.tag = Tag(old_tag.value + new_tag_list)
             print(f'The new tag {new_tag_list} has been added to old one {old_tag.value}')
         else:
-            print(f'The tag has been added yet for this contact. Add first')
+            self.add_tag(new_tag_list)#print(f'The tag has been added yet for this contact. Add first')
 
     def delete_tags(self) -> str:
         '''Видаляє всі тег.'''
