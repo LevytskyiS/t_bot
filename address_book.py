@@ -6,37 +6,51 @@ from datetime import datetime
 
 class AddressBook(UserDict):
 
-    def __str__(self) -> str: # допишу як тільки будуть нотатки
+    def __str__(self) -> str:
 
-        header = "\n|" + "-" * 110 + "|"
-        headers = ("Name", "Phone", "Birthday", "Email", "Tags", "Notes")
-        columns = "\n" + "|{:^10}|{:^25}" * (len(headers) // 2) + "|"
+        header = "\n|" + "-" * 117 + "|"
+        headers = ["Name", "Phone", "Birthday", "Email", "Tags", "Notes"]
+        columns = "\n|{:^15}|{:^15}|{:^12}|{:^25}|{:^15}|{:^30}|"
         header += columns.format(*headers)
-        header += "\n|" + "-" * 110+ "|"
+        header += "\n|" + "-" * 117+ "|"
         header = "\033[34m{}\033[0m".format(header)
 
         for name, record in self.data.items():
 
-            phone = record.phones[0].value if record.phones else ""
+            name = name.title()
+            name_table = [name[i:i+13] for i in range(0, len(name), 13)]
+
+            phone_table = [phone.value for phone in record.phones]
+
             birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
-            email = record.email.value if record.email else ""
-            tag = record.tag.value if record.tag else ""
-            note = record.note.value if record.note else ""
+            birthday_table = [birthday]
+            
+            email_table = []
 
-            header += columns.format(
-                name.title(),
-                phone,
-                birthday,
-                email,
-                tag,
-                note)
+            for email in record.emails:
+                for i in range(0, len(email.value), 23):
+                    email_table.append(email.value[i:i+23])
+           
+            tag = " ".join(record.tag.value) if record.tag else ""
+            tag_table = [tag[i:i+13] for i in range(0, len(tag), 13)]
 
-            for i, phone in enumerate(record.phones):
+            note = record.note.value if record.note else " "
+            note_table = [note[i:i+28] for i in range(0, len(note), 28)]
 
-                if i > 0:
-                    header += columns.format("", phone.value, "", "", "", "")
+            all_table = [name_table, phone_table, birthday_table, email_table, tag_table, note_table]
+            max_len_table = len(max(all_table, key=lambda table: len(table)))
 
-            header += "\n|" + "-" * 110 + "|"
+            for i in range(max_len_table):
+                cells = []
+
+                for table in all_table:
+
+                    table = table[i] if i < len(table) else ""
+                    cells.append(table)
+
+                header += columns.format(*cells)
+
+            header += "\n|" + "-" * 117 + "|"
 
         return header
     
@@ -50,18 +64,33 @@ class AddressBook(UserDict):
         '''Шукає співпадіння по цифрі в телефоні, по букві в імені, мейлу.'''
         
         output_book = AddressBook()
-        data = data[0]        
+        data = data[0]
+        counter = 0        
 
         for name, record in self.data.items():
-            email = record.email if record.email else ""
-            for phone in record.phones:
-                if data in name or\
-                    data in phone.value or\
-                    data in email:
 
-                    output_book.add_record(record)
+            phones = [phone.value for phone in record.phones]
+            phones = " ".join(phones)
+            emails = [email.value for email in record.emails]
+            emails = " ".join(emails)
+            birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
+            tag = record.tag.value if record.tag else ""
+            note = record.note.value if record.note else ""
+
+            if data in name or\
+                data in birthday or\
+                data in emails or\
+                data in phones or\
+                data in tag or\
+                data in note:
+
+                output_book.add_record(record)
+                counter += 1 
         
-        return output_book        
+        if counter < 1:
+            raise ValueError(f"I didn't find any {data} in AB.")              
+        
+        return output_book   
 
     def get_all_records(self) -> list:
         '''Повертає список всіх контактів із їхніми даними.'''
