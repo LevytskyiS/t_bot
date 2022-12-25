@@ -53,17 +53,8 @@ class Email(Field):
         if not new_email:
             raise ValueError(f"Email {email} is not valid.")
         self._value = new_email.group()
-        
+              
 
-class Notes(UserDict):
-
-    def __init__(self):
-        self.notes = []
-
-    def add_tags(self, tags):
-        self.tags = tags
-       
-       
 class Note(Field):
     pass
 
