@@ -61,7 +61,7 @@ def help_func(*_) -> str:
     "help": "I will tell you about my possibilities",
     "sort": "I will sort all the files in the folder you choose",
     "find mi": "I will find all record, which contains 'mi'",
-    f"{EXIT_COMMANDS}": "Enter one of these word and I will finisg my work",
+    f"{EXIT_COMMANDS}": "Enter one of these word and I will finish my work",
     
     }
 
@@ -179,10 +179,10 @@ def show_all_func(*_) -> str:
 @input_error
 def add_birth_func(args: list) -> str:
     record = address_book[args[0]]
-    if record:
+    if not record.birthday:
         return record.add_birthday(args[1])
     else:
-        return f'The name {args[0]} is not exist. Please add first'
+        return f'The name {args[0].title()} is not exist or this guy already has a birthday.'
 
 
 @input_error
@@ -191,15 +191,15 @@ def change_birth_func(args: list) -> str:
     if record:
         return record.change_birthday(args[1])
     else:
-        return f'The name {args[0]} is not exist. Please add first'
+        return f'The name {args[0].title()} is not exist. Please add first'
 
 @input_error
 def days_to_birth_func(args: list) -> str:
     record = address_book[args[0]]
-    if record:
+    if record.birthday != None:
         return f"{args[0].title()}'s birthday will be in {record.days_to_birthdays()} days."
     else:
-        return f'The name {args[0].title()} is not exist. Please add first'
+        return f"The name {args[0].title()} is not exist or this guy doesn't have a bday."
 
 
 @input_error
