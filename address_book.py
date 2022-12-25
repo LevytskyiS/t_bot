@@ -111,7 +111,7 @@ class AddressBook(UserDict):
     def delete_record(self, contact_name: str) -> str:
         '''Видаляє контакт повністю.'''
         self.data.pop(contact_name)
-        return f'The contact was deleted successfully.'
+        return f"The contact '{contact_name.title()}' was deleted successfully."
 
 
     def save_address_book(self) -> str:

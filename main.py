@@ -324,7 +324,7 @@ def handler(input_string: str) -> list:
 
 def main():
     """
-   The user enters through a space:
+    The user enters through a space:
         - a command for the bot;
         - command, contact name, phone number or date of birth, email address, notes, tags,
     The function returns the bot's response and prints them.
@@ -345,7 +345,10 @@ def main():
                 exit_func()
             get_command = handler(input_string)
             print(get_command)
-            
+    
+    except Exception:
+        print("\nAn unexpected error has occurred...")
+        main()
 
     finally:
         address_book.save_address_book()           
