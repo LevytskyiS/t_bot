@@ -1,6 +1,7 @@
 from __future__ import annotations
 from user_funcs import handler, EXIT_COMMANDS, exit_func
 from address_book import address_book
+from boris import boris
 
 def main():
     """
@@ -11,20 +12,22 @@ def main():
     The bot terminates after the words "good bye", "exit", "close", "quit", "bye"
     """
     try: 
-        print("")
-        print("\033[1m\033[34m{}\033[0m".format("Hello, I am Bot-contacts:)"))
-        print("")
-        #print("Type 'help' to see all commands")
-        help_str = "\033[34m{}\033[0m".format("help")
-        print(f"Type {help_str} to see all commands")
         
-        while True:
-            print("")
-            input_string = input("Input command, please: ")
-            if input_string.lower() in EXIT_COMMANDS:
-                exit_func()
-            get_command = handler(input_string)
-            print(get_command)
+        boris()
+        
+        # print("")
+        # print("\033[1m\033[34m{}\033[0m".format("Hello, I am Bot-contacts:)"))
+        # print("")
+        # help_str = "\033[34m{}\033[0m".format("help")
+        # print(f"Type {help_str} to see all commands")
+        
+        # while True:
+        #     print("")
+        #     input_string = input("Input command, please: ")
+        #     if input_string.lower() in EXIT_COMMANDS:
+        #         exit_func()
+        #     get_command = handler(input_string)
+        #     print(get_command)
     
     except Exception:
         print("\nAn unexpected error has occurred...")

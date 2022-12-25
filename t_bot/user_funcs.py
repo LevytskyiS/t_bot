@@ -10,9 +10,12 @@ def input_error(func):
         except KeyError:
             return "This contact doesn't exist, please try again."
         except ValueError as exception:
-            if exception.args[0] == "not enough values to unpack (expected 2, got 1)":
+            ex_text = exception.args[0]
+            if "not enough values to unpack" in ex_text:
                 return "Wrong format. Must be '{command} {name} {new_value}'."
-            return exception.args[0]    #"Incorrect data"
+            elif "invalid literal for int" in ex_text:
+                return "You must enter an integer number."
+            return ex_text    #"Incorrect data"
         except IndexError:
             return "Wrong format. Must be '{command} {name} {value}'."
         except TypeError:
@@ -214,7 +217,7 @@ def all_birth_func(args) -> str:
     result = "\n"
     bdays = address_book.all_birthdays(days)
     if not bdays:
-        return f"There are no bdays in {days}'s days."
+        return f"No one from your book will have a birthday in '{days}' days."
     for data in bdays:
         result += " - ".join(data)
         result += "\n"
@@ -296,7 +299,7 @@ def sort_func(*_) -> str:
 @input_error
 def exit_func(*_)-> str:
     """The function close bot."""
-    return exit("Good bye!")
+    return exit("\nGood bye! \nSee you later!  ͡° ͜ʖ ͡° \n")
 
 
 @input_error
