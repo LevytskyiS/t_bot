@@ -12,7 +12,7 @@ def input_error(func):
         except ValueError as exception:
             if exception.args[0] == "not enough values to unpack (expected 2, got 1)":
                 return "Wrong format. Must be '{command} {name} {new_value}'."
-            return "Incorrect data"
+            return exception.args[0]    #"Incorrect data"
         except IndexError:
             return "Wrong format. Must be '{command} {name} {value}'."
         except TypeError:

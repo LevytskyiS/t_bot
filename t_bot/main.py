@@ -25,7 +25,10 @@ def main():
                 exit_func()
             get_command = handler(input_string)
             print(get_command)
-            
+    
+    except Exception:
+        print("\nAn unexpected error has occurred...")
+        main()        
 
     finally:
         address_book.save_address_book()           
