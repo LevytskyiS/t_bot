@@ -159,6 +159,8 @@ class Record:
     def change_note(self, list_new_note) -> str:
         '''Міняє нотатку.'''
         new_note = ""
+        if not self.note:
+            return self.add_note(list_new_note)#f'Note must be created first.'
         for item in list_new_note:
             new_note += f"{item} "
         old_note = self.note.value
