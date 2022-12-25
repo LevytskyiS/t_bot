@@ -83,7 +83,7 @@ class Tag(Field):
                 raise ValueError(f'The tag shall be string')
             if not tag.startswith('#'):
                 raise ValueError(f'The tag must start #')
-        value = " ".join(value)
+        # value = " ".join(value)
         self._value = value
 
 
@@ -113,3 +113,6 @@ class Birthday(Field):
         day = self.range_control(int((birth_list[index_day[0]])), 1, 31)
 
         self._value = datetime(year=year, month=month, day=day).date()
+
+
+

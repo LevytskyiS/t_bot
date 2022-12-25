@@ -1,7 +1,9 @@
+from __future__ import annotations
 import os
 from address_book import address_book
 from record import Record
 from sort import sort_files
+
 
 
 def input_error(func):
@@ -97,7 +99,6 @@ def add_phone_func(args: list) -> str:
         return address_book[contact_name].add_phone(phone)
     else:
         return f"There is no '{contact_name}' in your AB or the '{phone}' already exists in the list."
-        
 
 @input_error
 def change_phone_func(args: list) -> str:
@@ -187,8 +188,17 @@ def days_to_birth_func(args: list) -> str:
 
 
 @input_error
-def all_birth_func(*_) -> str:
-    return address_book.all_birthdays()
+def all_birth_func(args) -> str:
+    days = int(args[0])
+    result = "\n"
+    bdays = address_book.all_birthdays(days)
+    if not bdays:
+        return f"There are no bdays in {days}'s days."
+    for data in bdays:
+        result += " - ".join(data)
+        result += "\n"
+    result = result[0:-1]
+    return result
 
 @input_error
 def add_note_func(args: list) -> str:
@@ -206,14 +216,47 @@ def change_note_func(args: list) -> str:
 
 @input_error
 def del_note_func(args: list) -> str:
-    pass
+    name=args[0]
+    record = address_book.data.get(name)
+    return record.delete_note()
 
 @input_error
 def add_tag_func(args: list) -> str:
-
+    '''Функція створює один раз теги'''
     record = address_book[args[0]]
     
     return record.add_tag(args[1:])
+
+@input_error
+def edit_tag_func(args: list) -> str:
+    '''Функція редагує існуючи теги'''
+    record = address_book[args[0]]
+    if record.tag:
+        while True:
+            print(f'The current list of tags is {record.tag.value}')
+            act = int(input('Please choose the way to edit tags: 1)remove any tag; 2)add any tag; 3)exit >>>'))
+            if act == 1:
+                record.del_tag()
+                continue
+            elif act == 2:
+                new_line_tag = input('Please type new tags, with # and separated by \' space\'>>>')
+                new_list_tag = new_line_tag.split(' ')
+                record.change_tag(new_list_tag)
+                continue
+            elif act == 3:
+                return f''
+            else:
+                print('You enter a wrong number. Please try again')
+                continue
+    else:
+        return f'Please verify your command or Tag are empty, please fill it'
+
+@input_error
+def delete_tags_func(args: list) -> str:
+    '''Функція видаляє всі теги'''
+    record = address_book.data.get(args[0])
+    return record.delete_tags()
+
 
 @input_error
 def find_tag_func(args: list) -> str:
@@ -241,6 +284,7 @@ def sort_func(*_) -> str:
 def exit_func(*_)-> str:
     """The function close bot."""
     return exit("Good bye!")
+
 
 @input_error
 def what_is_command(commands: list|dict, user_input: str) -> str:
@@ -282,6 +326,8 @@ FUNCTIONS = {
     "del note": del_note_func,
     "add tag": add_tag_func,
     "find tag": find_tag_func,
+    "edit tag": edit_tag_func,
+    "delete tags": delete_tags_func,
     "add": add_func,
     "help": help_func,
     "sort": sort_func,
@@ -356,4 +402,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
