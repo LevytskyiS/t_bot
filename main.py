@@ -239,8 +239,8 @@ def edit_tag_func(args: list) -> str:
                 record.del_tag()
                 continue
             elif act == 2:
-                new_line_tag = input('Please type new tags, with # and separated by \',\'>>>')
-                new_list_tag =new_line_tag.split(',')
+                new_line_tag = input('Please type new tags, with # and separated by \' space\'>>>')
+                new_list_tag = new_line_tag.split(' ')
                 record.change_tag(new_list_tag)
                 continue
             elif act == 3:
@@ -249,7 +249,7 @@ def edit_tag_func(args: list) -> str:
                 print('You enter a wrong number. Please try again')
                 continue
     else:
-        return f'Tag are empty. Please fill it'
+        return f'Please verify your command or Tag are empty, please fill it'
 
 @input_error
 def delete_tags_func(args: list) -> str:
@@ -327,7 +327,7 @@ FUNCTIONS = {
     "add tag": add_tag_func,
     "find tag": find_tag_func,
     "edit tag": edit_tag_func,
-    "delete tags":delete_tags_func,
+    "delete tags": delete_tags_func,
     "add": add_func,
     "help": help_func,
     "sort": sort_func,
