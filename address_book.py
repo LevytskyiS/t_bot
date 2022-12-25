@@ -9,32 +9,43 @@ class AddressBook(UserDict):
 
         header = "\n|" + "-" * 117 + "|"
         headers = ("Name", "Phone", "Birthday", "Email", "Tags", "Notes")
-        columns = "\n|{:^10}|{:^15}|{:^12}|{:^25}|{:^15}|{:^35}|"
+        columns = "\n|{:^15}|{:^15}|{:^12}|{:^25}|{:^15}|{:^30}|"
         header += columns.format(*headers)
         header += "\n|" + "-" * 117+ "|"
         header = "\033[34m{}\033[0m".format(header)
 
         for name, record in self.data.items():
 
+            name = name.title()
+            name_table = [name[i:i+13] for i in range(0, len(name), 13)]
             phone = record.phones[0].value if record.phones else ""
             birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
-            email = record.email.value if record.email else ""
-            tag = record.tag.value if record.tag else ""
+            email = record.emails[0].value if record.emails else " "
+            email_table = [email[i:i+23] for i in range(0, len(email), 23)]
+            tag = record.tag.value if record.tag else " "
+            tag_table = [tag[i:i+13] for i in range(0, len(tag), 13)]
             note = record.note.value if record.note else " "
-            note_table = [note[i:i+33] for i in range(0, len(note), 33)]
+            note_table = [note[i:i+28] for i in range(0, len(note), 28)]
 
             header += columns.format(
-                name.title(),
+                name_table[0],
                 phone,
                 birthday,
-                email,
-                tag,
+                email_table[0],
+                tag_table[0],
                 note_table[0])
 
             for i, phone in enumerate(record.phones):
 
                 if i > 0:
-                    header += columns.format("", phone.value, "", "", "", note_table[i])
+                    header += columns.format("", phone.value, "", "", "", "")   #note_table[i])
+
+            for ii, email in enumerate(record.emails):
+
+                if ii > 0:
+                    mail = email.value
+                    mail_table = [mail[i:i+23] for i in range(0, len(mail), 23)]
+                    header += columns.format("", "", "", mail_table[0], "", "")
 
             header += "\n|" + "-" * 117 + "|"
 
@@ -50,28 +61,33 @@ class AddressBook(UserDict):
         '''Шукає співпадіння по цифрі в телефоні, по букві в імені, мейлу.'''
         
         output_book = AddressBook()
-        data = data[0]        
+        data = data[0]
+        counter = 0        
 
         for name, record in self.data.items():
 
+            phones = [phone.value for phone in record.phones]
+            phones = " ".join(phones)
+            emails = [email.value for email in record.emails]
+            emails = " ".join(emails)
             birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
-            email = record.email.value if record.email else ""
             tag = record.tag.value if record.tag else ""
             note = record.note.value if record.note else ""
 
             if data in name or\
                 data in birthday or\
-                data in email or\
+                data in emails or\
+                data in phones or\
                 data in tag or\
                 data in note:
 
                 output_book.add_record(record)
-
-            for phone in record.phones:
-                if data in phone.value:
-                    output_book.add_record(record)                
+                counter += 1 
         
-        return output_book        
+        if counter < 1:
+            raise ValueError(f"I didn't find any {data} in AB.")              
+        
+        return output_book   
 
     def get_all_records(self) -> list:
         '''Повертає список всіх контактів із їхніми даними.'''
