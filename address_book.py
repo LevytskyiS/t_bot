@@ -9,13 +9,15 @@ class AddressBook(UserDict):
 
         header = "\n|" + "-" * 117 + "|"
         headers = ("Name", "Phone", "Birthday", "Email", "Tags", "Notes")
-        columns = "\n|{:^10}|{:^15}|{:^12}|{:^25}|{:^15}|{:^35}|"
+        columns = "\n|{:^15}|{:^15}|{:^12}|{:^25}|{:^15}|{:^30}|"
         header += columns.format(*headers)
         header += "\n|" + "-" * 117+ "|"
         header = "\033[34m{}\033[0m".format(header)
 
         for name, record in self.data.items():
 
+            name = name.title()
+            name_table = [name[i:i+13] for i in range(0, len(name), 13)]
             phone = record.phones[0].value if record.phones else ""
             birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
             email = record.emails[0].value if record.emails else " "
@@ -23,10 +25,10 @@ class AddressBook(UserDict):
             tag = record.tag.value if record.tag else " "
             tag_table = [tag[i:i+13] for i in range(0, len(tag), 13)]
             note = record.note.value if record.note else " "
-            note_table = [note[i:i+33] for i in range(0, len(note), 33)]
+            note_table = [note[i:i+28] for i in range(0, len(note), 28)]
 
             header += columns.format(
-                name.title(),
+                name_table[0],
                 phone,
                 birthday,
                 email_table[0],
