@@ -42,7 +42,7 @@ def boris():
         
         elif choosing == "1":
             new_contact_name = input("Write name of your new contact >>> ")
-            new_record = Record(new_contact_name)
+            new_record = Record(new_contact_name.lower())
             if new_record.name.value not in address_book.keys():
                 address_book.add_record(new_record)
                 print(f"\nThe contact '{new_contact_name.title()}' successfully added ♥")
@@ -211,24 +211,36 @@ def change_main_atributes(name, search_entry):
         elif choosing == "1":
             value = input(f"Write new phone for '{name.title()}' >>> ")
             if value:
-                print(change_phone_func([name, value]))
-                break
+                if not search_entry.phones:
+                    print(add_phone_func([name, value]))
+                    break
+                else:
+                    print(change_phone_func([name, value]))
+                    break
             else:
                 break
         
         elif choosing == "2":
             value = input(f"Write new birthday for '{name.title()}' >>> ")
             if value:
-                print(change_birth_func([name, value]))
-                break
+                if not search_entry.birthday:
+                    print(add_birth_func([name, value]))
+                    break
+                else:
+                    print(change_birth_func([name, value]))
+                    break
             else:
                 break
         
         elif choosing == "3":
             value = input(f"Write new email for '{name.title()}' >>> ")
             if value:
-                print(change_mail_func([name, value]))
-                break
+                if not search_entry.emails:
+                    print(add_mail_func([name, value]))
+                    break
+                else:
+                    print(change_mail_func([name, value]))
+                    break
             else:
                 break
 
