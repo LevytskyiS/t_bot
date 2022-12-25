@@ -254,5 +254,5 @@ class Record:
                 next_birth = datetime(year=current_year + 1, month=self.birthday.value.month, day=self.birthday.value.day)
                 return (next_birth - current_day).days
         else:
-            return f'The birthday hasn`t been added yet for this contact'
+            raise ValueError(f'The birthday hasn`t been added yet for this contact')
 

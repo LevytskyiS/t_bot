@@ -59,7 +59,7 @@ def help_func(*_) -> str:
     
     "help": "I will tell you about my possibilities",
     "sort": "I will sort all the files in the folder you choose",
-    "find mi": "I will find all record, which contains 'mi'",
+    "find {example}": "I will find all record, which contains 'mi'",
     f"{EXIT_COMMANDS}": "Enter one of these word and I will finisg my work",
     
     }
