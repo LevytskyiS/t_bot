@@ -36,7 +36,7 @@ def boris():
             search_entry = address_book.data.get(name)
             if search_entry:
                 print(f"\nWhat would you like to do with contact '{name.title()}' (° ͜ʖ°)\n")
-                main_comands(search_entry, name)
+                main_comands(name)
             else:
                 print(f"I didn't find any contact with name '{name.title()}' in AB (-_-)")
         
@@ -51,7 +51,7 @@ def boris():
             print(f"\nWhat is it '{choosing}' ??? (o_O)?")
 
 @input_error
-def main_comands(search_entry, name):
+def main_comands(name):
     showing = dict(enumerate(FUNC_2_LIST, 1))
     for k, v in showing.items():
         print(f"{k} : {v}")
@@ -150,6 +150,7 @@ def add_main_atributes(name):
         
         elif choosing_2 == "1":
             add_main_atributes(name)
+            break
         
         elif choosing_2 == "2":
             break
