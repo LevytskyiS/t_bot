@@ -1,4 +1,4 @@
-from main import *
+from user_funcs import *
 from fields_for_record import Note
 
 FUNC_1_LIST = ("Add new contact", "Check contact", \
@@ -301,7 +301,8 @@ def del_main_atributes(name, search_entry):
             break
         
         elif choosing == "2":
-            pass
+            print(del_birth_func([name]))
+            break
         
         elif choosing == "3":
             print(delete_mail_func([name]))
