@@ -50,7 +50,7 @@ def boris():
         else:
             print(f"\nWhat is it '{choosing}' ??? (o_O)?")
 
-
+@input_error
 def main_comands(search_entry, name):
     showing = dict(enumerate(FUNC_2_LIST, 1))
     for k, v in showing.items():
@@ -64,15 +64,15 @@ def main_comands(search_entry, name):
             break
         
         elif choosing == "1":
-            add_main_atributes()
+            add_main_atributes(name)
             break
         
         elif choosing == "2":
-            change_main_atributes()
+            change_main_atributes(name)
             break
         
         elif choosing == "3":
-            del_main_atributes()
+            del_main_atributes(name)
             break
 
         elif choosing == "4":
@@ -82,8 +82,8 @@ def main_comands(search_entry, name):
         else:
             print(f"\nWhat is it '{choosing}' ??? (o_O)?")
 
-
-def add_main_atributes():
+@input_error
+def add_main_atributes(name):
     showing = dict(enumerate(ATTRIBUTES_LIST, 1))
     for k, v in showing.items():
         print(f"{k} : {v}")
@@ -96,13 +96,103 @@ def add_main_atributes():
             break
         
         elif choosing == "1":
-            pass
+            value = input(f"Write phone for '{name}' >>> ")
+            if value:
+                print(add_phone_func([name, value]))
+                break
+            else:
+                break
         
         elif choosing == "2":
-            pass
+            value = input(f"Write birthday for '{name}' >>> ")
+            if value:
+                print(add_birth_func([name, value]))
+                break
+            else:
+                break
         
         elif choosing == "3":
-            pass
+            value = input(f"Write email for '{name}' >>> ")
+            if value:
+                print(add_mail_func([name, value]))
+                break
+            else:
+                break
+
+        # elif choosing == "4":
+        #     value = input(f"Write tag for '{name}' >>> ")
+        #     if value:
+        #         print(add_phone_func([name, value]))
+        #         break
+        #     else:
+        #         break
+
+        # elif choosing == "5":
+        #     value = input(f"Write note for '{name}' >>> ")
+        #     if value:
+        #         print(add_phone_func([name, value]))
+        #         break
+        #     else:
+        #         break
+        
+        else:
+            print(f"\nWhat is it '{choosing}' ??? (o_O)?")
+
+    print(f"\nDo you wanna add something else to the '{name}' ? (•¿•)")
+    print("1 : Yes")
+    print("2 : No")
+    while True:    
+        
+        choosing_2 = input("\nChoose № >>> ")
+        
+        if not choosing_2:
+            break
+        
+        elif choosing_2 == "1":
+            add_main_atributes(name)
+        
+        elif choosing_2 == "2":
+            break
+
+        else:
+            print(f"\nWhat is it '{choosing_2}' ??? (o_O)?")
+
+@input_error
+def change_main_atributes(name):
+    showing = dict(enumerate(ATTRIBUTES_LIST, 1))
+    for k, v in showing.items():
+        print(f"{k} : {v}")
+    
+    while True:    
+        
+        choosing = input("\nChoose № >>> ")
+        
+        if not choosing:
+            break
+        
+        elif choosing == "1":
+            value = input(f"Write new phone for '{name}' >>> ")
+            if value:
+                print(change_phone_func([name, value]))
+                break
+            else:
+                break
+        
+        elif choosing == "2":
+            value = input(f"Write new birthday for '{name}' >>> ")
+            if value:
+                print(change_birth_func([name, value]))
+                break
+            else:
+                break
+        
+        elif choosing == "3":
+            value = input(f"Write new email for '{name}' >>> ")
+            if value:
+                print(change_mail_func([name, value]))
+                break
+            else:
+                break
 
         elif choosing == "4":
             pass
@@ -112,40 +202,28 @@ def add_main_atributes():
         
         else:
             print(f"\nWhat is it '{choosing}' ??? (o_O)?")
-
-
-def change_main_atributes():
-    showing = dict(enumerate(ATTRIBUTES_LIST, 1))
-    for k, v in showing.items():
-        print(f"{k} : {v}")
     
+    print(f"\nDo you wanna change something else to the '{name}' ? (•¿•)")
+    print("1 : Yes")
+    print("2 : No")
     while True:    
         
-        choosing = input("\nChoose № >>> ")
+        choosing_2 = input("\nChoose № >>> ")
         
-        if not choosing:
+        if not choosing_2:
             break
         
-        elif choosing == "1":
-            pass
+        elif choosing_2 == "1":
+            add_main_atributes(name)
         
-        elif choosing == "2":
-            pass
-        
-        elif choosing == "3":
-            pass
+        elif choosing_2 == "2":
+            break
 
-        elif choosing == "4":
-            pass
-
-        elif choosing == "5":
-            pass
-        
         else:
-            print(f"\nWhat is it '{choosing}' ??? (o_O)?")
+            print(f"\nWhat is it '{choosing_2}' ??? (o_O)?")
 
-
-def del_main_atributes():
+@input_error
+def del_main_atributes(name):
     showing = dict(enumerate(ATTRIBUTES_LIST, 1))
     for k, v in showing.items():
         print(f"{k} : {v}")
@@ -158,13 +236,15 @@ def del_main_atributes():
             break
         
         elif choosing == "1":
-            pass
+            print(del_phone_func([name]))
+            break
         
         elif choosing == "2":
             pass
         
         elif choosing == "3":
-            pass
+            print(delete_mail_func([name]))
+            break
 
         elif choosing == "4":
             pass
