@@ -182,7 +182,7 @@ def add_birth_func(args: list) -> str:
     if not record.birthday:
         return record.add_birthday(args[1])
     else:
-        return f'The name {args[0]} is not exist or this guy already has a birthday.'
+        return f'The name {args[0].title()} is not exist or this guy already has a birthday.'
 
 
 @input_error
@@ -191,7 +191,7 @@ def change_birth_func(args: list) -> str:
     if record:
         return record.change_birthday(args[1])
     else:
-        return f'The name {args[0]} is not exist. Please add first'
+        return f'The name {args[0].title()} is not exist. Please add first'
 
 @input_error
 def days_to_birth_func(args: list) -> str:
