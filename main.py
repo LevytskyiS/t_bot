@@ -49,6 +49,7 @@ def help_func(*_) -> str:
     "change birth Natally 1999.12.23": "I will change your friend's date of birth",
     "all births 50": "I will show the birthdays of all your friends in the next 50 days",
     "days to birth Leo": "I will tell you the number of days until my friend's birthday",
+    "del birth Natally": "I will delete your contacts's birthday",
 
     "add note Natally str. Peremogy, house 76.": "I will add notes to the contact",
     "change note Natally str. Gagarina, h.126.": "I will change the contact notes",
@@ -56,7 +57,7 @@ def help_func(*_) -> str:
 
     "add tag Natally #address #favorite": "I will add tags",
     "find tag #favorite": "I will show notes with such tags",
-    "del tag": "I will delete a note's tag",
+    "del tags Natally": "I will delete a note's tags",
     
     "help": "I will tell you about my possibilities",
     "sort": "I will sort all the files in the folder you choose",
@@ -194,6 +195,10 @@ def change_birth_func(args: list) -> str:
         return f'The name {args[0].title()} is not exist. Please add first'
 
 @input_error
+def del_birth_func(args: list) -> str:
+    pass
+
+@input_error
 def days_to_birth_func(args: list) -> str:
     record = address_book[args[0]]
     if record.birthday != None:
@@ -217,16 +222,13 @@ def all_birth_func(args) -> str:
 
 @input_error
 def add_note_func(args: list) -> str:
-
     record = address_book[args[0]]
-
     return record.add_note(args[1:])
 
 @input_error
 def change_note_func(args: list) -> str:
     name, *new_note = args 
     record = address_book.data.get(name)
-
     return record.change_note(new_note)
 
 @input_error
@@ -271,11 +273,6 @@ def delete_tags_func(args: list) -> str:
     '''Функція видаляє всі теги'''
     record = address_book.data.get(args[0])
     return record.delete_tags()
-
-
-@input_error
-def find_tag_func(args: list) -> str:
-    pass
 
 @input_error
 def find_func(args) -> str:
@@ -329,21 +326,21 @@ FUNCTIONS = {
     "add mail": add_mail_func,
     "del contact": delete_record_func,
     "edit contact": edit_contact_name_func,
-    "change phone": change_phone_func,
-    "change mail": change_mail_func,
+    "edit phone": change_phone_func,
+    "edit mail": change_mail_func,
     "del phone": del_phone_func,
     "del mail": delete_mail_func,
     "show all": show_all_func,
     "add birth": add_birth_func,
-    "change birth": change_birth_func,
+    "del birth": del_birth_func,
+    "edit birth": change_birth_func,
     "all births": all_birth_func,
     "add note": add_note_func,
-    "change note": change_note_func,
+    "edit note": change_note_func,
     "del note": del_note_func,
     "add tag": add_tag_func,
-    "find tag": find_tag_func,
     "edit tag": edit_tag_func,
-    "delete tags": delete_tags_func,
+    "del tags": delete_tags_func,
     "add": add_func,
     "help": help_func,
     "sort": sort_func,
@@ -374,8 +371,6 @@ def handler(input_string: str) -> list:
         command = perhaps_command
         input_string = input_string.split()[len(command.split()):]
         data = " ".join(input_string)
-        print(f"data: {data}")
-
 
     if data:        
         args = data.strip().split(" ")

@@ -170,7 +170,7 @@ class Record:
     def delete_note(self) -> str:
         '''Видаляє нотатку.'''
         deleted_note = self.note.value
-        self.note = Note('')
+        self.note = None
         return f'The note < {deleted_note} > of contact < {self.name.value} > was deleted.'
 
     def add_tag(self, list_tag) -> str:
