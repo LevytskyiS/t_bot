@@ -30,7 +30,7 @@ class AddressBook(UserDict):
                 for i in range(0, len(email.value), 23):
                     email_table.append(email.value[i:i+23])
            
-            tag = record.tag.value if record.tag else " "
+            tag = " ".join(record.tag.value) if record.tag else ""
             tag_table = [tag[i:i+13] for i in range(0, len(tag), 13)]
 
             note = record.note.value if record.note else " "
