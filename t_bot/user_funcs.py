@@ -275,7 +275,7 @@ def edit_tag_func(args: list) -> str:
                 record.del_tag()
                 continue
             elif act == 2:
-                new_line_tag = input("Please type new tags, with # and separated by \' space\'>>>")
+                new_line_tag = input("Please type new tags, with # and separated by \'space\'>>> ")
                 new_list_tag = new_line_tag.split(' ')
                 record.change_tag(new_list_tag)
                 continue
