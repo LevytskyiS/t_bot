@@ -8,7 +8,7 @@ class AddressBook(UserDict):
     def __str__(self) -> str:
 
         header = "\n|" + "-" * 117 + "|"
-        headers = ("Name", "Phone", "Birthday", "Email", "Tags", "Notes")
+        headers = ["Name", "Phone", "Birthday", "Email", "Tags", "Notes"]
         columns = "\n|{:^15}|{:^15}|{:^12}|{:^25}|{:^15}|{:^30}|"
         header += columns.format(*headers)
         header += "\n|" + "-" * 117+ "|"
@@ -18,34 +18,36 @@ class AddressBook(UserDict):
 
             name = name.title()
             name_table = [name[i:i+13] for i in range(0, len(name), 13)]
-            phone = record.phones[0].value if record.phones else ""
+
+            phone_table = [phone.value for phone in record.phones]
+
             birthday = record.birthday.value.strftime("%m.%d.%Y") if record.birthday else ""
-            email = record.emails[0].value if record.emails else " "
-            email_table = [email[i:i+23] for i in range(0, len(email), 23)]
+            birthday_table = [birthday]
+            
+            email_table = []
+
+            for email in record.emails:
+                for i in range(0, len(email.value), 23):
+                    email_table.append(email.value[i:i+23])
+           
             tag = record.tag.value if record.tag else " "
             tag_table = [tag[i:i+13] for i in range(0, len(tag), 13)]
+
             note = record.note.value if record.note else " "
             note_table = [note[i:i+28] for i in range(0, len(note), 28)]
 
-            header += columns.format(
-                name_table[0],
-                phone,
-                birthday,
-                email_table[0],
-                tag_table[0],
-                note_table[0])
+            all_table = [name_table, phone_table, birthday_table, email_table, tag_table, note_table]
+            max_len_table = len(max(all_table, key=lambda table: len(table)))
 
-            for i, phone in enumerate(record.phones):
+            for i in range(max_len_table):
+                cells = []
 
-                if i > 0:
-                    header += columns.format("", phone.value, "", "", "", "")   #note_table[i])
+                for table in all_table:
 
-            for ii, email in enumerate(record.emails):
+                    table = table[i] if i < len(table) else ""
+                    cells.append(table)
 
-                if ii > 0:
-                    mail = email.value
-                    mail_table = [mail[i:i+23] for i in range(0, len(mail), 23)]
-                    header += columns.format("", "", "", mail_table[0], "", "")
+                header += columns.format(*cells)
 
             header += "\n|" + "-" * 117 + "|"
 
