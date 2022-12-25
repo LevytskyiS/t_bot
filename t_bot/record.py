@@ -12,7 +12,6 @@ class Record:
         self.emails = []
         self.tag = None
         self.note = None
-        self.notes =[]
 
     def add_phone(self, phone) -> str:
         '''Adds a phone to the contact's list of phones.'''
@@ -207,7 +206,7 @@ class Record:
             self.tag = Tag(old_tag.value + new_tag_list)
             print(f"The new tag {new_tag_list} has been added to old one {old_tag.value}.")
         else:
-            self.add_tag(new_tag_list)#print(f'The tag has been added yet for this contact. Add first')
+            print(f'The tag has been added yet for this contact. Add first')
 
     def delete_tags(self) -> str:
         '''Deletes all tags.'''
