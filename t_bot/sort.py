@@ -12,7 +12,7 @@ EXTENSIONS_DICT = {
     'archives': ('.zip', '.gz', '.tar'),
     'photoshop': ('.xmp', '.nef'),
     'books': ('.epub', '.fb2')
-}
+    }
 
 CYRILLIC_SYMBOLS = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяєіїґ"
 TRANSLATION = ("a", "b", "v", "g", "d", "e", "e", "j", "z", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u",
@@ -35,8 +35,7 @@ def sort_files(path):
     with ThreadPoolExecutor(max_workers=5) as executor:
         executor.submit(sort, current_folder)
 
-    return f'Well done!'
-
+    return f"Well done!"
 
 def sort(iter_dirs: Path):
 
@@ -55,7 +54,6 @@ def sort(iter_dirs: Path):
 
             finally:
                 continue
-
 
 def change(founded_file: Path):
 
@@ -91,7 +89,6 @@ def change(founded_file: Path):
                 base_archive_dir.mkdir(exist_ok=False)
                 shutil.unpack_archive(new_file_path, base_archive_dir)
 
-
 def normalize(correct_name: str) -> str:
 
     new_main_name = correct_name.translate(trans)
@@ -103,7 +100,6 @@ def normalize(correct_name: str) -> str:
             new_main_name = new_main_name.replace(i, '_')
 
     return new_main_name
-
 
 def to_translate():
 
