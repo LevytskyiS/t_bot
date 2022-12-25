@@ -1,7 +1,9 @@
+from __future__ import annotations
 import os
 from address_book import address_book
 from record import Record
 from sort import sort_files
+
 
 
 def input_error(func):
@@ -231,6 +233,7 @@ def edit_tag_func(args: list) -> str:
     record = address_book[args[0]]
     if record.tag:
         while True:
+            print(f'The current list of tags is {record.tag.value}')
             act = int(input('Please choose the way to edit tags: 1)remove any tag; 2)add any tag; 3)exit >>>'))
             if act == 1:
                 record.del_tag()
@@ -241,7 +244,7 @@ def edit_tag_func(args: list) -> str:
                 record.change_tag(new_list_tag)
                 continue
             elif act == 3:
-                break
+                return f''
             else:
                 print('You enter a wrong number. Please try again')
                 continue
@@ -323,6 +326,8 @@ FUNCTIONS = {
     "del note": del_note_func,
     "add tag": add_tag_func,
     "find tag": find_tag_func,
+    "edit tag": edit_tag_func,
+    "delete tags":delete_tags_func,
     "add": add_func,
     "help": help_func,
     "sort": sort_func,
