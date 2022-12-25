@@ -58,11 +58,12 @@ def help_func(*_) -> str:
     "del birth Natally": "I will delete your contact's birthday.",
 
     "add note Natally str. Peremogy, house 76.": "I will add any note to the contact.",
-    "edit note Natally str. Gagarina, h.126.": "I will change the contact's notes.",
+    "edit note Natally str. Gagarina, h.126.": "I will add a new note to the existing note.",
     "del note Natally": "I will delete contact's notes.",
 
     "add tag Natally #address #favorite": "I will add tags.",
     "find tag #favorite": "I will show notes with such tags.",
+    "edit tags Natally": "You can delete or add a new tag.",
     "del tags Natally": "I will deletenote's tags of your contact.",
     
     "help": "I will tell you about my possibilities.",
