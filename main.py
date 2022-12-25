@@ -11,6 +11,8 @@ def input_error(func):
         except KeyError:
             return "This contact doesn't exist, please try again."
         except ValueError as exception:
+            if exception.args[0] == "not enough values to unpack (expected 2, got 1)":
+                return "Wrong format. Must be '{command} {name} {new_value}'."
             return exception.args[0]
         except IndexError:
             return "Wrong format. Must be '{command} {name} {value}'."
@@ -26,28 +28,38 @@ def input_error(func):
 @input_error
 def help_func(*_) -> str:
     options_bot_str = {
-    "days to birth Leo": "I will tell you the number of days until my friend's birthday", #???? Функція не приймає аргументи, а має
-    "add phone Natally 096-45-34-876": "I will add another number to your contact",
+
+    "add Natally": "I will save the friend's name",
+    "show all 3/showll all": "I will show the entire list of contacts / all contacts",
+    "del contact Natally": "I will delete the contact",
+    
+    "add phone Natally 096-45-34-876": "I will add a number to your contact",
     "change phone Natally 0995456743 0986754325": "I will change your friend's phone number",
+    "phone Natally": "I will show your friend's phone, just enter the name",
     "del phone Natally 096-45-34-876": "I will delete your contact's phone number",
+    
     "add mail Vasya vasiliy007@gmail.com": "I will add email to your contact",
     "change mail Vasya new_mail_vasya@gmail.com": "I will change email of your contact",
     "del mail Vasya": "I will delete email of your contact",
-    "show all 3": "I will show the entire list of contacts",
+    
     "add birth Natally 1999.12.23": "I will add the birthday of your friend so that you do not forget to congratulate",
     "change birth Natally 1999.12.23": "I will change your friend's date of birth",
-    "all births": "I will show the birthdays of all your friends",
+    "all births 50": "I will show the birthdays of all your friends in the next 50 days",
+    "days to birth Leo": "I will tell you the number of days until my friend's birthday",
+
     "add note Natally str. Peremogy, house 76.": "I will add notes to the contact",
     "change note Natally str. Gagarina, h.126.": "I will change the contact notes",
     "del note Natally": "I will delete contact notes",
+
     "add tag Natally #address #favorite": "I will add tags",
     "find tag #favorite": "I will show notes with such tags",
-    f"{EXIT_COMMANDS}": "I will finish my work",
-    "add Natally 096-45-34-876": "I will save the friend's name and phone number",
+    "del tag": "I will delete a note's tag",
+    
     "help": "I will tell you about my possibilities",
-    "sort": "", #??? які аргументи отримує функція
-    "find house 76": "I will show you all the contacts that have what you are looking for",
-    "phone Natally": "I will show your friend's phone, just enter the name"
+    "sort": "I will sort all the files in the folder you choose",
+    "find mi": "I will find all record, which contains 'mi'",
+    f"{EXIT_COMMANDS}": "Enter one of these word and I will finisg my work",
+    
     }
 
     table_options_bot = ""
@@ -84,16 +96,16 @@ def add_phone_func(args: list) -> str:
     if contact_name in address_book.keys() and phone not in [p.value for p in address_book[contact_name].phones]:
         return address_book[contact_name].add_phone(phone)
     else:
-        return f"There is no '{contact_name}' in your AB or the {phone} already exists in the list."
-        
+        return f"There is no '{contact_name}' in your AB or the '{phone}' already exists in the list."
+
 @input_error
 def change_phone_func(args: list) -> str:
     '''Змінює номер телефону контакту {name}'''
     
-    name, old_phone, new_phone = args   # Розпаковуємо аргументи
+    name, new_phone = args   # Розпаковуємо аргументи
     record = address_book.data.get(name)   # Знаходимо {record} контакту {name}
 
-    return record.change_phone(old_phone, new_phone)
+    return record.change_phone(new_phone)
    
 
 @input_error
@@ -109,23 +121,27 @@ def phone_func(args: list) -> str:
 def del_phone_func(args: list) -> str:
     '''Видаляє існуючий номер телефону'''
 
-    name, phone = args    
+    name = args[0]    
     record = address_book.data.get(name)
     
-    return record.delete_phone(phone)
+    return record.delete_phone()
 
 @input_error
 def add_mail_func(args: list) -> str:
-
-    record = address_book[args[0]]
-
-    return record.add_mail(args[1])
+    
+    contact_name = args[0]
+    email = args[1]
+    
+    if contact_name in address_book.keys() and email not in [e.value for e in address_book[contact_name].emails]:
+        return address_book[contact_name].add_mail(email)
+    else:
+        return f"There is no '{contact_name}' in your AB or the '{email}' already exists in the list."
 
 @input_error
 def change_mail_func(args: list) -> str:
 
-    name, new_mail = args                     # Розпаковуємо аргументи
-    record = address_book.data.get(name)      # Знаходимо {record} контакту {name}
+    name, new_mail = args
+    record = address_book.data.get(name)
 
     return record.change_mail(new_mail)
 
@@ -164,9 +180,9 @@ def change_birth_func(args: list) -> str:
 def days_to_birth_func(args: list) -> str:
     record = address_book[args[0]]
     if record:
-        return record.days_to_birthdays()
+        return f"{args[0].title()}'s birthday will be in {record.days_to_birthdays()} days."
     else:
-        return f'The name {args[0]} is not exist. Please add first'
+        return f'The name {args[0].title()} is not exist. Please add first'
 
 
 @input_error
@@ -263,13 +279,12 @@ def sort_func(*_) -> str:
 
 @input_error
 def exit_func(*_)-> str:
-    """
-    The function close bot.
-    """
+    """The function close bot."""
     return exit("Good bye!")
 
 
-def what_is_command(commands: list, user_input: str) -> str:
+@input_error
+def what_is_command(commands: list|dict, user_input: str) -> str:
     count = 0
     command_out = ""
 
@@ -366,7 +381,6 @@ def main():
         
         while True:
             print("")
-            #print(address_book.data.keys())
             input_string = input("Input command, please: ")
             if input_string.lower() in EXIT_COMMANDS:
                 exit_func()
