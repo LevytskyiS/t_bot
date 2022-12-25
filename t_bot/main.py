@@ -15,13 +15,13 @@ def input_error(func):
         except ValueError as exception:
             if exception.args[0] == "not enough values to unpack (expected 2, got 1)":
                 return "Wrong format. Must be '{command} {name} {new_value}'."
-            return exception.args[0]
+            return "Incorrect data"
         except IndexError:
             return "Wrong format. Must be '{command} {name} {value}'."
         except TypeError:
             return "Unknown command or parameters, please try again."
         except AttributeError:
-            return "Can't find information about this contact."
+            return "Can't find information about this contact or the data is incorrect."
         except StopIteration:
             return "There are no other numbers in the book."
 
@@ -84,7 +84,7 @@ def add_func(args: list) -> str:
     if record.name.value not in address_book.keys():
         return address_book.add_record(record)
     else:
-        return f"The contact with the name {args[0]} already exists in the AB."
+        return f"The contact with the name {args[0].title()} already exists in the AB."
 
 @input_error
 def edit_contact_name_func(args: list) -> str:
@@ -189,14 +189,18 @@ def add_birth_func(args: list) -> str:
 @input_error
 def change_birth_func(args: list) -> str:
     record = address_book[args[0]]
-    if record:
+    if record.birthday:
         return record.change_birthday(args[1])
     else:
         return f'The name {args[0].title()} is not exist. Please add first'
 
 @input_error
 def del_birth_func(args: list) -> str:
-    pass
+    record = address_book[args[0]]
+    if record.birthday:
+        return record.delete_birthday()
+    else:
+        return f"The name {args[0].title()} isn't in AB or there is no birthday to delete."
 
 @input_error
 def days_to_birth_func(args: list) -> str:

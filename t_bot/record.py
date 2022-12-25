@@ -236,7 +236,7 @@ class Record:
     def change_birthday(self, new_birthday) -> str:
         '''Міняє день народження.'''
         if self.birthday:
-            self.birthday.value = new_birthday
+            self.birthday = Birthday(new_birthday)
             return f'Birthday has been successfully changed'
         else:
             return f'The birthday hasn`t been added yet for this contact. Add first'
@@ -255,4 +255,8 @@ class Record:
                 return (next_birth - current_day).days
         else:
             return f'The birthday hasn`t been added yet for this contact'
+    
+    def delete_birthday(self):
+        self.birthday = None
+        return f"The birhdays was deleted successfully."
 
