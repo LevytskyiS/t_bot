@@ -184,7 +184,15 @@ def days_to_birth_func(args: list) -> str:
 @input_error
 def all_birth_func(args) -> str:
     days = int(args[0])
-    return address_book.all_birthdays(days)
+    result = "\n"
+    bdays = address_book.all_birthdays(days)
+    if not bdays:
+        return f"There are no bdays in {days}'s days."
+    for data in bdays:
+        result += " - ".join(data)
+        result += "\n"
+    result = result[0:-1]
+    return result
 
 @input_error
 def add_note_func(args: list) -> str:
