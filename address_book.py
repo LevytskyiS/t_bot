@@ -1,6 +1,7 @@
 from collections import UserDict
 import pickle
 from record import Record
+from datetime import datetime
 
 
 class AddressBook(UserDict):
@@ -102,7 +103,16 @@ class AddressBook(UserDict):
             if record_elem.birthday:
                 days_to_next_birthday = record_elem.days_to_birthdays()
                 if days_to_next_birthday <= range_days:
-                    list_accounts.append(record_elem.name.value)
+                    current_year = datetime.now().year
+                    current_day = datetime.now()
+                    this_year_birthday = datetime(year=current_year, month=record_elem.birthday.value.month, day=record_elem.birthday.value.day)
+                    if (this_year_birthday - current_day).days >= 0:
+                        next_birth = this_year_birthday - current_day
+                        return next_birth.days
+                    else:
+                        next_birth = datetime(year=current_year + 1, month=record_elem.birthday.value.month, day=record_elem.birthday.value.day)
+                    data = [record_elem.name.value.title(), next_birth.strftime("%A %d %B %Y")]
+                    list_accounts.append(data)
             else:
                 continue
         return list_accounts
