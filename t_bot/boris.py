@@ -374,8 +374,11 @@ def del_main_atributes(name, search_entry):
         else:
             print(f"\nWhat is it '{choosing_3}' ??? (o_O)?")
 
-boris()
-
+address_book.load_address_book()
+try:
+    boris()
+finally:
+    address_book.save_address_book()
 
 
 
