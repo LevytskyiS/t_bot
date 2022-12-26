@@ -162,7 +162,7 @@ class Record:
                 note += f"{item} "
             self.note = Note(note)
         else:
-            return f"Note exists. Choose the 'edit note' command to correct the note."
+            return f"A note exists. Choose the 'edit note' command to correct the note."
 
         return f"The note '{note[:-1]}' was added to the contact '{self.name.value.title()}'."
 
@@ -196,10 +196,10 @@ class Record:
             self.tag = Tag(tag_list2)
             return f"The tag '{tag_list2}' was added to the contact '{self.name.value}'."
         else:
-            return f"Tag is existed. Cannot be added."
+            return f"This tag is already in the list. It cannot be added."
 
     def change_tag(self, new_tag_list):
-        '''Adds new tahs to the list.'''
+        '''Adds new tags to the list.'''
         old_tag = self.tag
         
         if self.tag:
@@ -210,7 +210,7 @@ class Record:
         '''Deletes all tags.'''
         deleted_tag = self.tag
         self.tag = None
-        return f"The tag < {deleted_tag.value} > of contact < {self.name.value} > was deleted"
+        return f"The tag '{deleted_tag.value}' of contact '{self.name.value}' was deleted"
 
     def del_tag(self):
         '''Deletes only that tag which is chosen by a user.'''
@@ -228,7 +228,7 @@ class Record:
                         print( f"You didn't remove any tags of '{self.tag.value}'.")
                     choosing = int(choosing)
                     self.tag.value.pop(choosing - 1)
-                    return f"Tag '{showing[choosing]}' from '{old_tags}' was removed."
+                    return f"The tag '{showing[choosing]}' from '{old_tags}' was removed."
                 
                 except ValueError:
                     print(f"{choosing} is not a number!")
@@ -237,11 +237,11 @@ class Record:
                 except IndexError:
                     print(f"{choosing} is out of range!")
         else:
-            return f"Tag {self.tag} is empty."
+            return f"The list of tags '{self.tag}' is empty."
 
 
     def add_birthday(self, birthday) -> str:
-        '''Add a birthday.'''
+        '''Adds a birthday.'''
         self.birthday = Birthday(birthday)
         return f"Birthday was successfully added."
 

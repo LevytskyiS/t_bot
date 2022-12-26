@@ -1,7 +1,7 @@
 from collections import UserDict
-import pickle
 from record import Record
 from datetime import datetime
+import pickle
 
 
 class AddressBook(UserDict):
@@ -68,13 +68,13 @@ class AddressBook(UserDict):
         return header
     
     def add_record(self, record: Record) -> str:
-        '''Додає ім'я як ключ та об'єкт класу Рекорд як значення.'''
+        '''Adds name (key) of the contact and his fields (value).'''
         self.data[record.name.value] = record                 #.title()
-        return f'New contact was added successfuly.'
+        return f"New contact was added successfuly."
 
 
     def search_in_contact_book(self, data) -> str:
-        '''Шукає співпадіння по цифрі в телефоні, по букві в імені, мейлу.'''
+        '''Looks for mathches in names, phones, mails, tags, notes, birthdays.'''
         
         output_book = AddressBook()
         data = data[0]
@@ -105,20 +105,20 @@ class AddressBook(UserDict):
         
         return output_book   
 
-    def get_all_records(self) -> list:
-        '''Повертає список всіх контактів із їхніми даними.'''
-        pass
-
     def all_birthdays(self, range_days) -> list:
-        '''Повертає список всіх днів народжень за проміжок днів заданих користувачем.'''
+        '''Returns the list of all b-days in the next N-days.'''
         list_accounts = []
+        
         for record_elem in self.data.values():
+            
             if record_elem.birthday:
                 days_to_next_birthday = record_elem.days_to_birthdays()
+                
                 if days_to_next_birthday <= range_days:
                     current_year = datetime.now().year
                     current_day = datetime.now()
                     this_year_birthday = datetime(year=current_year, month=record_elem.birthday.value.month, day=record_elem.birthday.value.day)
+                    
                     if (this_year_birthday - current_day).days >= 0:
                         next_birth = this_year_birthday - current_day
                         return next_birth.days
@@ -126,36 +126,32 @@ class AddressBook(UserDict):
                         next_birth = datetime(year=current_year + 1, month=record_elem.birthday.value.month, day=record_elem.birthday.value.day)
                     data = [record_elem.name.value.title(), next_birth.strftime("%A %d %B %Y")]
                     list_accounts.append(data)
+            
             else:
                 continue
+            
         return list_accounts
 
 
     def delete_record(self, contact_name: str) -> str:
-        '''Видаляє контакт повністю.'''
+        '''Deletes the contact (key).'''
         self.data.pop(contact_name)
-        return f'The contact was deleted successfully.'
+        return f"The contact was deleted successfully."
 
 
     def save_address_book(self) -> str:
-        '''Зберігає адресну книгу'''
+        '''Saves the address book.'''
         with open("address_book.bin", "wb") as file:
             pickle.dump(self.data, file)
     
 
     def load_address_book(self) -> str:
-        '''Завантажує адресну книгу.'''
+        '''Loads the address book.'''
         try:
             with open("address_book.bin", "rb") as file:     
                 self.data = pickle.load(file)
         except FileNotFoundError:
             return "The file does not exist."   
-        
-
-    def iterator(self) -> list:
-        '''Повертає кількість сторінок, вказаних користувачем.'''
-        pass
-
 
 address_book = AddressBook()
 address_book.load_address_book()
