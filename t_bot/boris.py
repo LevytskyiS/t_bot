@@ -88,7 +88,7 @@ def boris():
         
         else:
             print('')
-            print(f"\nWhat is it '{choosing}' ??? (o_O)?")
+            print(f"What is it '{choosing}' ??? (o_O)?")
 
 
 @input_error
