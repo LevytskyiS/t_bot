@@ -51,7 +51,7 @@ def help_func(*_) -> str:
     "edit mail Vasya new_mail_vasya@gmail.com": "I will change an email of one of your contacts.",
     "del mail Vasya": "I will delete an email of one of your contacts.",
     
-    "add birth Natally 1999.12.23": "I will add the birthday of your friend so that you do not forget to congratulate.",
+    "add birth Natally 1999.12.23": "I will add the birthday of your friend.",
     "edit birth Natally 1999.12.23": "I will change your friend's date of birth.",
     "all births 50": "I will show the birthdays of all your friends in the next 50 days.",
     "days to birth Leo": "I will tell you the number of days until my friend's birthday.",
