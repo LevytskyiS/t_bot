@@ -174,7 +174,7 @@ def delete_mail_func(args: list) -> str:
 
 @input_error
 def show_all_func(*_) -> str:
-    return address_book
+    return address_book.search_in_contact_book("")
 
 
 @input_error
@@ -369,8 +369,10 @@ def handler(input_string: str) -> list:
             data = input_string[len(command):]
             break
 
-    if not command and \
-        input(f"If you mean '{perhaps_command}' enter 'y': ") == "y":
+    if (
+        not command and
+        input(f"If you mean '{perhaps_command}' enter 'y': ") == "y"
+        ):
 
         command = perhaps_command
         input_string = input_string.split()[len(command.split()):]
