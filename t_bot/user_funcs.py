@@ -285,7 +285,7 @@ def edit_tag_func(args: list) -> str:
                 print("You entered a wrong number. Please try again.")
                 continue
     else:
-        return f"Please verify your command or the list of tags is empty, please fill it."
+        return f"The list of tags is empty, please fill it."
 
 @input_error
 def delete_tags_func(args: list) -> str:
@@ -378,11 +378,11 @@ def handler(input_string: str) -> list:
     command = ""
     perhaps_command = what_is_command(FUNCTIONS, input_string)
     data = ""
-    input_string = input_string.strip().lower()
+    input_string = input_string.strip().lower() + " "
     for key in FUNCTIONS:
-        if input_string.startswith(key):
+        if input_string.startswith(key + " "):
             command = key
-            data = input_string[len(command):]
+            data = input_string[len(command):].strip()
             break
 
     if not command and \
