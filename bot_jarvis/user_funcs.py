@@ -331,7 +331,7 @@ def sort_func(*_) -> str:
 @input_error
 def exit_func(*_)-> str:
     """The function close bot."""
-    return exit(color_message("Bye! I'm gonna miss you :)", "blue_bold"))
+    return exit(color_message("Bye! I'm gonna miss you :)\n", "blue_bold"))
 
 @input_error
 def what_is_command(commands: list|dict, user_input: str) -> str:
