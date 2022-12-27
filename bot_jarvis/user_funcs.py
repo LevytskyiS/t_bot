@@ -288,12 +288,25 @@ def edit_tag_func(args: list) -> str:
     if record.tag:
         
         while True:
+            
+            choices = ["1", "2", "3"]
+            
             print(color_message(f"The current list of tags is {record.tag.value}", "blue"))
             message = color_message("Please choose the way to edit tags:\n 1. Remove any tag\n 2. Add any tag\n 3. Exit\n >>> ", "purple")
-            act = int(input(message))
+            
+            act = input(message)
+            
+            if act not in choices:
+                return color_message("You have to choose '1', '2' or '3'.", "blue")
+            
+            act = int(act)
+            
             if act == 1:
-                record.del_tag()
-                continue
+                res = record.del_tag()
+                if res == 0:
+                    break
+                else:
+                    continue
             elif act == 2:
                 new_line_tag = input(color_message("Please type new tags, with # and separated by \'space\'>>> ", "blue"))
                 new_list_tag = new_line_tag.split(' ')
