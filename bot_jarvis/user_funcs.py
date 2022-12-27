@@ -347,6 +347,12 @@ def sort_func(*_) -> str:
         return sort_files(user_path)
     else:
         return color_message(f"You have to enter '1' or '2'.", "purple")
+    
+@input_error
+def edit_bot_name(args: list) -> str:
+    '''Changes the name of the bot.'''
+    new_bot_name, *_ = args
+    return address_book.change_bot_name(new_bot_name)
 
 @input_error
 def exit_func(*_)-> str:
@@ -426,6 +432,7 @@ FUNCTIONS = {
     "add tag": add_tag_func,
     "edit tag": edit_tag_func,
     "del tags": delete_tags_func,
+    "edit bot": edit_bot_name,
     "add": add_func,
     "help": help_func,
     "sort": sort_func,

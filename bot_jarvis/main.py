@@ -1,6 +1,7 @@
 from user_funcs import handler, EXIT_COMMANDS, exit_func
 from address_book import address_book
 from color_message import color_message
+from address_book import address_book
 
 
 def main():
@@ -13,7 +14,7 @@ def main():
     """
     try: 
 
-        print(color_message("\nHello, I am Jarvis :)\n", "blue_bold"))
+        print(color_message(f"\nHello, I am {address_book.bot_name} :)\n", "blue_bold"))
 
         help_str = color_message("help", "blue")
         print(f"Type {help_str} to see all commands")
