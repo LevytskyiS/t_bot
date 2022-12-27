@@ -12,7 +12,7 @@ class AddressBook(UserDict):
     def __init__(self):
         super().__init__()
         
-        if os.path.getsize("bot_name.bin") > 0:
+        if os.path.exists("bot_name.bin") and os.path.getsize("bot_name.bin") > 0:
             with open("bot_name.bin", "rb") as b_name:
                 self.bot_name = pickle.load(b_name)
         else:
