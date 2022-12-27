@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from record import Record
 from sort import sort_files
 from address_book import address_book
@@ -19,7 +18,7 @@ def input_error(func) -> str:
         except ValueError as exception:
             if exception.args[0] == "Not enough values to unpack (expected 2, got 1).":
                 return color_message("Wrong format. Please enter: '{command} {name} {new_value}'.", "red")
-            return color_message("Incorrect data.", "red")
+            return exception.args[0]
 
         except IndexError:
             return color_message("Wrong format. Please enter: '{command} {name} {value}'.", "red")
@@ -327,7 +326,7 @@ def sort_func(*_) -> str:
 @input_error
 def exit_func(*_)-> str:
     """The function close bot."""
-    return exit(color_message("Good bye! I will wait for you", "blue_bold"))
+    return exit(color_message("Bye! I'm gonna miss you :)", "blue_bold"))
 
 @input_error
 def what_is_command(commands: list|dict, user_input: str) -> str:

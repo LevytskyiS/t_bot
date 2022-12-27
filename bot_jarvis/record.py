@@ -201,7 +201,10 @@ class Record:
             self.tag = Tag(tag_list2)
             return color_message(f"The tag '{tag_list2}' was added to the contact '{self.name.value}'.", "green")
         else:
-            return color_message(f"This tag is already in the list. It cannot be added.", "red")
+            return color_message(
+                f"If you want to add tags to an existing list of tags, "
+                                 f"please choose 'edit tag' command.", "red"
+            )
 
     def change_tag(self, new_tag_list):
         '''Adds new tags to the list.'''
