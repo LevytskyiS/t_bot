@@ -7,5 +7,5 @@ setup(
     url="https://github.com/LevytskyiS/t_bot",
     license="MIT License",
     packages=find_namespace_packages(),
-    entry_points={"console_scripts": ["best_bot = t_bot.main:main"]}
+    entry_points={"console_scripts": ["best_bot = bot_jarvis.main:main"]}
 )
