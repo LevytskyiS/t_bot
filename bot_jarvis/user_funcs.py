@@ -16,22 +16,22 @@ def input_error(func) -> str:
         except KeyError:
             return color_message("This contact doesn't exist, please try again.", "red")
 
-        # except ValueError as exception:
-        #     if exception.args[0] == "Not enough values to unpack (expected 2, got 1).":
-        #         return color_message("Wrong format. Please enter: '{command} {name} {new_value}'.", "red")
-        #     return exception.args[0]
+        except ValueError as exception:
+            if exception.args[0] == "Not enough values to unpack (expected 2, got 1).":
+                return color_message("Wrong format. Please enter: '{command} {name} {new_value}'.", "red")
+            return exception.args[0]
 
-        # except IndexError:
-        #     return color_message("Wrong format. Please enter: '{command} {name} {value}'.", "red")
+        except IndexError:
+            return color_message("Wrong format. Please enter: '{command} {name} {value}'.", "red")
 
-        # except TypeError:
-        #     return color_message("Unknown command or parameters, please try again.", "red")
+        except TypeError:
+            return color_message("Unknown command or parameters, please try again.", "red")
 
-        # except AttributeError:
-        #     return color_message("Can't find information about this contact or the data is incorrect.", "red")
+        except AttributeError:
+            return color_message("Can't find information about this contact or the data is incorrect.", "red")
 
-        # except StopIteration:
-        #     return color_message("There are no other numbers in the book.", "red")
+        except StopIteration:
+            return color_message("There are no other numbers in the book.", "red")
 
     return inner
 
