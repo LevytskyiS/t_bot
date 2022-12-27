@@ -15,7 +15,7 @@ def main():
 
     try: 
 
-        print("\n\033[1m\033[34m{}\033[0m\n".format("Hello, I am Jarvis :)"))
+        print(color_message("Hello, I am Jarvis :)", "blue_bold"))
 
         help_str = color_message("help", "blue")
         print(f"Type {help_str} to see all commands")
