@@ -46,16 +46,16 @@ def help_func(*_) -> str:
     "del contact Natally": "I will delete the contact.",
     
     "add phone Natally 096-45-34-876": "I will add phone a number to your address book.",
-    "edit phone Natally 0995456743 0986754325": "I will change your friend's phone number.",
+    "edit phone Natally 0986754325": "I will change your friend's phone number.",
     "phone Natally": "I will show your contact's phone, just enter the name.",
-    "del phone Natally 096-45-34-876": "I will delete your contact's phone number.",
+    "del phone Natally": "I will delete your contact's phone number.",
     
     "add mail Vasya vasiliy007@gmail.com": "I will add an email to your address book.",
     "edit mail Vasya new_mail_vasya@gmail.com": "I will change an email of one of your contacts.",
     "del mail Vasya": "I will delete an email of one of your contacts.",
     
-    "add birth Natally 1999.12.23": "I will add the birthday of your friend.",
-    "edit birth Natally 1999.12.23": "I will change your friend's date of birth.",
+    "add birth Natally 1999 12 23": "I will add the birthday of your friend.",
+    "edit birth Natally 1999 12 23": "I will change your friend's date of birth.",
     "all births 50": "I will show the birthdays of all your friends in the next 50 days.",
     "days to birth Leo": "I will tell you the number of days until my friend's birthday.",
     "del birth Natally": "I will delete your contact's birthday.",
@@ -116,6 +116,7 @@ def edit_contact_name_func(args: list) -> str:
 def delete_record_func(args: list) -> str:
     '''Deletes the contact including all his records.'''
     contact_name, *_ = args
+    
     if contact_name in address_book.keys():
         return address_book.delete_record(contact_name)
     return color_message(f"Name '{contact_name.title()}' doesn't exist in your address book.", "yellow")
@@ -142,11 +143,12 @@ def change_phone_func(args: list) -> str:
 @input_error
 def phone_func(args: list) -> str:
     '''Returns the list of contact's phones.'''
-    name, record, *_ = args
+    name, *_ = args
+    record = address_book[name]
     
     if record:
         phones_list = [phone.value for phone in record.phones]
-        return color_message(f"{record.name.value.title()} has this phones {phones_list}", "green")
+        return color_message(f"{record.name.value.title()} has these phones {phones_list}", "green")
     return color_message(f"I didn't find any '{name.title()}' in your Address Book.", "green")
 
 @input_error
@@ -193,11 +195,11 @@ def add_birth_func(args: list) -> str:
     record = address_book[args[0]]
     years, months, days, *_ = args[1:]
     user_bday = datetime(year=int(years), month=int(months), day=int(days))
+    
     if not record.birthday:
         return record.add_birthday(user_bday)
     else:
         return color_message(f"The contact with the name {args[0].title()} does not exist in your address book.", "yellow")
-
 
 @input_error
 def change_birth_func(args: list) -> str:
@@ -205,6 +207,7 @@ def change_birth_func(args: list) -> str:
     record = address_book[args[0]]
     years, months, days, *_ = args[1:]
     user_bday = datetime(year=int(years), month=int(months), day=int(days))
+   
     if record.birthday:
         return record.change_birthday(user_bday)
     else:
@@ -214,6 +217,7 @@ def change_birth_func(args: list) -> str:
 def del_birth_func(args: list) -> str:
     '''Deletes the birthday of the contact.'''
     record = address_book[args[0]]
+    
     if record.birthday:
         return record.delete_birthday()
     elif not record.birthday:
@@ -225,6 +229,7 @@ def del_birth_func(args: list) -> str:
 def days_to_birth_func(args: list) -> str:
     '''Returns a quantity of days until contact's birthday.'''
     record = address_book[args[0]]
+   
     if record.birthday != None:
         return color_message(f"{args[0].title()}'s birthday will be in {record.days_to_birthdays()} days.", "green")
     elif record.birthday == None:
@@ -238,6 +243,7 @@ def all_birth_func(args) -> str:
     days = int(args[0])
     result = "\n"
     bdays = address_book.all_birthdays(days)
+    
     if not bdays:
         return color_message(f"There are no bdays in {days} days.", "yellow")
     
@@ -296,8 +302,7 @@ def edit_tag_func(args: list) -> str:
             elif act == 3:
                 return f""
             else:
-                print(color_message("You entered a wrong number. Please try again.", "red"))
-                continue
+                return color_message("You entered a wrong number. Please try again.", "red")
     else:
         return color_message(f"The list of tags is empty, please fill it.", "yellow")
 
@@ -320,6 +325,7 @@ def sort_func(*_) -> str:
         "Enter '1' if you want to sort files in the current folder.\n"
         "Enter '2' if you want to choose another folder.\n", "blue")
     )
+    
     if user_input == "1":
         return sort_files(os.getcwd())
     elif user_input == "2":

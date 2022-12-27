@@ -70,9 +70,11 @@ class Tag(Field):
         self._value = value
 
 
-
 class Birthday(Field):
 
     @Field.value.setter
     def value(self, birthday: datetime):
-        self._value = birthday
+        if isinstance(birthday, datetime):
+            self._value = birthday
+        else:
+            return f"{birthday} is not a birthday. Check it."
