@@ -1,6 +1,7 @@
 from __future__ import annotations
 from user_funcs import handler, EXIT_COMMANDS, exit_func
 from address_book import address_book
+from color_message import color_return
 
 
 def main():
@@ -17,7 +18,7 @@ def main():
 
         print("\n\033[1m\033[34m{}\033[0m\n".format("Hello, I am Jarvis :)"))
 
-        help_str = "\033[34m{}\033[0m".format("help")
+        help_str = color_return("help", "blue")
         print(f"Type {help_str} to see all commands")
         
         while True:
