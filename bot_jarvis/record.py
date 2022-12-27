@@ -234,7 +234,8 @@ class Record:
                     choosing = input(color_message("Choose № of this tags (press Enter to skip)>>> ", "purple"))
                     
                     if not choosing:
-                        return color_message(f"You didn't remove any tags of '{self.tag.value}'.", "yellow")
+                        message = color_message("You didn't remove any tags of", "yellow")
+                        return f"{message} '{self.tag.value}'"
                     choosing = int(choosing)
                     self.tag.value.pop(choosing - 1)
                     return color_message(f"The tag '{showing[choosing]}' from '{old_tags}' was removed.", "green")
