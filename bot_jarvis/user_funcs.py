@@ -302,7 +302,8 @@ def edit_tag_func(args: list) -> str:
             elif act == 3:
                 return f""
             else:
-                return color_message("You entered a wrong number. Please try again.", "red")
+                print(color_message("You entered a wrong number. Please try again.", "red"))
+                continue
     else:
         return color_message(f"The list of tags is empty, please fill it.", "yellow")
 
