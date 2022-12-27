@@ -143,11 +143,12 @@ def change_phone_func(args: list) -> str:
 @input_error
 def phone_func(args: list) -> str:
     '''Returns the list of contact's phones.'''
-    name, record, *_ = args
+    name, *_ = args
+    record = address_book[name]
     
     if record:
         phones_list = [phone.value for phone in record.phones]
-        return color_message(f"{record.name.value.title()} has this phones {phones_list}", "green")
+        return color_message(f"{record.name.value.title()} has these phones {phones_list}", "green")
     return color_message(f"I didn't find any '{name.title()}' in your Address Book.", "green")
 
 @input_error
@@ -199,7 +200,6 @@ def add_birth_func(args: list) -> str:
         return record.add_birthday(user_bday)
     else:
         return color_message(f"The contact with the name {args[0].title()} does not exist in the address book.", "red")
-
 
 @input_error
 def change_birth_func(args: list) -> str:
