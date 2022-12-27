@@ -1,16 +1,24 @@
 from collections import UserDict
 from record import Record
 from datetime import datetime
-import pickle
 from color_message import color_message
 from print_table import header_func, line_func
+import os
+import pickle
 
 
 class AddressBook(UserDict):
 
     def __init__(self):
-        super().__init__()    
-    
+        super().__init__()
+        
+        if os.path.exists("bot_name.bin") and os.path.getsize("bot_name.bin") > 0:
+            with open("bot_name.bin", "rb") as b_name:
+                self.bot_name = pickle.load(b_name)
+        else:
+            self.bot_name = "Jarvis"
+        
+        
     def add_record(self, record: Record) -> str:
         '''Adds name (key) of the contact and his fields (value).'''
         self.data[record.name.value] = record   #.title()
@@ -44,10 +52,13 @@ class AddressBook(UserDict):
                 ):
 
                 table += line_func(record)
-                counter += 1 
+                counter += 1
+        
+        if counter < 1 and not data:
+            return color_message(f"The address book is emty", "yellow")        
         
         if counter < 1:
-            return color_message(f"The address book is empty. Please add any contact.", "yellow")
+            return color_message(f"I didn't find any '{data}' in adress book.", "yellow")
         
         return table
 
@@ -89,7 +100,6 @@ class AddressBook(UserDict):
         '''Saves the address book.'''
         with open("address_book.bin", "wb") as file:
             pickle.dump(self.data, file)
-    
 
     def load_address_book(self) -> str:
         '''Loads the address book.'''
@@ -98,6 +108,16 @@ class AddressBook(UserDict):
                 self.data = pickle.load(file)
         except FileNotFoundError:
             return color_message("The file does not exist.", "red")    
+        
+    def change_bot_name(self, new_name: str) -> str:
+        '''Changes the name of the bot.'''
+        if new_name and new_name != self.bot_name:
+            self.bot_name = new_name.title()
+            with open("bot_name.bin", "wb") as file:
+                pickle.dump(self.bot_name, file)
+            return f"The bot's name was changed to {self.bot_name}."
+        else: 
+            return f"Please enter the name or the bot already has this name."
 
 
 address_book = AddressBook()
