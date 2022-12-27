@@ -319,23 +319,53 @@ def exit_func(*_)-> str:
 @input_error
 def what_is_command(commands: list|dict, user_input: str) -> str:
     '''Checks user input.'''
-    count = 0
-    command_out = ""
+    command_out = []
+    user_input_list = user_input.split()
 
-    for command in commands:
+    if len(user_input_list) == 1:
+        commands = ["help", "sort"]
 
-        i = 0
+    for j, command_in_one in enumerate(user_input_list):
 
-        for char_in, char_comm in zip(user_input, command):
+        count = 0
+        command_one_out = ""
 
-            if char_in == char_comm:
-                i += 1
+        if len(user_input_list) < len(command_out) + 1:
+            break
 
-        if i > count:
-            count = i
-            command_out = command
+        for commands_str in commands:
+            i = 0
 
-    return command_out
+            if " ".join(command_out) not in commands_str:
+                continue
+
+            if len(commands_str.split()) > j:
+                command_one = commands_str.split()[j]
+            else:
+                continue
+
+            for char_in, char_comm in zip(command_in_one, command_one):
+
+                if char_in == char_comm:
+                    i += 1
+
+            if i > count:
+                command_one_out = command_one
+                count = i
+
+        if command_one_out == "show":
+            command_out = ["show all"]
+            break
+
+        elif command_one_out:
+            command_out.append(command_one_out)
+
+    if len(command_out) > 1:
+        data = user_input_list[len(command_out):]
+    else:
+        data = ""
+
+    return " ".join(command_out), " ".join(data)
 
 #Importantly! The more words in the bot command, the higher command is in the dictionary.
 FUNCTIONS = {
@@ -384,14 +414,13 @@ def handler(input_string: str) -> list:
             data = input_string[len(command):].strip()
             break
 
-    if (
-        not command and
-        input(f"If you mean '{perhaps_command}' enter 'y': ") == "y"
-        ):
+    if not command:
 
-        command = perhaps_command
-        input_string = input_string.split()[len(command.split()):]
-        data = " ".join(input_string)
+        command, data = what_is_command(FUNCTIONS, input_string)
+
+        if input(f"If you mean '{command} {data}' press enter: ") != "":
+            command = ""
+            data = ""
 
     if data:        
         args = data.strip().split(" ")
