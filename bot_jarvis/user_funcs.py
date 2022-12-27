@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from record import Record
 from sort import sort_files
 from address_book import address_book

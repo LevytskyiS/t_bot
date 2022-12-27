@@ -1,4 +1,3 @@
-from __future__ import annotations
 from user_funcs import handler, EXIT_COMMANDS, exit_func
 from address_book import address_book
 from color_message import color_message
