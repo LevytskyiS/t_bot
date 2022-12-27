@@ -232,13 +232,14 @@ class Record:
                     message = color_message("What tag do you want to remove?", "blue")
                     print(f"{message} {showing}")
                     choosing = input(color_message("Choose № of this tags (press Enter to skip)>>> ", "purple"))
-                    
+
                     if not choosing:
-                        return color_message(f"You didn't remove any tags of '{self.tag.value}'.", "yellow")
+                        print(color_message(f"You didn't remove any tags of '{self.tag.value}'.", "yellow"))
+                        return 0
                     choosing = int(choosing)
+
                     self.tag.value.pop(choosing - 1)
                     return color_message(f"The tag '{showing[choosing]}' from '{old_tags}' was removed.", "green")
-                
                 except ValueError:
                     return color_message(f"{choosing} is not a number!", "red")
                 except KeyError:
