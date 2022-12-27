@@ -16,6 +16,7 @@ def header_func() -> str:
 
 def line_func(record: Record) -> str:
     
+    line = ""
     columns = "\n|{:^15}|{:^15}|{:^12}|{:^25}|{:^15}|{:^30}|"
     
     name = record.name.value.title()
@@ -64,7 +65,7 @@ def line_func(record: Record) -> str:
             table = table[i] if i < len(table) else ""
             cells.append(table)
 
-        line = columns.format(*cells)
+        line += columns.format(*cells)
 
     line += "\n|" + "-" * 117 + "|"
 
