@@ -363,7 +363,7 @@ def what_is_command(commands: list|dict, user_input: str) -> str:
         elif command_one_out:
             command_out.append(command_one_out)
 
-    if len(command_out) > 1:
+    if len(command_out) > 1 or command_out[0] == "add":
         data = user_input_list[len(command_out):]
     else:
         data = ""
