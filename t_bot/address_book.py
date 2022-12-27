@@ -9,13 +9,12 @@ from print_table import header_func, line_func
 class AddressBook(UserDict):
 
     def __init__(self):
-        super().__init__()
-        self.load_address_book()    
+        super().__init__()    
     
     def add_record(self, record: Record) -> str:
         '''Adds name (key) of the contact and his fields (value).'''
         self.data[record.name.value] = record   #.title()
-        return self.parne_neparne_a_book(2)    #f"New contact was added successfuly." 
+        return Record.color_return(2)    #rerurn green text --> f"New contact was added successfuly." 
 
 
     def search_in_contact_book(self, data) -> str:
@@ -83,7 +82,7 @@ class AddressBook(UserDict):
     def delete_record(self, contact_name: str) -> str:
         '''Deletes the contact (key).'''
         self.data.pop(contact_name)
-        return self.parne_neparne_a_book(4)  #f"The contact was deleted successfully."
+        return Record.color_return(4)  #rerurn green text --> f"The contact was deleted successfully."
 
 
     def save_address_book(self) -> str:
@@ -98,27 +97,8 @@ class AddressBook(UserDict):
             with open("address_book.bin", "rb") as file:     
                 self.data = pickle.load(file)
         except FileNotFoundError:
-            return self.parne_neparne_a_book(3) #"The file does not exist."   
-
-
-    def parne_neparne_a_book(self, key):
-
-        positive_return = {
-            2: "New contact was added successfuly.",
-            4: "The contact was deleted successfully." 
-            }
-
-        negative_return = {
-
-            3: "The file does not exist."  
-            }  
-        
-        if key % 2 == 0:
-            res = positive_return.get(key)
-            print("\033[32m{}\033[0m".format(res)) #викликає список з позитивними відповідями, return green text
-        else:
-            res = negative_return.get(key)
-            print("\033[35m{}\033[0m".format(res))
+            return f"The file does not exist." #Record.color_return(3) #rerurn red text -->    
 
 
 address_book = AddressBook()
+address_book.load_address_book()

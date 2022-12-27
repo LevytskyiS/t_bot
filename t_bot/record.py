@@ -17,7 +17,7 @@ class Record:
         '''Adds a phone to the contact's list of phones.'''
         added_phone = Phone(phone)
         self.phones.append(added_phone)
-        return f"The phone '{added_phone.value}' was added to the '{self.name.value.title()}'."
+        return self.color_return(6)   #f"The phone '{added_phone.value}' was added to the '{self.name.value.title()}'."
 
     def change_phone(self, new_phone) -> str:
         '''Changes an existing phone.'''
@@ -272,3 +272,26 @@ class Record:
         '''Deletes a birthday.'''
         self.birthday = None
         return f"The birhdays was deleted successfully."
+
+    def color_return(self, key: int) -> str:
+
+        positive_return = { 
+            
+            2: "New contact was added successfuly.",                                           #from address_book
+            4: "The contact was deleted successfully.",                                        #from address_book
+            6: f"The phone '{self.add_phone.added_phone.value}' was added to the '{self.add_phone.name.value.title()}'." #from record
+            }
+
+        negative_return = {
+            
+            3: "The file does not exist."  #from address_book
+            }  
+        
+        if key % 2 == 0:
+            res = positive_return.get(key)
+            res_color_green = "\033[32m{}\033[0m".format(res)
+            return res_color_green #green_text_color --> for all positive bot answers
+        else:
+            res = negative_return.get(key)
+            res_color_red = "\033[35m{}\033[0m".format(res)
+            return res_color_red  #red_text_color --> for all negative bot answers

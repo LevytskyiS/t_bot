@@ -1,5 +1,4 @@
 from datetime import datetime
-from collections import UserDict
 import re
 
 
@@ -96,6 +95,3 @@ class Birthday(Field):
         day = self.range_control(int((birth_list[index_day[0]])), 1, 31)
 
         self._value = datetime(year=year, month=month, day=day).date()
-
-
-
