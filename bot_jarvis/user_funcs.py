@@ -95,7 +95,7 @@ def add_func(args: list) -> str:
     if record.name.value not in address_book.keys():
         return address_book.add_record(record)
     else:
-        return color_message(f"The contact with the name {args[0].title()} does not exist in the Address Book.", "red")
+        return color_message(f"The contact with the name {args[0].title()} does not exist in your address book.", "yellow")
 
 @input_error
 def edit_contact_name_func(args: list) -> str:
@@ -103,14 +103,14 @@ def edit_contact_name_func(args: list) -> str:
     existing_name, corrected_name, *_ = args
     
     if not address_book:
-        return color_message(f"'{existing_name.title()}' wasn't found in you Address Book.", "red")
+        return color_message(f"'{existing_name.title()}' wasn't found in your address book.", "yellow")
     for value in address_book.values():
         if existing_name in address_book.keys():
             value.name.value = corrected_name
             address_book[corrected_name] = address_book.pop(existing_name)
             return color_message(f"'{existing_name.title()}' was changed to '{corrected_name.title()}'.", "green")
         else:
-            return color_message(f"'{existing_name.title()}' wasn't found in you Address Book.", "red")
+            return color_message(f"'{existing_name.title()}' wasn't found in your address book.", "yellow")
 
 @input_error
 def delete_record_func(args: list) -> str:
@@ -119,7 +119,7 @@ def delete_record_func(args: list) -> str:
     
     if contact_name in address_book.keys():
         return address_book.delete_record(contact_name)
-    return color_message(f"Name '{contact_name.title()}' doesn't exist in your book.", "red")
+    return color_message(f"Name '{contact_name.title()}' doesn't exist in your address book.", "yellow")
 
 @input_error
 def add_phone_func(args: list) -> str:
@@ -129,9 +129,9 @@ def add_phone_func(args: list) -> str:
     if contact_name in address_book.keys() and phone not in [p.value for p in address_book[contact_name].phones]:
         return address_book[contact_name].add_phone(phone)
     elif contact_name in address_book.keys() and phone in [p.value for p in address_book[contact_name].phones]:
-        return color_message(f"The '{phone}' already exists in the list.", "red")
+        return color_message(f"The '{phone}' already exists in the list.", "yellow")
     else:
-        return color_message(f"There is no '{contact_name.title()}' in your Address Book.", "red")
+        return color_message(f"There is no '{contact_name.title()}' in your address book.", "yellow")
 
 @input_error
 def change_phone_func(args: list) -> str:
@@ -166,9 +166,9 @@ def add_mail_func(args: list) -> str:
     if contact_name in address_book.keys() and email not in [e.value for e in address_book[contact_name].emails]:
         return address_book[contact_name].add_mail(email)
     elif contact_name in address_book.keys() and email in [e.value for e in address_book[contact_name].emails]:  
-        return color_message(f"The '{email}' already exists in the list.", "red")
+        return color_message(f"The '{email}' already exists in the list.", "yellow")
     else:
-        return color_message(f"There is no '{contact_name.title()}' in your Address Book.", "red")
+        return color_message(f"There is no '{contact_name.title()}' in your Address Book.", "yellow")
 
 @input_error
 def change_mail_func(args: list) -> str:
@@ -199,7 +199,7 @@ def add_birth_func(args: list) -> str:
     if not record.birthday:
         return record.add_birthday(user_bday)
     else:
-        return color_message(f"The contact with the name {args[0].title()} does not exist in the address book.", "red")
+        return color_message(f"The contact with the name {args[0].title()} does not exist in your address book.", "yellow")
 
 @input_error
 def change_birth_func(args: list) -> str:
@@ -211,7 +211,7 @@ def change_birth_func(args: list) -> str:
     if record.birthday:
         return record.change_birthday(user_bday)
     else:
-        return color_message(f"The contact with the name {args[0].title()} does not exist in the address book.", "red")
+        return color_message(f"The contact with the name {args[0].title()} does not exist in your address book.", "yellow")
 
 @input_error
 def del_birth_func(args: list) -> str:
@@ -221,9 +221,9 @@ def del_birth_func(args: list) -> str:
     if record.birthday:
         return record.delete_birthday()
     elif not record.birthday:
-        return color_message(f"The contact has no birthday information.", "red")
+        return color_message(f"The contact has no birthday information.", "yellow")
     else:
-        return color_message(f"The contact with the name {args[0].title()} does not exist in the address book.", "red")
+        return color_message(f"The contact with the name {args[0].title()} does not exist in your address book.", "yellow")
 
 @input_error
 def days_to_birth_func(args: list) -> str:
@@ -233,9 +233,9 @@ def days_to_birth_func(args: list) -> str:
     if record.birthday != None:
         return color_message(f"{args[0].title()}'s birthday will be in {record.days_to_birthdays()} days.", "green")
     elif record.birthday == None:
-        return color_message(f"The contact has no birthday information.", "red")
+        return color_message(f"The contact has no birthday information.", "yellow")
     else:
-        return color_message(f"The contact with the name {args[0].title()} does not exist in the address book.", "red")
+        return color_message(f"The contact with the name {args[0].title()} does not exist in your address book.", "yellow")
 
 @input_error
 def all_birth_func(args) -> str:
@@ -245,7 +245,7 @@ def all_birth_func(args) -> str:
     bdays = address_book.all_birthdays(days)
     
     if not bdays:
-        return color_message(f"There are no bdays in {days} days.", "red")
+        return color_message(f"There are no bdays in {days} days.", "yellow")
     
     for data in bdays:
         result += " - ".join(data)
@@ -302,9 +302,10 @@ def edit_tag_func(args: list) -> str:
             elif act == 3:
                 return f""
             else:
-                return color_message("You entered a wrong number. Please try again.", "red")
+                print(color_message("You entered a wrong number. Please try again.", "red"))
+                continue
     else:
-        return color_message(f"The list of tags is empty, please fill it.", "red")
+        return color_message(f"The list of tags is empty, please fill it.", "yellow")
 
 @input_error
 def delete_tags_func(args: list) -> str:
@@ -332,12 +333,12 @@ def sort_func(*_) -> str:
         user_path = input("Enter a path: ")
         return sort_files(user_path)
     else:
-        return color_message(f"You have to enter '1' or '2'.", "red")
+        return color_message(f"You have to enter '1' or '2'.", "purple")
 
 @input_error
 def exit_func(*_)-> str:
     """The function close bot."""
-    return exit(color_message("Bye! I'm gonna miss you :)\n", "blue_bold"))
+    return exit(color_message("Bye! I'm gonna miss you ;)\n", "blue_bold"))
 
 @input_error
 def what_is_command(commands: list|dict, user_input: str) -> str:
@@ -437,8 +438,8 @@ def handler(input_string: str) -> list:
             data = input_string[len(command):].strip()
             break
 
-    message_start = color_message("If you mean", "blue")
-    message_end = color_message("press enter: ", "blue")
+    message_start = color_message("If you mean", "turquoise")
+    message_end = color_message("press enter: ", "turquoise")
     
     if not command:
 
