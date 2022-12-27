@@ -53,15 +53,9 @@ class AddressBook(UserDict):
 
                 table += line_func(record)
                 counter += 1
-                
-        # print(os.path.getsize("address_book.bin"))
-        # print(type(os.path.getsize("address_book.bin")))
         
-        if not os.path.exists("address_book.bin"):
-            return f"The address book is empty."
-
-        if os.path.getsize("address_book.bin") < 0:
-            return f"The address book is empty."
+        if counter < 1 and not data:
+            return color_message(f"The address book is emty", "yellow")        
         
         if counter < 1:
             return color_message(f"I didn't find any '{data}' in adress book.", "yellow")
