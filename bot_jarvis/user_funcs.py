@@ -432,15 +432,13 @@ def handler(input_string: str) -> list:
             break
 
     message_start = color_message("If you mean", "blue")
-    message_end = color_message("enter 'y': ", "blue")
-    if (
-        not command and
-        input(f"{message_start} '{perhaps_command}' {message_end}")
-        ):
+    message_end = color_message("press enter: ", "blue")
+    
+    if not command:
 
         command, data = what_is_command(FUNCTIONS, input_string)
 
-        if input(f"If you mean '{command} {data}' press enter: ") != "":
+        if input(f"{message_start} '{command} {data}' {message_end}") != "":
             command = ""
             data = ""
 
