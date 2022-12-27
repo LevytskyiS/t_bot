@@ -15,7 +15,7 @@ def main():
 
     try: 
 
-        print(color_message("Hello, I am Jarvis :)", "blue_bold"))
+        print(color_message("\nHello, I am Jarvis :)\n", "blue_bold"))
 
         help_str = color_message("help", "blue")
         print(f"Type {help_str} to see all commands")
