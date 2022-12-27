@@ -32,7 +32,7 @@ class Record:
                 try:
                     message = color_message("What phone you want to change?", "blue")
                     print(f"{message} {showing}")
-                    choosing = input(color_message("Choose № of this phone (press Enter to skip)>>> "), "purple")
+                    choosing = input(color_message("Choose № of this phone (press Enter to skip)>>> ", "purple"))
                     
                     if not choosing:
                         return color_message(f"You didn't change any phone in your list: {self.name.value.title()}.", "yellow")
@@ -65,7 +65,7 @@ class Record:
                 try:
                     message = color_message("What phone you want to remove?", "blue")
                     print(f"{message} {showing}")
-                    choosing = input(color_message("Choose № of this phone (press Enter to skip)>>> "), "purple")
+                    choosing = input(color_message("Choose № of this phone (press Enter to skip)>>> ", "purple"))
                     
                     if not choosing:
                         return color_message("You didn't remove any phone of '{self.name.value.title()}'.", "yellow")
@@ -104,7 +104,7 @@ class Record:
                 try:
                     message = color_message("What email you want to change?", "blue")
                     print(f"{message} {showing}")
-                    choosing = input(color_message("Choose № of this email (press Enter to skip)>>> "), "purple")
+                    choosing = input(color_message("Choose № of this email (press Enter to skip)>>> ", "purple"))
                     
                     if not choosing:
                         return color_message(f"You didn't change any email of '{self.name.value.title()}'.", "yellow")
@@ -137,7 +137,7 @@ class Record:
                 try:
                     message = color_message("What email you want to remove?", "blue")
                     print(f"{message} {showing}")
-                    choosing = input(color_message("Choose № of this email (press Enter to skip)>>> "), "purple")
+                    choosing = input(color_message("Choose № of this email (press Enter to skip)>>> ", "purple"))
                    
                     if not choosing:
                         return color_message(f"You didn't remove any email of '{self.name.value.title()}'.", "yellow")
