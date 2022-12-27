@@ -47,7 +47,7 @@ class AddressBook(UserDict):
                 counter += 1 
         
         if counter < 1:
-            raise ValueError(color_message(f"I didn't find any {data} in AB."), "red")           
+            raise ValueError(color_message(f"I didn't find any {data} in AB.", "red"))
         
         return table
 
