@@ -201,7 +201,10 @@ class Record:
             self.tag = Tag(tag_list2)
             return color_message(f"The tag '{tag_list2}' was added to the contact '{self.name.value}'.", "green")
         else:
-            return color_message(f"This tag is already in the list. It cannot be added.", "red")
+            return color_message(
+                f"If you want to add tags to an existing list of tags, "
+                                 f"please choose 'edit tag' command.", "red"
+            )
 
     def change_tag(self, new_tag_list):
         '''Adds new tags to the list.'''
@@ -249,12 +252,15 @@ class Record:
 
     def add_birthday(self, birthday) -> str:
         '''Adds a birthday.'''
-        self.birthday = Birthday(birthday)
+        new_bday = Birthday(birthday)
+        if new_bday.value > datetime.now():
+            return f"This guy hasn't been born yet."
+        self.birthday = new_bday
         return color_message(f"Birthday was successfully added.", "green")
 
     def change_birthday(self, new_birthday) -> str:
         '''Changes a birthday.'''
-        if self.birthday:
+        if self.birthday and Birthday(new_birthday).value > datetime.now():
             self.birthday = Birthday(new_birthday)
             return color_message(f"Birthday has been changed successfully.", "green")
         else:

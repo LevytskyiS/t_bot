@@ -73,26 +73,6 @@ class Tag(Field):
 
 class Birthday(Field):
 
-    @classmethod
-    def range_control(cls, variable, left_range, right_range):
-        if left_range <= variable <= right_range:
-            return variable
-        else:
-            raise ValueError(color_message(f"Your data {variable} shall be in range from {left_range} up to {right_range}", "red"))
-
     @Field.value.setter
-    def value(self, birthday_str):
-        birth_list = birthday_str.split('.')
-        
-        if (len(birth_list) < 3) or (len(birth_list) > 3):
-            return color_message("Please type birthday in format 'yyyy.mm.dd'", "red")
-        
-        year = [num for num in birth_list if len(num) == 4]
-        year_index_in_list = birth_list.index(year[0])
-        index_day = [2 if year_index_in_list == 0 else 0]
-
-        year = self.range_control(int(year[0]), 1920, 2022)
-        month = self.range_control(int(birth_list[1]), 1, 12)
-        day = self.range_control(int((birth_list[index_day[0]])), 1, 31)
-
-        self._value = datetime(year=year, month=month, day=day).date()
+    def value(self, birthday: datetime):
+        self._value = birthday
