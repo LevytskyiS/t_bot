@@ -2,8 +2,9 @@ from __future__ import annotations
 from record import Record
 from sort import sort_files
 from address_book import address_book
-import os
 from color_message import color_message
+from datetime import datetime
+import os
 
 
 def input_error(func) -> str:
@@ -15,22 +16,22 @@ def input_error(func) -> str:
         except KeyError:
             return color_message("This contact doesn't exist, please try again.", "red")
 
-        except ValueError as exception:
-            if exception.args[0] == "Not enough values to unpack (expected 2, got 1).":
-                return color_message("Wrong format. Please enter: '{command} {name} {new_value}'.", "red")
-            return exception.args[0]
+        # except ValueError as exception:
+        #     if exception.args[0] == "Not enough values to unpack (expected 2, got 1).":
+        #         return color_message("Wrong format. Please enter: '{command} {name} {new_value}'.", "red")
+        #     return exception.args[0]
 
-        except IndexError:
-            return color_message("Wrong format. Please enter: '{command} {name} {value}'.", "red")
+        # except IndexError:
+        #     return color_message("Wrong format. Please enter: '{command} {name} {value}'.", "red")
 
-        except TypeError:
-            return color_message("Unknown command or parameters, please try again.", "red")
+        # except TypeError:
+        #     return color_message("Unknown command or parameters, please try again.", "red")
 
-        except AttributeError:
-            return color_message("Can't find information about this contact or the data is incorrect.", "red")
+        # except AttributeError:
+        #     return color_message("Can't find information about this contact or the data is incorrect.", "red")
 
-        except StopIteration:
-            return color_message("There are no other numbers in the book.", "red")
+        # except StopIteration:
+        #     return color_message("There are no other numbers in the book.", "red")
 
     return inner
 
@@ -190,8 +191,10 @@ def show_all_func(*_) -> dict:
 def add_birth_func(args: list) -> str:
     '''Adds a birthday to an existing contact.'''
     record = address_book[args[0]]
+    years, months, days, *_ = args[1:]
+    user_bday = datetime(year=int(years), month=int(months), day=int(days))
     if not record.birthday:
-        return record.add_birthday(args[1])
+        return record.add_birthday(user_bday)
     else:
         return color_message(f"The contact with the name {args[0].title()} does not exist in the address book.", "red")
 
@@ -200,8 +203,10 @@ def add_birth_func(args: list) -> str:
 def change_birth_func(args: list) -> str:
     '''Changes the birthday of the contact.'''
     record = address_book[args[0]]
+    years, months, days, *_ = args[1:]
+    user_bday = datetime(year=int(years), month=int(months), day=int(days))
     if record.birthday:
-        return record.change_birthday(args[1])
+        return record.change_birthday(user_bday)
     else:
         return color_message(f"The contact with the name {args[0].title()} does not exist in the address book.", "red")
 

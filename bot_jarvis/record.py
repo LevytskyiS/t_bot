@@ -252,12 +252,15 @@ class Record:
 
     def add_birthday(self, birthday) -> str:
         '''Adds a birthday.'''
-        self.birthday = Birthday(birthday)
+        new_bday = Birthday(birthday)
+        if new_bday.value > datetime.now():
+            return f"This guy hasn't been born yet."
+        self.birthday = new_bday
         return color_message(f"Birthday was successfully added.", "green")
 
     def change_birthday(self, new_birthday) -> str:
         '''Changes a birthday.'''
-        if self.birthday:
+        if self.birthday and Birthday(new_birthday).value > datetime.now():
             self.birthday = Birthday(new_birthday)
             return color_message(f"Birthday has been changed successfully.", "green")
         else:
