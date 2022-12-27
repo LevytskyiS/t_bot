@@ -85,7 +85,7 @@ class Birthday(Field):
         birth_list = birthday_str.split('.')
         
         if (len(birth_list) < 3) or (len(birth_list) > 3):
-            return "Please type birthday in format 'year.month.day'"
+            return "Please type birthday in format 'yyyy.mm.dd'"
         
         year = [num for num in birth_list if len(num) == 4]
         year_index_in_list = birth_list.index(year[0])
