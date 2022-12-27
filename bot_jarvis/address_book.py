@@ -47,7 +47,7 @@ class AddressBook(UserDict):
                 counter += 1 
         
         if counter < 1:
-            return f"The address book is empty. Please add any contact."
+            return color_message(f"The address book is empty. Please add any contact.", "yellow")
         
         return table
 

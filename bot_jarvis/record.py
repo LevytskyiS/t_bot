@@ -35,7 +35,7 @@ class Record:
                     choosing = input(color_message("Choose № of this phone (press Enter to skip)>>> "), "purple")
                     
                     if not choosing:
-                        return color_message(f"You didn't change any phone in your list: {self.name.value.title()}.", "red")
+                        return color_message(f"You didn't change any phone in your list: {self.name.value.title()}.", "yellow")
                     choosing = int(choosing)
                     
                     if choosing > 0:
@@ -68,7 +68,7 @@ class Record:
                     choosing = input(color_message("Choose № of this phone (press Enter to skip)>>> "), "purple")
                     
                     if not choosing:
-                        return color_message("You didn't remove any phone of '{self.name.value.title()}'.", "red")
+                        return color_message("You didn't remove any phone of '{self.name.value.title()}'.", "yellow")
                     choosing = int(choosing)
                     if choosing > 0:
                         self.phones.pop(choosing-1)
@@ -107,7 +107,7 @@ class Record:
                     choosing = input(color_message("Choose № of this email (press Enter to skip)>>> "), "purple")
                     
                     if not choosing:
-                        return color_message(f"You didn't change any email of '{self.name.value.title()}'.", "red")
+                        return color_message(f"You didn't change any email of '{self.name.value.title()}'.", "yellow")
                     choosing = int(choosing)
                     
                     if choosing > 0:
@@ -140,7 +140,7 @@ class Record:
                     choosing = input(color_message("Choose № of this email (press Enter to skip)>>> "), "purple")
                    
                     if not choosing:
-                        return color_message(f"You didn't remove any email of '{self.name.value.title()}'.", "red")
+                        return color_message(f"You didn't remove any email of '{self.name.value.title()}'.", "yellow")
                     choosing = int(choosing)
                     
                     if choosing > 0:
@@ -167,7 +167,7 @@ class Record:
                 note += f"{item} "
             self.note = Note(note)
         else:
-            return color_message(f"The note exists. Enter the command 'edit note' to change it.", "red")
+            return color_message(f"The note exists. Enter the command 'edit note' to change it.", "yellow")
 
         return color_message(f"The note '{note[:-1]}' was added to the contact '{self.name.value.title()}'.", "green")
 
@@ -193,7 +193,7 @@ class Record:
     def add_tag(self, list_tag) -> str:
         '''Creates and adds tags to the contact's list of tags.'''
         if not list_tag:
-            return color_message(f"There are no tags in the input, please type again", "red")
+            return color_message(f"There are no tags in the input, please type again", "yellow")
         elif not self.tag:
             tag_list2 = []
             for tag in list_tag:
@@ -203,7 +203,7 @@ class Record:
         else:
             return color_message(
                 f"If you want to add tags to an existing list of tags, "
-                                 f"please choose 'edit tag' command.", "red"
+                                 f"please choose 'edit tag' command.", "yellow"
             )
 
     def change_tag(self, new_tag_list):
@@ -234,7 +234,7 @@ class Record:
                     choosing = input(color_message("Choose № of this tags (press Enter to skip)>>> ", "purple"))
                     
                     if not choosing:
-                        return color_message(f"You didn't remove any tags of '{self.tag.value}'.", "red")
+                        return color_message(f"You didn't remove any tags of '{self.tag.value}'.", "yellow")
                     choosing = int(choosing)
                     self.tag.value.pop(choosing - 1)
                     return color_message(f"The tag '{showing[choosing]}' from '{old_tags}' was removed.", "green")
@@ -247,7 +247,7 @@ class Record:
                     return color_message(f"{choosing} is out of range!", "red")
 
         else:
-            return color_message(f"The list of tags '{self.tag}' is empty.", "red")
+            return color_message(f"The list of tags '{self.tag}' is empty.", "yellow")
 
 
     def add_birthday(self, birthday) -> str:
@@ -264,7 +264,7 @@ class Record:
             self.birthday = Birthday(new_birthday)
             return color_message(f"Birthday has been changed successfully.", "green")
         else:
-            return color_message("The birthday hasn't been added yet for this contact. Add first.", "red")
+            return color_message("The birthday hasn't been added yet for this contact. Add first.", "yellow")
 
     def days_to_birthdays(self):
         '''Returns a quantity of days until contact's birthday.'''
@@ -279,7 +279,7 @@ class Record:
                 next_birth = datetime(year=current_year + 1, month=self.birthday.value.month, day=self.birthday.value.day)
                 return (next_birth - current_day).days
         else:
-            return color_message(f"The birthday hasn`t been added yet for this contact.", "red")
+            return color_message(f"The birthday hasn`t been added yet for this contact. Add first.", "yellow")
     
     def delete_birthday(self):
         '''Deletes a birthday.'''
