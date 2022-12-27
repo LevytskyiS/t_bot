@@ -211,7 +211,7 @@ class Record:
         '''Deletes all tags.'''
         deleted_tag = self.tag
         self.tag = None
-        return f"The tag '{deleted_tag.value}' of contact '{self.name.value}' was deleted"
+        return f"The tag '{deleted_tag.value}' of contact '{self.name.value}' was deleted."
 
     def del_tag(self):
         '''Deletes only that tag which is chosen by a user.'''

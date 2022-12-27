@@ -98,9 +98,8 @@ def add_func(args: list) -> str:
 @input_error
 def edit_contact_name_func(args: list) -> str:
     '''Edits the name of the existing contact.'''
-    existing_name = args[0]
-    corrected_name = args[1]
-
+    existing_name, corrected_name, *_ = args
+    
     if not address_book:
         return f"'{existing_name.title()}' wasn't found in you address book."
     for value in address_book.values():
@@ -114,7 +113,7 @@ def edit_contact_name_func(args: list) -> str:
 @input_error
 def delete_record_func(args: list) -> str:
     '''Deletes the contact including all his records.'''
-    contact_name = args[0]
+    contact_name, *_ = args
     if contact_name in address_book.keys():
         return address_book.delete_record(contact_name)
     return f"Name '{contact_name.title()}' doesn't exist in your book."
@@ -122,8 +121,8 @@ def delete_record_func(args: list) -> str:
 @input_error
 def add_phone_func(args: list) -> str:
     '''Adds a phone number to an existing contact.'''
-    contact_name = args[0]
-    phone = args[1]
+    contact_name, phone, *_ = args
+    
     if contact_name in address_book.keys() and phone not in [p.value for p in address_book[contact_name].phones]:
         return address_book[contact_name].add_phone(phone)
     else:
@@ -132,16 +131,15 @@ def add_phone_func(args: list) -> str:
 @input_error
 def change_phone_func(args: list) -> str:
     '''Changes the phone of the contact.'''
-    name, new_phone = args
+    name, new_phone, *_ = args
     record = address_book.data.get(name)
     return record.change_phone(new_phone)
-   
 
 @input_error
 def phone_func(args: list) -> str:
     '''Returns the list of contact's phones.'''
-    name = args[0]
-    record = address_book.data.get(name)
+    name, record, *_ = args
+    
     if record:
         phones_list = [phone.value for phone in record.phones]
         return f"{record.name.value.title()} has this phones {phones_list}"
@@ -150,15 +148,14 @@ def phone_func(args: list) -> str:
 @input_error
 def del_phone_func(args: list) -> str:
     '''Deletes an existing phone.'''
-    name = args[0]    
+    name, *_ = args    
     record = address_book.data.get(name)
     return record.delete_phone()
 
 @input_error
 def add_mail_func(args: list) -> str:
     '''Adds an email to an existing contact.'''
-    contact_name = args[0]
-    email = args[1]
+    contact_name, email, *_ = args
     
     if contact_name in address_book.keys() and email not in [e.value for e in address_book[contact_name].emails]:
         return address_book[contact_name].add_mail(email)
@@ -168,14 +165,14 @@ def add_mail_func(args: list) -> str:
 @input_error
 def change_mail_func(args: list) -> str:
     '''Changes the email of the contact.'''
-    name, new_mail = args
+    name, new_mail, *_ = args
     record = address_book.data.get(name)
     return record.change_mail(new_mail)
 
 @input_error
 def delete_mail_func(args: list) -> str:
     '''Deletes an existing email.'''
-    name = args[0]
+    name, *_ = args
     record = address_book.data.get(name)
     return record.delete_mail()
 
@@ -253,7 +250,7 @@ def change_note_func(args: list) -> str:
 @input_error
 def del_note_func(args: list) -> str:
     '''Deletes an existing note.'''
-    name=args[0]
+    name, *_ = args
     record = address_book.data.get(name)
     return record.delete_note()
 
@@ -375,7 +372,8 @@ EXIT_COMMANDS = ("good bye", "exit", "close", "quit", "bye", "q")
 @input_error
 def handler(input_string: str) -> list:
     """
-    The function separates the command word for the bot, and writes all other data into a list, where the first value is the name.
+    The function separates the command word for the bot, and writes all other data into a list, 
+    where the first value is the name.
     """
     command = ""
     perhaps_command = what_is_command(FUNCTIONS, input_string)
