@@ -1,7 +1,7 @@
 from fields_for_record import Name, Birthday, Phone, Email, Note, Tag
 from datetime import datetime
 from copy import copy
-from color_message import color_return
+from color_message import color_message
 
 
 class Record:
@@ -18,7 +18,7 @@ class Record:
         '''Adds a phone to the contact's list of phones.'''
         added_phone = Phone(phone)
         self.phones.append(added_phone)
-        return color_return(f"The phone '{added_phone.value}' was added to the '{self.name.value.title()}'.", "green")   #f"The phone '{added_phone.value}' was added to the '{self.name.value.title()}'."
+        return color_message(f"The phone '{added_phone.value}' was added to the '{self.name.value.title()}'.", "green")   #f"The phone '{added_phone.value}' was added to the '{self.name.value.title()}'."
 
     def change_phone(self, new_phone) -> str:
         '''Changes an existing phone.'''
@@ -30,7 +30,7 @@ class Record:
             while True:
                 
                 try:
-                    print(color_return(f"What phone you want to change? {showing}\n"), "purple")
+                    print(color_message(f"What phone you want to change? {showing}\n"), "purple")
                     choosing = input("Choose № of this phone (skip it if you don't want)>>> ")
                     
                     if not choosing:
@@ -222,9 +222,9 @@ class Record:
             
             while True:
                 try:
-                    message = color_return("What tag do you want to remove?", "blue")
+                    message = color_message("What tag do you want to remove?", "blue")
                     print(f"{message} {showing}")
-                    choosing = input(color_return("Choose № of this tags (press enter to skip)>>> ", "purple"))
+                    choosing = input(color_message("Choose № of this tags (press enter to skip)>>> ", "purple"))
                     
                     if not choosing:
                         print( f"You didn't remove any tags of '{self.tag.value}'.")
@@ -253,7 +253,7 @@ class Record:
             self.birthday = Birthday(new_birthday)
             return f"Birthday has been changed successfully."
         else:
-            return color_return("The birthday hasn't been added yet for this contact. Add first.", "red")
+            return color_message("The birthday hasn't been added yet for this contact. Add first.", "red")
 
     def days_to_birthdays(self):
         '''Returns a quantity of days until contact's birthday.'''

@@ -2,7 +2,7 @@ from record import Record
 from sort import sort_files
 from address_book import address_book
 import os
-from color_message import color_return
+from color_message import color_message
 
 
 def input_error(func) -> str:

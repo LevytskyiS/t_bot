@@ -1,6 +1,6 @@
 from datetime import datetime
 import re
-from color_message import color_return
+from color_message import color_message
 
 
 class Field:
