@@ -1,4 +1,5 @@
 from record import Record
+from color_message import color_message
 
 
 def header_func() -> str:
@@ -8,7 +9,7 @@ def header_func() -> str:
     columns = "\n|{:^15}|{:^15}|{:^12}|{:^25}|{:^15}|{:^30}|"
     header += columns.format(*headers)
     header += "\n|" + "-" * 117 + "|"
-    header = "\033[34m{}\033[0m".format(header)
+    header = color_message(f"{header}", "blue")
 
     return header
 

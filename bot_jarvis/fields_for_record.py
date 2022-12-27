@@ -27,9 +27,9 @@ class Phone(Field):
         fixed_phone = self._sanitize_phone_number(value)
         
         if len(fixed_phone) < 10 or len(fixed_phone) > 12:
-            raise ValueError("Wrong format of phone, must be 10 or 12 numbers.")
+            raise ValueError(color_message("Wrong format of phone, must be 10 or 12 numbers.", "red"))
         if not fixed_phone.isnumeric():
-            raise ValueError("Wrong format of phone, must be only numbers.")
+            raise ValueError(color_message("Wrong format of phone, must be only numbers.", "red"))
         self._value = fixed_phone
 
     def _sanitize_phone_number(self, phone):
@@ -51,7 +51,7 @@ class Email(Field):
         new_email = re.search(r'[a-zA-Z]+[\w.]+[@][a-zA-Z]+[.][a-zA-Z]{2,}', email)
 
         if not new_email:
-            raise ValueError(f"Email {email} is not valid.")
+            raise ValueError(color_message(f"Email {email} is not valid.", "red"))
         self._value = new_email.group()
               
 
@@ -64,9 +64,9 @@ class Tag(Field):
     def value(self, value):
         for tag in value:
             if not isinstance(tag, str):
-                raise ValueError(f'The tag shall be string')
-            if not tag.startswith('#'):
-                raise ValueError(f'The tag must start #')
+                raise ValueError(color_message(f"The tag shall be string", "red"))
+            if not tag.startswith("#"):
+                raise ValueError(color_message(f"The tag must start #", "red"))
         self._value = value
 
 
@@ -78,14 +78,14 @@ class Birthday(Field):
         if left_range <= variable <= right_range:
             return variable
         else:
-            raise ValueError(f"Your data {variable} shall be in range from {left_range} up to {right_range}")
+            raise ValueError(color_message(f"Your data {variable} shall be in range from {left_range} up to {right_range}", "red"))
 
     @Field.value.setter
     def value(self, birthday_str):
         birth_list = birthday_str.split('.')
         
         if (len(birth_list) < 3) or (len(birth_list) > 3):
-            return "Please type birthday in format 'yyyy.mm.dd'"
+            return color_message("Please type birthday in format 'yyyy.mm.dd'", "red")
         
         year = [num for num in birth_list if len(num) == 4]
         year_index_in_list = birth_list.index(year[0])

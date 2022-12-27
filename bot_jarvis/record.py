@@ -167,7 +167,7 @@ class Record:
                 note += f"{item} "
             self.note = Note(note)
         else:
-            return color_message(f"A note exists. Choose the 'edit note' command to correct the note.", "red")
+            return color_message(f"The note exists. Enter the command 'edit note' to change it.", "red")
 
         return color_message(f"The note '{note[:-1]}' was added to the contact '{self.name.value.title()}'.", "green")
 
