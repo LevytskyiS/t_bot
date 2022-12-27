@@ -133,7 +133,7 @@ class Record:
                 
                 try:
                     print(f"What email you want to remove? {showing}")
-                    choosing = input("Choose № of this email (skip it if you don't want)>>> ")
+                    choosing = input("Choose № of this email (press enter to skip)>>> ")
                    
                     if not choosing:
                         return f"You didn't remove any email of '{self.name.value.title()}'."
@@ -224,7 +224,7 @@ class Record:
                 try:
                     message = color_return("What tag do you want to remove?", "blue")
                     print(f"{message} {showing}")
-                    choosing = input("Choose № of this tags (skip it if you  want press enter)>>> ")
+                    choosing = input(color_return("Choose № of this tags (press enter to skip)>>> ", "purple"))
                     
                     if not choosing:
                         print( f"You didn't remove any tags of '{self.tag.value}'.")
