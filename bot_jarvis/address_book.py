@@ -2,20 +2,19 @@ from collections import UserDict
 from record import Record
 from datetime import datetime
 import pickle
-
+from color_message import color_message
 from print_table import header_func, line_func
 
 
 class AddressBook(UserDict):
 
     def __init__(self):
-        super().__init__()
-        self.load_address_book()    
+        super().__init__()    
     
     def add_record(self, record: Record) -> str:
         '''Adds name (key) of the contact and his fields (value).'''
-        self.data[record.name.value] = record                 #.title()
-        return f"New contact was added successfuly."
+        self.data[record.name.value] = record   #.title()
+        return color_message("New contact was added successfuly.", "green")
 
 
     def search_in_contact_book(self, data) -> str:
@@ -48,7 +47,7 @@ class AddressBook(UserDict):
                 counter += 1 
         
         if counter < 1:
-            raise ValueError(f"I didn't find any {data} in AB.")              
+            raise ValueError(color_message(f"I didn't find any {data} in AB."), "red")           
         
         return table
 
@@ -83,7 +82,7 @@ class AddressBook(UserDict):
     def delete_record(self, contact_name: str) -> str:
         '''Deletes the contact (key).'''
         self.data.pop(contact_name)
-        return f"The contact was deleted successfully."
+        return color_message("The contact was deleted successfully.", "green")
 
 
     def save_address_book(self) -> str:
@@ -98,6 +97,8 @@ class AddressBook(UserDict):
             with open("address_book.bin", "rb") as file:     
                 self.data = pickle.load(file)
         except FileNotFoundError:
-            return "The file does not exist."   
+            return color_message("The file does not exist.", "red")    
+
 
 address_book = AddressBook()
+address_book.load_address_book()

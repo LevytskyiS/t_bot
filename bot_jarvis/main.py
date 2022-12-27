@@ -1,6 +1,7 @@
 from __future__ import annotations
 from user_funcs import handler, EXIT_COMMANDS, exit_func
 from address_book import address_book
+from color_message import color_message
 
 
 def main():
@@ -17,7 +18,7 @@ def main():
 
         print("\n\033[1m\033[34m{}\033[0m\n".format("Hello, I am Jarvis :)"))
 
-        help_str = "\033[34m{}\033[0m".format("help")
+        help_str = color_message("help", "blue")
         print(f"Type {help_str} to see all commands")
         
         while True:
@@ -26,8 +27,7 @@ def main():
 
             if input_string.lower() in EXIT_COMMANDS:
                 exit_func()
-            get_command = handler(input_string)
-            print(get_command)
+            print(handler(input_string))
       
     finally:
         address_book.save_address_book()           

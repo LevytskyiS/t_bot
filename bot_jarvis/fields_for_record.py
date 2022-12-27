@@ -1,6 +1,6 @@
 from datetime import datetime
-from collections import UserDict
 import re
+from color_message import color_message
 
 
 class Field:
@@ -96,6 +96,3 @@ class Birthday(Field):
         day = self.range_control(int((birth_list[index_day[0]])), 1, 31)
 
         self._value = datetime(year=year, month=month, day=day).date()
-
-
-
