@@ -26,8 +26,8 @@ def main():
 
             if input_string.lower() in EXIT_COMMANDS:
                 exit_func()
-            get_command = handler(input_string)
-            print(get_command)
+            handler(input_string)
+           # print(get_command)
       
     finally:
         address_book.save_address_book()           

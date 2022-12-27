@@ -69,8 +69,8 @@ class AddressBook(UserDict):
     
     def add_record(self, record: Record) -> str:
         '''Adds name (key) of the contact and his fields (value).'''
-        self.data[record.name.value] = record                 #.title()
-        return f"New contact was added successfuly."
+        self.data[record.name.value] = record   #.title()
+        return self.parne_neparne_a_book(2)    #f"New contact was added successfuly." 
 
 
     def search_in_contact_book(self, data) -> str:
@@ -136,7 +136,7 @@ class AddressBook(UserDict):
     def delete_record(self, contact_name: str) -> str:
         '''Deletes the contact (key).'''
         self.data.pop(contact_name)
-        return f"The contact was deleted successfully."
+        return self.parne_neparne_a_book(4)  #f"The contact was deleted successfully."
 
 
     def save_address_book(self) -> str:
@@ -151,7 +151,28 @@ class AddressBook(UserDict):
             with open("address_book.bin", "rb") as file:     
                 self.data = pickle.load(file)
         except FileNotFoundError:
-            return "The file does not exist."   
+            return self.parne_neparne_a_book(3) #"The file does not exist."   
+
+
+    def parne_neparne_a_book(self, key):
+
+        positive_return = {
+            2: "New contact was added successfuly.",
+            4: "The contact was deleted successfully." 
+            }
+
+        negative_return = {
+
+            3: "The file does not exist."  
+            }  
+        
+        if key % 2 == 0:
+            res = positive_return.get(key)
+            print("\033[32m{}\033[0m".format(res)) #викликає список з позитивними відповідями, return green text
+        else:
+            res = negative_return.get(key)
+            print("\033[35m{}\033[0m".format(res))
+
 
 address_book = AddressBook()
 address_book.load_address_book()
