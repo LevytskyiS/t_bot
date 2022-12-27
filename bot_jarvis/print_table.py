@@ -25,7 +25,7 @@ def line_func(record: Record) -> str:
     phone_table = [phone.value for phone in record.phones]
 
     birthday = record.birthday.value.strftime(
-        "%m.%d.%Y") if record.birthday else ""
+        "%d.%m.%Y") if record.birthday else ""
     birthday_table = [birthday]
 
     email_table = []
