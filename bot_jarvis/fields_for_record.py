@@ -1,5 +1,5 @@
 from datetime import datetime
-from color_message import color_message
+from termcolor import colored
 import re
 
 
@@ -27,9 +27,9 @@ class Phone(Field):
         fixed_phone = self._sanitize_phone_number(value)
         
         if len(fixed_phone) < 10 or len(fixed_phone) > 12:
-            raise ValueError(color_message("Wrong format of phone, must be 10 or 12 numbers.", "red"))
+            raise ValueError(colored("Wrong format of phone, must be 10 or 12 numbers.", "red"))
         if not fixed_phone.isnumeric():
-            raise ValueError(color_message("Wrong format of phone, must be only numbers.", "red"))
+            raise ValueError(colored("Wrong format of phone, must be only numbers.", "red"))
         self._value = fixed_phone
 
     def _sanitize_phone_number(self, phone):
@@ -51,7 +51,7 @@ class Email(Field):
         new_email = re.search(r'[a-zA-Z]+[\w.]+[@][a-zA-Z]+[.][a-zA-Z]{2,}', email)
 
         if not new_email:
-            raise ValueError(color_message(f"Email {email} is not valid.", "red"))
+            raise ValueError(colored(f"Email {email} is not valid.", "red"))
         self._value = new_email.group()
               
 
@@ -64,9 +64,9 @@ class Tag(Field):
     def value(self, value):
         for tag in value:
             if not isinstance(tag, str):
-                raise ValueError(color_message(f"The tag shall be string", "red"))
+                raise ValueError(colored(f"The tag shall be string", "red"))
             if not tag.startswith("#"):
-                raise ValueError(color_message(f"The tag must start #", "red"))
+                raise ValueError(colored(f"The tag must start #", "red"))
         self._value = value
 
 

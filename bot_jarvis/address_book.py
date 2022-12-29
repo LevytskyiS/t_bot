@@ -1,8 +1,8 @@
 from collections import UserDict
-from record import Record
+from .record import Record
 from datetime import datetime
-from color_message import color_message
-from print_table import header_func, line_func
+from termcolor import colored
+from .print_table import header_func, line_func
 import os
 import pickle
 
@@ -22,7 +22,7 @@ class AddressBook(UserDict):
     def add_record(self, record: Record) -> str:
         '''Adds name (key) of the contact and his fields (value).'''
         self.data[record.name.value] = record   #.title()
-        return color_message("New contact was added successfuly.", "green")
+        return colored("New contact was added successfuly.", "green")
 
 
     def search_in_contact_book(self, data) -> str:
@@ -55,10 +55,10 @@ class AddressBook(UserDict):
                 counter += 1
         
         if counter < 1 and not data:
-            return color_message(f"The address book is emty", "yellow")        
+            return colored(f"The address book is emty.", "yellow")        
         
         if counter < 1:
-            return color_message(f"I didn't find any '{data}' in adress book.", "yellow")
+            return colored(f"I didn't find any '{data}' in adress book.", "yellow")
         
         return table
 
@@ -93,7 +93,7 @@ class AddressBook(UserDict):
     def delete_record(self, contact_name: str) -> str:
         '''Deletes the contact (key).'''
         self.data.pop(contact_name)
-        return color_message("The contact was deleted successfully.", "green")
+        return colored("The contact was deleted successfully.", "green")
 
 
     def save_address_book(self) -> str:
@@ -107,7 +107,7 @@ class AddressBook(UserDict):
             with open("address_book.bin", "rb") as file:     
                 self.data = pickle.load(file)
         except FileNotFoundError:
-            return color_message("The file does not exist.", "red")    
+            return colored("The file does not exist.", "red")    
         
     def change_bot_name(self, new_name: str) -> str:
         '''Changes the name of the bot.'''
