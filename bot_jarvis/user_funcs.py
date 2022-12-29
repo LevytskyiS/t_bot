@@ -14,7 +14,7 @@ def input_error(func) -> str:
             return func(*args, **kwargs)
 
         except KeyError:
-            return colored("This contact doesn't exist, please try again.", "red")
+            return colored("You forgot to enter the contact name.", "red")
 
         except ValueError as exception:
             if exception.args[0] == "Not enough values to unpack (expected 2, got 1).":
