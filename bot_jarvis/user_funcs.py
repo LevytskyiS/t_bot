@@ -78,11 +78,11 @@ def help_func(*_) -> str:
 
     table_options_bot = ""
     header_table = "| {:<51} | {:<80}".format("Example command", "Command description")
-    header_table = "\033[1m\033[34m{}\033[0m".format(header_table)  
+    header_table = colored(f"{header_table}", "blue", attrs=["bold"])  
     table_options_bot += f"\n{header_table}\n\n"
     
     for key, value in options_bot_str.items():
-        key = "\033[34m{}\033[0m".format(key)
+        key = colored(f"{key}", "blue")
         row = "| {:<60} | {:<80}".format(key, value)
         table_options_bot += f"{row}\n"
 
