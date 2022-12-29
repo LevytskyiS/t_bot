@@ -13,7 +13,7 @@ This bot supports the following commands:
 | add mail Vasya vasiliy007@gmail.com                 | I will add email to your contact
 | change mail Vasya new_mail_vasya@gmail.com          | I will change email of your contact
 | del mail Vasya                                      | I will delete email of your contact
-| add birth Natally 1999.12.23                        | I will add the birthday of your friend so that you do not forget to congratulate
+| add birth Natally 1999.12.23                        | I will add the birthday of your friend
 | change birth Natally 1999.12.23                     | I will change your friend's date of birth
 | all births 50                                       | I will show the birthdays of all your friends in the next 50 days
 | days to birth Leo                                   | I will tell you the number of days until my friend's birthday
