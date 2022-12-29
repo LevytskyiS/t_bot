@@ -1,7 +1,7 @@
 from __future__ import annotations
-from record import Record
-from sort import sort_files
-from address_book import address_book
+from .record import Record
+from .sort import sort_files
+from .address_book import address_book
 from termcolor import colored
 from datetime import datetime
 import os

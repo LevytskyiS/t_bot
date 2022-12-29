@@ -28,7 +28,7 @@ This bot supports the following commands:
 | sort                                                | I will sort all the files in the folder you choose
 | find mi                                             | I will find all record, which contains 'mi'
 | ('good bye', 'exit', 'close', 'quit', 'bye', 'q')   | Enter one of these word and I will finish my work
-|____________________________________________________________________________________________________________________________|
+|__________________________________________________________________________________________________________________________
 
 In order to install this application in the folder with the file setup.py in the command line enter:
 

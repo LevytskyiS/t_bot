@@ -1,8 +1,8 @@
 from collections import UserDict
-from record import Record
+from .record import Record
 from datetime import datetime
 from termcolor import colored
-from print_table import header_func, line_func
+from .print_table import header_func, line_func
 import os
 import pickle
 

@@ -1,4 +1,4 @@
-from record import Record
+from .record import Record
 from termcolor import colored
 
 

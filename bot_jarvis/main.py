@@ -1,7 +1,6 @@
-from user_funcs import handler, EXIT_COMMANDS, exit_func
-from address_book import address_book
+from .user_funcs import handler, EXIT_COMMANDS, exit_func
+from .address_book import address_book
 from termcolor import colored
-from address_book import address_book
 
 
 def main():

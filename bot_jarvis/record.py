@@ -1,4 +1,4 @@
-from fields_for_record import Name, Birthday, Phone, Email, Note, Tag
+from .fields_for_record import Name, Birthday, Phone, Email, Note, Tag
 from datetime import datetime
 from copy import copy
 from termcolor import colored
