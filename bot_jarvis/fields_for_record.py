@@ -25,11 +25,13 @@ class Phone(Field):
     @Field.value.setter
     def value(self, value):
         fixed_phone = self._sanitize_phone_number(value)
-        
+
         if len(fixed_phone) < 10 or len(fixed_phone) > 12:
-            raise ValueError(colored("Wrong format of phone, must be 10 or 12 numbers.", "red"))
+            raise ValueError(
+                colored("Wrong format of phone, must be 10 or 12 numbers.", "red"))
         if not fixed_phone.isnumeric():
-            raise ValueError(colored("Wrong format of phone, must be only numbers.", "red"))
+            raise ValueError(
+                colored("Wrong format of phone, must be only numbers.", "red"))
         self._value = fixed_phone
 
     def _sanitize_phone_number(self, phone):
@@ -48,12 +50,13 @@ class Email(Field):
 
     @Field.value.setter
     def value(self, email: str):
-        new_email = re.search(r'[a-zA-Z]+[\w.]+[@][a-zA-Z]+[.][a-zA-Z]{2,}', email)
+        new_email = re.search(
+            r'[a-zA-Z]+[\w.]+[@][a-zA-Z]+[.][a-zA-Z]{2,}', email)
 
         if not new_email:
             raise ValueError(colored(f"Email {email} is not valid.", "red"))
         self._value = new_email.group()
-              
+
 
 class Note(Field):
     pass
