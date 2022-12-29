@@ -7,5 +7,6 @@ setup(
     url="https://github.com/LevytskyiS/t_bot",
     license="MIT License",
     packages=find_namespace_packages(),
+    install_requires=["termcolor"],
     entry_points={"console_scripts": ["best_bot = bot_jarvis.main:main"]}
 )
