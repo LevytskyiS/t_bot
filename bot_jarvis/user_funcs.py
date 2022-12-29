@@ -71,6 +71,7 @@ def help_func(*_) -> str:
         "del tags Natally": "I will deletenote's tags of your contact.",
 
         "help": "I will tell you about my possibilities.",
+        "edit bot": "To change the name of the bot",
         "sort": "I will sort all the files in the folder you choose.",
         "find {example}": "I will find all records, which contain 'mi'",
         f"{EXIT_COMMANDS}": "Enter one of these words and I will finish my work.",
