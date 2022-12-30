@@ -18,7 +18,8 @@ class Record:
         '''Adds a phone to the contact's list of phones.'''
         added_phone = Phone(phone)
         self.phones.append(added_phone)
-        return colored(f"The phone '{added_phone.value}' was added to the '{self.name.value.title()}'.", "green")   #f"The phone '{added_phone.value}' was added to the '{self.name.value.title()}'."
+        # f"The phone '{added_phone.value}' was added to the '{self.name.value.title()}'."
+        return colored(f"The phone '{added_phone.value}' was added to the '{self.name.value.title()}'.", "green")
 
     def change_phone(self, new_phone) -> str:
         '''Changes an existing phone.'''
@@ -26,18 +27,19 @@ class Record:
             new_phone = Phone(new_phone)
             phones = [phone.value for phone in self.phones]
             showing = dict(enumerate(phones, 1))
-            
+
             while True:
-                
+
                 try:
                     message = colored("What phone you want to change?", "blue")
                     print(f"{message} {showing}")
-                    choosing = input(colored("Choose № of this phone (press Enter to skip)>>> ", "magenta"))
-                    
+                    choosing = input(
+                        colored("Choose № of this phone (press Enter to skip)>>> ", "magenta"))
+
                     if not choosing:
                         return colored(f"You didn't change any phone in your list: {self.name.value.title()}.", "yellow")
                     choosing = int(choosing)
-                    
+
                     if choosing > 0:
                         self.phones[choosing-1] = new_phone
                         return colored(f"Phone '{showing[choosing]}' of '{self.name.value.title()}' changed to '{new_phone.value}'.", "green")
@@ -52,21 +54,23 @@ class Record:
                     return colored(f"{choosing} is out of range!", "red")
 
         else:
-            raise ValueError(colored(f"Phone list of '{self.name.value.title()}' is empty"), "red")
-   
+            raise ValueError(
+                colored(f"Phone list of '{self.name.value.title()}' is empty"), "red")
+
     def delete_phone(self) -> str:
         '''Deletes an existing phone.'''
         if self.phones:
             phones = [phone.value for phone in self.phones]
             showing = dict(enumerate(phones, 1))
-            
+
             while True:
-                
+
                 try:
                     message = colored("What phone you want to remove?", "blue")
                     print(f"{message} {showing}")
-                    choosing = input(colored("Choose № of this phone (press Enter to skip)>>> ", "magenta"))
-                    
+                    choosing = input(
+                        colored("Choose № of this phone (press Enter to skip)>>> ", "magenta"))
+
                     if not choosing:
                         return colored("You didn't remove any phone of '{self.name.value.title()}'.", "yellow")
                     choosing = int(choosing)
@@ -75,7 +79,7 @@ class Record:
                         return colored(f"Phone '{showing[choosing]}' of '{self.name.value.title()}' removed.", "green")
                     else:
                         raise KeyError
-       
+
                 except ValueError:
                     return colored(f"{choosing} is not a number!", "red")
                 except KeyError:
@@ -84,7 +88,8 @@ class Record:
                     return colored(f"{choosing} is out of range!", "red")
 
         else:
-            raise ValueError(colored(f"Phones list of '{self.name.value.title()}' is empty."), "red")
+            raise ValueError(
+                colored(f"Phones list of '{self.name.value.title()}' is empty."), "red")
 
     def add_mail(self, mail) -> str:
         '''Add an email to the contact.'''
@@ -98,18 +103,19 @@ class Record:
             new_mail = Email(new_mail)
             emails = [email.value for email in self.emails]
             showing = dict(enumerate(emails, 1))
-            
+
             while True:
-                
+
                 try:
                     message = colored("What email you want to change?", "blue")
                     print(f"{message} {showing}")
-                    choosing = input(colored("Choose № of this email (press Enter to skip)>>> ", "magenta"))
-                    
+                    choosing = input(
+                        colored("Choose № of this email (press Enter to skip)>>> ", "magenta"))
+
                     if not choosing:
                         return colored(f"You didn't change any email of '{self.name.value.title()}'.", "yellow")
                     choosing = int(choosing)
-                    
+
                     if choosing > 0:
                         self.emails[choosing-1] = new_mail
                         return colored(f"Email < {showing[choosing]} > of < {self.name.value.title()} > changed to the < {new_mail.value} >", "green")
@@ -124,25 +130,27 @@ class Record:
                     return colored(f"{choosing} is out of range!", "red")
 
         else:
-            raise ValueError(colored(f"Emails list of '{self.name.value.title()}' is empty."), "red")
+            raise ValueError(
+                colored(f"Emails list of '{self.name.value.title()}' is empty."), "red")
 
     def delete_mail(self) -> str:
         '''Removes an email.'''
         if self.emails:
             emails = [email.value for email in self.emails]
             showing = dict(enumerate(emails, 1))
-            
+
             while True:
-                
+
                 try:
                     message = colored("What email you want to remove?", "blue")
                     print(f"{message} {showing}")
-                    choosing = input(colored("Choose № of this email (press Enter to skip)>>> ", "magenta"))
-                   
+                    choosing = input(
+                        colored("Choose № of this email (press Enter to skip)>>> ", "magenta"))
+
                     if not choosing:
                         return colored(f"You didn't remove any email of '{self.name.value.title()}'.", "yellow")
                     choosing = int(choosing)
-                    
+
                     if choosing > 0:
                         self.emails.pop(choosing-1)
                         return colored(f"Email '{showing[choosing]}' of '{self.name.value.title()}' removed.", "green")
@@ -157,7 +165,8 @@ class Record:
                     return colored(f"{choosing} is out of range!", "red")
 
         else:
-            raise ValueError(colored(f"Emails list of '{self.name.value.title()}' is empty."), "red")
+            raise ValueError(
+                colored(f"Emails list of '{self.name.value.title()}' is empty."), "red")
 
     def add_note(self, list_note) -> str:
         '''Add only one note at all.'''
@@ -179,7 +188,7 @@ class Record:
         for item in list_new_note:
             new_note += f"{item} "
         old_note = self.note.value
-        note = old_note + new_note   
+        note = old_note + new_note
         self.note = Note(note)
 
         return colored(f"The note '{new_note[:-1]}' was added to the contact '{self.name.value.title()}'.", "green")
@@ -203,13 +212,13 @@ class Record:
         else:
             return colored(
                 f"If you want to add tags to an existing list of tags, "
-                                 f"please choose 'edit tag' command.", "yellow"
+                f"please choose 'edit tag' command.", "yellow"
             )
 
     def change_tag(self, new_tag_list):
         '''Adds new tags to the list.'''
         old_tag = self.tag
-        
+
         if self.tag:
             self.tag = Tag(old_tag.value + new_tag_list)
             return colored(f"The new tag {new_tag_list} has been added to old one {old_tag.value}.", "green")
@@ -223,21 +232,24 @@ class Record:
     def del_tag(self):
         '''Deletes only that tag which is chosen by a user.'''
         if self.tag:
-            old_tags =copy(self.tag.value)
+            old_tags = copy(self.tag.value)
             tags = [tag for tag in self.tag.value]
             showing = dict(enumerate(tags, 1))
-            
+
             while True:
                 try:
-                    message = colored("What tag do you want to remove?", "blue")
+                    message = colored(
+                        "What tag do you want to remove?", "blue")
                     print(f"{message} {showing}")
-                    choosing = input(colored("Choose № of this tags >>> ", "magenta"))
+                    choosing = input(
+                        colored("Choose № of this tags >>> ", "magenta"))
 
                     if not choosing:
 
-                        message = colored("You didn't remove any tags of", "yellow")
+                        message = colored(
+                            "You didn't remove any tags of", "yellow")
                         return f"{message} '{self.tag.value}'"
-                        
+
                     choosing = int(choosing)
 
                     self.tag.value.pop(choosing - 1)
@@ -251,7 +263,6 @@ class Record:
 
         else:
             return colored(f"The list of tags '{self.tag}' is empty.", "yellow")
-
 
     def add_birthday(self, birthday) -> str:
         '''Adds a birthday.'''
@@ -274,16 +285,18 @@ class Record:
         if self.birthday:
             current_year = datetime.now().year
             current_day = datetime.now()
-            this_year_birthday = datetime(year=current_year, month=self.birthday.value.month, day=self.birthday.value.day)
+            this_year_birthday = datetime(
+                year=current_year, month=self.birthday.value.month, day=self.birthday.value.day)
             if (this_year_birthday - current_day).days >= 0:
                 next_birth = this_year_birthday - current_day
                 return next_birth.days
             else:
-                next_birth = datetime(year=current_year + 1, month=self.birthday.value.month, day=self.birthday.value.day)
+                next_birth = datetime(
+                    year=current_year + 1, month=self.birthday.value.month, day=self.birthday.value.day)
                 return (next_birth - current_day).days
         else:
             return colored(f"The birthday hasn`t been added yet for this contact. Add first.", "yellow")
-    
+
     def delete_birthday(self):
         '''Deletes a birthday.'''
         self.birthday = None

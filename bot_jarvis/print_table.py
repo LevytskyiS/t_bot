@@ -3,7 +3,7 @@ from termcolor import colored
 
 
 def header_func() -> str:
-
+    '''Creates a header of a table.'''
     header = "\n|" + "-" * 117 + "|"
     headers = ["Name", "Phone", "Birthday", "Email", "Tags", "Notes"]
     columns = "\n|{:^15}|{:^15}|{:^12}|{:^25}|{:^15}|{:^30}|"
@@ -15,10 +15,10 @@ def header_func() -> str:
 
 
 def line_func(record: Record) -> str:
-    
+    '''Creates lines of a table.'''
     line = ""
     columns = "\n|{:^15}|{:^15}|{:^12}|{:^25}|{:^15}|{:^30}|"
-    
+
     name = record.name.value.title()
     name_table = [name[i:i+13] for i in range(0, len(name), 13)]
 
@@ -54,7 +54,7 @@ def line_func(record: Record) -> str:
     note_table = [note[i:i+28] for i in range(0, len(note), 28)]
 
     all_table = [name_table, phone_table, birthday_table,
-                    email_table, tag_table, note_table]
+                 email_table, tag_table, note_table]
     max_len_table = len(max(all_table, key=lambda table: len(table)))
 
     for i in range(max_len_table):
